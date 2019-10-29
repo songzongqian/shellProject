@@ -1,9 +1,13 @@
 package com.shell.home;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
@@ -29,9 +34,11 @@ import com.shell.home.Bean.HomeUserBean;
 import com.shell.home.Bean.JiangLiBean;
 import com.shell.home.Bean.TopStaticBean;
 import com.shell.home.activity.SuanChartActivity;
+import com.shell.home.adapter.MessagesAdapter;
 import com.shell.home.adapter.PopuCardAdapter;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
+import com.shell.utils.RecyclerViewScrollHelper;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
@@ -41,7 +48,10 @@ import com.yanzhenjie.nohttp.rest.Response;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,7 +119,9 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.iv_more)
     ImageView ivMore;
     Unbinder unbinder;
+    private Timer mTimer;
 
+    ArrayList<String> mList = new ArrayList<>();
 
     private RecyclerView recyclerView;
     private String creditScoreDesc;
@@ -117,7 +129,25 @@ public class HomeFragment extends BaseFragment {
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryList;
     private List<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
-
+    private int handlerPosition = 0;
+    @SuppressLint("HandlerLeak")
+    private Handler doActionHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int msgId = msg.what;
+            switch (msgId) {
+                case 1:
+                    handlerPosition--;
+                    if (0 < handlerPosition) {
+                        recyclerView.smoothScrollToPosition(handlerPosition);
+                    } else {
+                        mTimer.cancel();
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -129,9 +159,72 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.bind(getActivity());
         ViewFlipper viewFlipper = mRootView.findViewById(R.id.viewFlipper);
         viewFlipper.startFlipping();
+        recyclerView = mRootView.findViewById(R.id.recyclerView);
+        for (int i = 0; i < 10; i++) {
+            mList.add("测试" + i);
+        }
+        handlerPosition = mList.size();
 
+        MessagesAdapter adapter = new MessagesAdapter(getActivity(), mList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                doActionHandler.sendMessage(message);
+            }
+        }, 1000, 2000/* 表示1000毫秒之後，每隔1000毫秒執行一次 */);
     }
 
+    /**
+     * 目标项是否在最后一个可见项之后
+     */
+    private boolean mShouldScroll;
+    /**
+     * 记录目标项位置
+     */
+    private int mToPosition;
+
+    /**
+     * 滑动到指定位置
+     *
+     * @param mRecyclerView
+     * @param position
+     */
+    private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
+        // 第一个可见位置
+        int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
+        // 最后一个可见位置
+        int lastItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1));
+        System.out.println("smoothMoveToPosition--" + lastItem);
+        if (position < firstItem) {
+            System.out.println("smoothMoveToPosition-11-" + lastItem);
+            // 如果跳转位置在第一个可见位置之前，就smoothScrollToPosition可以直接跳转
+            mRecyclerView.smoothScrollToPosition(position);
+        } else if (position <= lastItem) {
+            // 跳转位置在第一个可见项之后，最后一个可见项之前
+            // smoothScrollToPosition根本不会动，此时调用smoothScrollBy来滑动到指定位置
+            int movePosition = position - firstItem;
+            if (movePosition >= 0 && movePosition < mRecyclerView.getChildCount()) {
+                int top = mRecyclerView.getChildAt(movePosition).getTop();
+                mRecyclerView.smoothScrollBy(0, top);
+            }
+        } else {
+            // 如果要跳转的位置在最后可见项之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
+            // 再通过onScrollStateChanged控制再次调用smoothMoveToPosition，执行上一个判断中的方法
+            System.out.println("smoothMoveToPosition-33-" + position);
+            mRecyclerView.smoothScrollToPosition(position);
+            mToPosition = position;
+            mShouldScroll = true;
+        }
+    }
 
     @Override
     protected void setListener() {
@@ -469,42 +562,41 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
     //弹出各大洲的数据
     private void showTopFirstWindow(List<TopStaticBean.ResultDataBean.CountryDataBean> value) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_home_top1, null, false);
         final PopupWindow firstWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        RelativeLayout llOZ=inflate.findViewById(R.id.ll_OZ);
-        TextView tvOZ=inflate.findViewById(R.id.tv_ozName);
-        TextView tvOZCount=inflate.findViewById(R.id.ozsl);
+        RelativeLayout llOZ = inflate.findViewById(R.id.ll_OZ);
+        TextView tvOZ = inflate.findViewById(R.id.tv_ozName);
+        TextView tvOZCount = inflate.findViewById(R.id.ozsl);
 
-        RelativeLayout llMZ=inflate.findViewById(R.id.ll_MZ);
-        TextView tvMZ=inflate.findViewById(R.id.tv_mz);
-        TextView tvMZCount=inflate.findViewById(R.id.mzsl);
-
-
-        RelativeLayout llYZ=inflate.findViewById(R.id.ll_YZ);
-        TextView tvYZ=inflate.findViewById(R.id.tv_YZ);
-        TextView tvYZCount=inflate.findViewById(R.id.yzsl);
-
-        RelativeLayout llDYZ=inflate.findViewById(R.id.ll_DYZ);
-        TextView tvDYZ=inflate.findViewById(R.id.tv_DYZ);
-        TextView tvDYZCount=inflate.findViewById(R.id.dyzsl);
+        RelativeLayout llMZ = inflate.findViewById(R.id.ll_MZ);
+        TextView tvMZ = inflate.findViewById(R.id.tv_mz);
+        TextView tvMZCount = inflate.findViewById(R.id.mzsl);
 
 
-        RelativeLayout llFZ=inflate.findViewById(R.id.ll_FZ);
-        TextView tvFZ=inflate.findViewById(R.id.tv_FZ);
-        TextView tvFZCount=inflate.findViewById(R.id.fzsl);
+        RelativeLayout llYZ = inflate.findViewById(R.id.ll_YZ);
+        TextView tvYZ = inflate.findViewById(R.id.tv_YZ);
+        TextView tvYZCount = inflate.findViewById(R.id.yzsl);
+
+        RelativeLayout llDYZ = inflate.findViewById(R.id.ll_DYZ);
+        TextView tvDYZ = inflate.findViewById(R.id.tv_DYZ);
+        TextView tvDYZCount = inflate.findViewById(R.id.dyzsl);
+
+
+        RelativeLayout llFZ = inflate.findViewById(R.id.ll_FZ);
+        TextView tvFZ = inflate.findViewById(R.id.tv_FZ);
+        TextView tvFZCount = inflate.findViewById(R.id.fzsl);
         tvOZ.setText(value.get(0).getName());
-        tvOZCount.setText(value.get(0).getUserCount()+"");
+        tvOZCount.setText(value.get(0).getUserCount() + "");
         tvMZ.setText(value.get(1).getName());
-        tvMZCount.setText(value.get(1).getUserCount()+"");
+        tvMZCount.setText(value.get(1).getUserCount() + "");
         tvYZ.setText(value.get(2).getName());
-        tvYZCount.setText(value.get(2).getUserCount()+"");
+        tvYZCount.setText(value.get(2).getUserCount() + "");
         tvDYZ.setText(value.get(3).getName());
-        tvDYZCount.setText(value.get(3).getUserCount()+"");
+        tvDYZCount.setText(value.get(3).getUserCount() + "");
         tvFZ.setText(value.get(4).getName());
-        tvFZCount.setText(value.get(4).getUserCount()+"");
+        tvFZCount.setText(value.get(4).getUserCount() + "");
 
 
         llOZ.setOnClickListener(new View.OnClickListener() {
@@ -551,9 +643,6 @@ public class HomeFragment extends BaseFragment {
         });
 
 
-
-
-
         backgroundAlpha(0.5f);
         firstWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -566,28 +655,6 @@ public class HomeFragment extends BaseFragment {
         firstWindow.setTouchable(true);
         firstWindow.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.TOP, 0, 300);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private void backgroundAlpha(float bgAlpha) {

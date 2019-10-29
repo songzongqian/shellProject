@@ -19,6 +19,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/shell_logo"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/shell_logo"
         android:supportsRtl="true"
         android:name=".MyApplication"
