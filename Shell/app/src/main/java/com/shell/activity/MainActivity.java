@@ -37,6 +37,9 @@ import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ * MainActivity
+ */
 public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks  {
     private FragmentManager mFragmentmanager;
     private RadioGroup radioGroup;
