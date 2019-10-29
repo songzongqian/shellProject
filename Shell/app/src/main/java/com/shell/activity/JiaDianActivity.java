@@ -150,7 +150,7 @@ public class JiaDianActivity extends BaseActivity {
                   JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
                     if(jieDianBean.getResultCode().equals("999999")) {
                          JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
-                         tvVip.setText("Bv"+dataBean.getLevel());
+                         tvVip.setText("BLv"+dataBean.getLevel());
                          tvProgress.setText(dataBean.getBrokerComplete()+"/"+dataBean.getBrokerNeed());
                          tvSuanliValue.setText(GetTwoLetter.getTwo(dataBean.getHashRate()));
                          tvSuanli2Value.setText(GetTwoLetter.getTwo(dataBean.getAllHashRate()));
@@ -160,7 +160,6 @@ public class JiaDianActivity extends BaseActivity {
                          List<JieDianBean.ResultDataBean.LstLevelProfitBean> ProfitList = jieDianBean.getResultData().getLstLevelProfit();
                          JieDianAdapter jieDianAdapter = new JieDianAdapter(ProfitList,JiaDianActivity.this);
                          listView.setAdapter(jieDianAdapter);
-
                     }else{
 
                     }

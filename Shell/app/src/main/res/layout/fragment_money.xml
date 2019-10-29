@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="28dp"
-                        android:text="99999"
+                        android:text=""
                         android:textColor="#FFFFFF"
                         android:textSize="30sp" />
 
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="28dp"
-                        android:text="200"
+                        android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="28dp"
-                        android:text="9800"
+                        android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp" />
                 </RelativeLayout>

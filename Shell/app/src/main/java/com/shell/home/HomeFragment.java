@@ -2,7 +2,6 @@ package com.shell.home;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
@@ -38,7 +36,6 @@ import com.shell.home.adapter.MessagesAdapter;
 import com.shell.home.adapter.PopuCardAdapter;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
-import com.shell.utils.RecyclerViewScrollHelper;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
@@ -62,16 +59,6 @@ public class HomeFragment extends BaseFragment {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
     @BindView(R.id.iv_QiTa)
     ImageView ivQiTa;
-    @BindView(R.id.MeiGuo)
-    ImageView MeiGuo;
-    @BindView(R.id.OuZhou)
-    ImageView OuZhou;
-    @BindView(R.id.ZhongGuo)
-    ImageView ZhongGuo;
-    @BindView(R.id.HanGuo)
-    ImageView HanGuo;
-    @BindView(R.id.RiBen)
-    ImageView RiBen;
     @BindView(R.id.one2)
     TextView one2;
     @BindView(R.id.one1)
@@ -96,6 +83,18 @@ public class HomeFragment extends BaseFragment {
     ViewFlipper viewFlipper;
     @BindView(R.id.ll_map)
     RelativeLayout llMap;
+    @BindView(R.id.MeiZhou)
+    ImageView MeiZhou;
+    @BindView(R.id.OuZhou)
+    ImageView OuZhou;
+    @BindView(R.id.Feizhou)
+    ImageView Feizhou;
+    @BindView(R.id.YaZhou)
+    ImageView YaZhou;
+    @BindView(R.id.DaYangZhou)
+    ImageView DaYangZhou;
+    @BindView(R.id.tv_word)
+    TextView tvWord;
     private Request<JSONObject> request;
     private int page = 1;
     @BindView(R.id.all_suanli)
@@ -242,6 +241,8 @@ public class HomeFragment extends BaseFragment {
     //获取首页静态数据
     private void getStaticData() {
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeStaticUrl, RequestMethod.GET);
+        String language = PreManager.instance().getString("language");
+        request.addHeader("lang", language);
         mQueue.add(1, request, responseListener);
     }
 
@@ -297,6 +298,89 @@ public class HomeFragment extends BaseFragment {
                         double hashRate = topStaticBean.getResultData().getNetworkHashRate().getHashRate();
                         allSuanli.setText(hashRate + "");
                         countryDataList = topStaticBean.getResultData().getCountryData();
+
+                        int ouZhouCount = countryDataList.get(0).getUserCount();
+                        int MeiZhouCount = countryDataList.get(1).getUserCount();
+                        int YaZhouCount = countryDataList.get(2).getUserCount();
+                        int DaYangZhouCount = countryDataList.get(3).getUserCount();
+                        int FeiZhouCount = countryDataList.get(4).getUserCount();
+
+                        if (ouZhouCount >= 0 && ouZhouCount < 100) {
+                            OuZhou.setImageResource(R.mipmap.ouzhou1);
+                        } else if (ouZhouCount > 100 && ouZhouCount <= 2999) {
+                            OuZhou.setImageResource(R.mipmap.ouzhou2);
+                        } else if (ouZhouCount > 3000 && ouZhouCount <= 7999) {
+                            OuZhou.setImageResource(R.mipmap.ouzhou3);
+                        } else if (ouZhouCount > 8000 && ouZhouCount <= 19999) {
+                            OuZhou.setImageResource(R.mipmap.ouzhou4);
+                        } else if (ouZhouCount > 20000 && ouZhouCount <= 49999) {
+                            OuZhou.setImageResource(R.mipmap.ouzhou5);
+                        } else if (ouZhouCount > 50000) {
+                            OuZhou.setImageResource(R.mipmap.ouzhou6);
+                        }
+
+
+                        if (MeiZhouCount >= 0 && MeiZhouCount < 100) {
+                            MeiZhou.setImageResource(R.mipmap.meizhou1);
+                        } else if (MeiZhouCount > 100 && MeiZhouCount <= 2999) {
+                            MeiZhou.setImageResource(R.mipmap.meizhou2);
+                        } else if (MeiZhouCount > 3000 && MeiZhouCount <= 7999) {
+                            MeiZhou.setImageResource(R.mipmap.meizhou3);
+                        } else if (MeiZhouCount > 8000 && MeiZhouCount <= 19999) {
+                            MeiZhou.setImageResource(R.mipmap.meizhou4);
+                        } else if (MeiZhouCount > 20000 && MeiZhouCount <= 49999) {
+                            MeiZhou.setImageResource(R.mipmap.meizhou5);
+                        } else if (MeiZhouCount > 50000) {
+                            MeiZhou.setImageResource(R.mipmap.meizhou6);
+                        }
+
+
+                        if (YaZhouCount >= 0 && YaZhouCount < 100) {
+                            YaZhou.setImageResource(R.mipmap.yazhou1);
+                        } else if (YaZhouCount > 100 && YaZhouCount <= 2999) {
+                            YaZhou.setImageResource(R.mipmap.yazhou2);
+                        } else if (YaZhouCount > 3000 && YaZhouCount <= 7999) {
+                            YaZhou.setImageResource(R.mipmap.yazhou3);
+                        } else if (YaZhouCount > 8000 && YaZhouCount <= 19999) {
+                            YaZhou.setImageResource(R.mipmap.yazhou4);
+                        } else if (YaZhouCount > 20000 && YaZhouCount <= 49999) {
+                            YaZhou.setImageResource(R.mipmap.yazhou5);
+                        } else if (YaZhouCount > 50000) {
+                            YaZhou.setImageResource(R.mipmap.yazhou6);
+                        }
+
+
+                        if (DaYangZhouCount >= 0 && DaYangZhouCount < 100) {
+                            DaYangZhou.setImageResource(R.mipmap.dayang1);
+                        } else if (DaYangZhouCount > 100 && DaYangZhouCount <= 2999) {
+                            DaYangZhou.setImageResource(R.mipmap.dayang2);
+                        } else if (DaYangZhouCount > 3000 && DaYangZhouCount <= 7999) {
+                            DaYangZhou.setImageResource(R.mipmap.dayang3);
+                        } else if (DaYangZhouCount > 8000 && DaYangZhouCount <= 19999) {
+                            DaYangZhou.setImageResource(R.mipmap.dayang4);
+                        } else if (DaYangZhouCount > 20000 && DaYangZhouCount <= 49999) {
+                            DaYangZhou.setImageResource(R.mipmap.dayang5);
+                        } else if (DaYangZhouCount > 50000) {
+                            DaYangZhou.setImageResource(R.mipmap.dayang6);
+                        }
+
+
+                        if (FeiZhouCount >= 0 && FeiZhouCount < 100) {
+                            Feizhou.setImageResource(R.mipmap.feizhou1);
+                        } else if (FeiZhouCount > 100 && FeiZhouCount <= 2999) {
+                            Feizhou.setImageResource(R.mipmap.feizhou2);
+                        } else if (FeiZhouCount > 3000 && FeiZhouCount <= 7999) {
+                            Feizhou.setImageResource(R.mipmap.feizhou3);
+                        } else if (FeiZhouCount > 8000 && FeiZhouCount <= 19999) {
+                            Feizhou.setImageResource(R.mipmap.feizhou4);
+                        } else if (FeiZhouCount > 20000 && FeiZhouCount <= 49999) {
+                            Feizhou.setImageResource(R.mipmap.feizhou5);
+                        } else if (FeiZhouCount > 50000) {
+                            Feizhou.setImageResource(R.mipmap.feizhou6);
+                        }
+
+
+
                         if (bottomList != null && bottomList.size() > 0) {
                             TopStaticBean.ResultDataBean.AllMilepostBean allMilepostBean = bottomList.get(0);
                             tvTime.setText(allMilepostBean.getTime());
@@ -671,6 +755,7 @@ public class HomeFragment extends BaseFragment {
         if (!hidden) {
             //可见
             Log.i("song", "HomeFragment可见");
+            getStaticData();
             getUserInfo();
             getJiangLi();
         } else {

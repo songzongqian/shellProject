@@ -33,51 +33,51 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/qita"
-                    android:layout_marginLeft="31dp"/>
+                    android:layout_marginLeft="31dp"
+                    android:visibility="gone"/>
 
-                <!--美国-->
+                <!--美洲-->
                 <ImageView
-                    android:id="@+id/MeiGuo"
+                    android:id="@+id/MeiZhou"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="27dp"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/meiguo"/>
+                    android:background="@mipmap/meizhou1"/>
 
                 <!--欧洲-->
                 <ImageView
                     android:id="@+id/OuZhou"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginLeft="161dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="147dp"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/ouzhou"/>
+                    android:background="@mipmap/ouzhou1"/>
 
-                <!--中国-->
+                <!--非洲-->
                 <ImageView
-                    android:id="@+id/ZhongGuo"
+                    android:id="@+id/Feizhou"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="56dp"
-                    android:layout_marginLeft="248dp"
+                    android:layout_marginTop="77dp"
+                    android:layout_marginLeft="154dp"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/zhongguo"/>
+                    android:background="@mipmap/feizhou1"/>
 
-                <!--韩国-->
+                <!--亚洲-->
                 <ImageView
-                    android:id="@+id/HanGuo"
+                    android:id="@+id/YaZhou"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginLeft="303dp"
+                    android:layout_marginTop="54dp"
+                    android:layout_marginLeft="222dp"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/hanguo"/>
+                    android:background="@mipmap/yazhou1"/>
 
-                <!--日本-->
+                <!--大洋洲-->
                 <ImageView
-                    android:id="@+id/RiBen"
+                    android:id="@+id/DaYangZhou"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginLeft="308dp"
+                    android:layout_marginTop="127dp"
+                    android:layout_marginLeft="291dp"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/riben"/>
+                    android:background="@mipmap/dayang1"/>
             </RelativeLayout>
 
 
@@ -91,15 +91,7 @@
 
 
                 <TextView
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="138dp"
-                    android:background="@drawable/circle_shi" />
-
-
-                <TextView
+                    android:id="@+id/tv_word"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -110,6 +102,15 @@
                     android:textSize="12sp" />
 
 
+
+                <TextView
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_word"
+                    android:background="@drawable/circle_shi" />
+
+
                 <TextView
                     android:id="@+id/all_suanli"
                     android:layout_width="wrap_content"
@@ -117,7 +118,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="19dp"
-                    android:text="0.01"
+                    android:text="0"
                     android:textColor="#156097"
                     android:textSize="12sp" />
 
@@ -226,7 +227,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginRight="17dp"
                         android:layout_marginTop="2dp"
-                        android:text="100.42"
+                        android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp" />
 

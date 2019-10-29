@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.shell.Bean.JieDianBean;
 import com.shell.Bean.MessageBean;
 import com.shell.Bean.MessageEvent;
 import com.shell.Bean.MyInfoBean;
@@ -152,6 +153,7 @@ public class MineFragment extends BaseFragment {
         } else {
             getMyData();
             getMessageCount();
+            getMyLevel();
         }
 
     }
@@ -168,6 +170,15 @@ public class MineFragment extends BaseFragment {
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(1, request, responseListener);
+    }
+
+
+    private void getMyLevel() {
+        String token = PreManager.instance().getString("token");
+        request = NoHttp.createJsonObjectRequest(AppUrl.getUserJieDian, RequestMethod.GET);
+        request.addHeader("token", token);
+        request.add("token", token);
+        mQueue.add(3, request, responseListener);
     }
 
     @Override
@@ -316,6 +327,14 @@ public class MineFragment extends BaseFragment {
 
                     } else {
 
+                    }
+                    break;
+
+                case 3:
+                    JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
+                    if(jieDianBean.getResultCode().equals("999999")) {
+                        JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
+                        tvVip.setText("BLv"+dataBean.getLevel());
                     }
                     break;
 

@@ -172,9 +172,11 @@ public class LanguageActivity extends BaseActivity {
 
     private void selectLanguage(int select) {
         LocalManageUtil.saveSelectLanguage(this, select);
-        Intent intent = new Intent(this, LanguageActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        final Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        //杀掉以前进程
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 
