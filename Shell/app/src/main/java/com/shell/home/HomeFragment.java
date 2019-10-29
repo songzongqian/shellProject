@@ -171,7 +171,7 @@ public class HomeFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        mTimer = new Timer();
+/*        mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -179,7 +179,7 @@ public class HomeFragment extends BaseFragment {
                 message.what = 1;
                 doActionHandler.sendMessage(message);
             }
-        }, 1000, 2000/* 表示1000毫秒之後，每隔1000毫秒執行一次 */);
+        }, 1000, 2000*//* 表示1000毫秒之後，每隔1000毫秒執行一次 *//*);*/
     }
 
     /**
