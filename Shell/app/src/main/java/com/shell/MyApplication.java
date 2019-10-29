@@ -1,10 +1,12 @@
 package com.shell;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
@@ -22,6 +24,8 @@ import com.zhangke.websocket.WebSocketHandler;
 import com.zhangke.websocket.WebSocketManager;
 import com.zhangke.websocket.WebSocketSetting;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static com.shell.utils.LocalManageUtil.getSetLanguageLocale;
@@ -29,7 +33,8 @@ import static com.shell.utils.LocalManageUtil.getSetLanguageLocale;
 public class MyApplication extends Application {
     private static MyApplication app;
     public static boolean canShow = true;
-
+    public static Activity topactivity;
+    public static List<Activity> activityList = new ArrayList<>();
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -61,6 +66,7 @@ public class MyApplication extends Application {
             }
         });
         MultiLanguage.setApplicationLanguage(this);
+        ManageActivity();
     }
 
 
@@ -145,5 +151,41 @@ public class MyApplication extends Application {
         //注意，需要在 AndroidManifest 中配置网络状态获取权限
         //注册网路连接状态变化广播
         WebSocketHandler.registerNetworkChangedReceiver(this);
+    }
+
+    private void ManageActivity() {
+        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle bundle) {
+                activityList.add(activity);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                //处于栈顶的Activity
+                topactivity = activity;
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                activityList.remove(activity);
+            }
+        });
     }
 }

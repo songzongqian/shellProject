@@ -46,7 +46,7 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("关于我们");
+        tvTitle.setText("TRITON LAB");
         tvRightTitle.setVisibility(View.GONE);
     }
 

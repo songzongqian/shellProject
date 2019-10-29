@@ -18,9 +18,9 @@
 
 
             <RelativeLayout
+                android:id="@+id/rlLeft"
                 android:layout_width="150dp"
-                android:layout_height="match_parent"
-               android:id="@+id/rlLeft">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/tv_leftTitle"
@@ -94,8 +94,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="51dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/input_login"
         android:hint="@string/register_hint_email"
         android:paddingLeft="17dp"
@@ -109,12 +109,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/input_login"
         android:hint="@string/re_pwd"
-        android:paddingLeft="17dp"
         android:inputType="textPassword"
+        android:paddingLeft="17dp"
         android:textColor="#678DA8"
         android:textColorHint="#678DA8"
         android:textSize="14sp" />
@@ -125,8 +125,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="26dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button"
         android:text="@string/log_login"
         android:textColor="#FFFFFF" />
@@ -136,12 +136,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="30dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button_register"
         android:text="@string/log_noaccount"
         android:textColor="#8D99B2" />
-
 
 
     <RelativeLayout
@@ -160,7 +159,6 @@
             android:textSize="14sp" />
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

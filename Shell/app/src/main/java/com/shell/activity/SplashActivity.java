@@ -60,6 +60,7 @@ public class SplashActivity extends BaseActivity {
                 lottieAnimationView.cancelAnimation();
                 Intent intent= new Intent(SplashActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
 
             }
 

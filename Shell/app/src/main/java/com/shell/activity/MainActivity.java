@@ -1,6 +1,7 @@
 package com.shell.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -12,9 +13,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.OrderEvent;
+import com.shell.MyApplication;
 import com.shell.R;
 import com.shell.base.BaseActivity;
 import com.shell.home.HomeFragment;
@@ -34,13 +37,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * MainActivity
  */
-public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks  {
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     private FragmentManager mFragmentmanager;
     private RadioGroup radioGroup;
     private RadioButton rbtn0, rbtn1, rbtn2, rbtn3, rbtn4;
@@ -48,11 +53,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private int currentIndex = 0;
 
 
-
     private SocketListener socketListener = new SimpleListener() {
         @Override
         public void onConnected() {
-           Log.i("song","onConnected()");
+            Log.i("song", "onConnected()");
         }
 
         @Override
@@ -60,29 +64,29 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             if (e != null) {
 
             } else {
-                Log.i("song","onConnectFailed");
+                Log.i("song", "onConnectFailed");
             }
         }
 
         @Override
         public void onDisconnect() {
-            Log.i("song","onDisconnect");
+            Log.i("song", "onDisconnect");
         }
 
         @Override
         public void onSendDataError(ErrorResponse errorResponse) {
-            Log.i("song","onSendDataError");
+            Log.i("song", "onSendDataError");
             errorResponse.release();
         }
 
         @Override
         public <T> void onMessage(String message, T data) {
-            Log.w("song","服务器推送的消息"+message);
-            if(message.contains("userEmail")){
+            Log.w("song", "服务器推送的消息" + message);
+            if (message.contains("userEmail")) {
                 //订单消息
                 EventBus.getDefault().post(new OrderEvent(message));
-            }else if(message.contains("hashAward")){
-               //一样的信息
+            } else if (message.contains("hashAward")) {
+                //一样的信息
             }
         }
 
@@ -121,11 +125,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
 
-
     /**
      * 切换Fragment
      */
-    private void repleacFragment(int index) {
+    public void repleacFragment(int index) {
         Log.i("main_加载位置", index + "");
         Fragment tabFragment = getTabFragment(index);
         FragmentTransaction fragmentTransaction = mFragmentmanager
@@ -151,7 +154,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
 
-
     private Fragment getTabFragment(int index) {
         Fragment fragment = mTabFragment.get(index);
         Log.i("getTabFragment(int", index + "");
@@ -161,12 +163,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             } else if (index == 1) {
                 fragment = new OrderFragment();
             } else if (index == 2) {
-                    fragment = new MoneyFragment();
+                fragment = new MoneyFragment();
             } else if (index == 3) {
                 fragment = new MineFragment();
             }
             mTabFragment.put(index, fragment);
-        }else{
+        } else {
 
         }
         return fragment;
@@ -180,7 +182,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         Date nowTime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd");
         String retStrFormatNowDate = sdFormatter.format(nowTime);
-        Log.i("song","重新获取焦点的值onRestart"+System.currentTimeMillis());
+        Log.i("song", "重新获取焦点的值onRestart" + System.currentTimeMillis());
     }
 
     @Override
@@ -188,6 +190,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (!startLoginActiviy(checkedId)){
+                    rbtn0.setChecked(true);
+                    return;
+                }
                 switch (checkedId) {
                     case R.id.rbtn_kuangchi:
                         repleacFragment(0);
@@ -210,6 +216,23 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         });
     }
 
+
+    /**
+     * 如果用户未登录   跳转到登录页面
+     *
+     * @param checkedId
+     */
+    public boolean startLoginActiviy(int checkedId) {
+        String token = PreManager.instance().getString("token");
+        if (TextUtils.isEmpty(token) && R.id.rbtn_kuangchi != checkedId) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return false;
+        }else {
+            return true;
+        }
+    }
+
     @Override
     protected void initData() {
         WebSocketHandler.getDefault().addListener(socketListener);
@@ -223,7 +246,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             if (EasyPermissions.hasPermissions(this, mPermissionList)) {
 
 
-            }else {
+            } else {
                 //未同意过,或者说是拒绝了，再次申请权限
                 EasyPermissions.requestPermissions(
                         this,  //上下文
@@ -242,14 +265,14 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     protected void onResume() {
         super.onResume();
         String type = PreManager.instance().getString("fromType");
-        Log.i("song","重新获取焦点的值"+type);
-        if(type!=null && !TextUtils.isEmpty(type)){
-            if(type.equals("login")){
+        Log.i("song", "重新获取焦点的值" + type);
+        if (type != null && !TextUtils.isEmpty(type)) {
+            if (type.equals("login")) {
                 repleacFragment(0);
                 currentIndex = 0;
                 PreManager.instance().putString("fromType", "");
             }
-        }else{
+        } else {
 
         }
     }
@@ -285,4 +308,34 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+        exitAppByDoubleClick();
+    }
+
+    private static Boolean isExit = false;
+
+    //双击退出
+    private void exitAppByDoubleClick() {
+        Timer exit;
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            exit = new Timer();
+            exit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false;
+                }
+            }, 2000);
+        } else {
+            super.onBackPressed();
+            //关闭其他Activity
+            List<Activity> activityList = MyApplication.activityList;
+            for (int i = 0; i < activityList.size(); i++) {
+                activityList.get(i).finish();
+            }
+        }
+    }
+
 }

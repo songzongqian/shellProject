@@ -1,5 +1,6 @@
 package com.shell.mine;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,9 +19,11 @@ import com.google.gson.Gson;
 import com.shell.Bean.MessageBean;
 import com.shell.Bean.MessageEvent;
 import com.shell.Bean.MyInfoBean;
+import com.shell.MyApplication;
 import com.shell.R;
 import com.shell.activity.JiaDianActivity;
 import com.shell.activity.LoginActivity;
+import com.shell.activity.MainActivity;
 import com.shell.base.BaseFragment;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
@@ -44,6 +47,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

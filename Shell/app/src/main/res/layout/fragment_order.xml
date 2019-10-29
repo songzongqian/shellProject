@@ -265,7 +265,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:layout_toRightOf="@id/tv_moneyName"
-                        android:text="10000"
+                        android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -291,7 +291,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_toRightOf="@id/tv_moneyEDU"
-                        android:text="3325.3"
+                        android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -317,7 +317,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:layout_toRightOf="@id/tv_shouyi"
-                        android:text="3325.3"
+                        android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </RelativeLayout>
