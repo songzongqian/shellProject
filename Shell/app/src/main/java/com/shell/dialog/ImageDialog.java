@@ -1,0 +1,63 @@
+package com.shell.dialog;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.ImageView;
+
+/**
+ * desc
+ * author  785917397@qq.com
+ * create time  2018/5/29 0029 17:15
+ * Reference link
+ */
+
+public class ImageDialog extends AlertDialog.Builder  {
+    private AlertDialog alertDialog;
+    private ImageView imageView;
+
+    public ImageDialog(Context context) {
+        super(context);
+        imageView = new ImageView(getContext());
+        setView(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+    }
+
+    public void setImage(int image) {
+        imageView.setImageResource(image);
+    }
+
+    public void setImage(Drawable image) {
+        imageView.setImageDrawable(image);
+    }
+
+    public void setImage(Bitmap image) {
+        imageView.setImageBitmap(image);
+    }
+
+    public void dismiss() {
+        if (alertDialog != null && alertDialog.isShowing())
+            alertDialog.dismiss();
+    }
+
+    public void cancel() {
+        if (alertDialog != null && alertDialog.isShowing())
+            alertDialog.cancel();
+    }
+
+    @Override
+    public AlertDialog show() {
+        if (alertDialog == null)
+            alertDialog = create();
+        if (!alertDialog.isShowing())
+            alertDialog.show();
+        return alertDialog;
+    }
+}

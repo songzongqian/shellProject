@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="151dp"
+    android:background="@drawable/card_home_country"
+    android:layout_marginLeft="34dp"
+    android:layout_marginRight="34dp"
+    android:orientation="vertical"
+    android:alpha="0.6">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_topName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="美国"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/close_top" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_RegisterUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册用户：22,530"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="20dp"
+       />
+
+    <TextView
+        android:id="@+id/tv_orderCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="累计完成订单数：52,350"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_orderMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="累计完成订单金额：125,223,530"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_JieDian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="超级节点：2"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="19dp"
+        />
+
+
+
+
+</LinearLayout>

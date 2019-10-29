@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#04172A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_top"/>
+
+
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_marginTop="49dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="原始密码"
+        android:textColorHint="#678DA8"
+        android:textColor="#678DA8"
+        android:paddingLeft="17dp"
+        android:textSize="14sp"
+        android:background="@drawable/input_login"/>
+
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="新密码"
+        android:textColorHint="#678DA8"
+        android:textColor="#678DA8"
+        android:paddingLeft="17dp"
+        android:textSize="14sp"
+        android:background="@drawable/input_login"/>
+
+    <EditText
+        android:id="@+id/et_agianpwd"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="重新输入新密码"
+        android:textColorHint="#678DA8"
+        android:textColor="#678DA8"
+        android:paddingLeft="17dp"
+        android:textSize="14sp"
+        android:background="@drawable/input_login"/>
+
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="重置密码"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"/>
+
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

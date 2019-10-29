@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#04172A">
+
+    <include
+        layout="@layout/layout_top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:orientation="vertical"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:background="#061D34">
+
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#678DA8"
+            android:text="1您即将清算质押资金.
+当前未完成订单不再计算收益.
+系统将优先匹配您的订单，请持续关注并及时处理.
+所有订单完成后，您所有的质押资金将会扣除3%的服务费返还到 USDT 钱包账户.
+清算后所有信用分将恢复至20分，下次重新质押将不再享受目前所有的信用分权益."/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qs_xieyi"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <Button
+        android:id="@+id/btn_qingsuan"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="清算"
+        android:textColor="#ffffff"
+        android:background="@drawable/button"/>
+
+
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="17dp"
+        />
+
+</LinearLayout>

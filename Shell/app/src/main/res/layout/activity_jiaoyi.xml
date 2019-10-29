@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#04172A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_top"/>
+
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <EditText
+                android:id="@+id/et_code"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="请输入邮箱验证码"
+                android:textColorHint="#678DA8"
+                android:textColor="#678DA8"
+                android:paddingLeft="17dp"
+                android:textSize="14sp"
+                android:background="@drawable/input_login"/>
+
+            <TextView
+                android:id="@+id/tv_Code"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:text="获取验证码"
+                android:gravity="center_vertical"
+                android:textColor="#4AB2E7"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+
+
+        <com.galenleo.widgets.CodeInputView
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:ciItemWidth="40dp"
+            app:ciTextSize="20sp"
+            app:ciTextColor="#FFFFFF"
+            app:ciInputType="number"
+            app:ciGapWidth="20dp"
+            app:ciItemCount="6"
+            app:ciItemBackground="@drawable/border"/>
+
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="提交"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"/>
+
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

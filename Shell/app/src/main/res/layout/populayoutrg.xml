@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:background="@drawable/country_bg">
+
+
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/tv_zhongguo"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中国"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#4E658D"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/tv_hanguo"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="韩国"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#4E658D"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/tv_riben"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日本"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#4E658D"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/tv_om"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欧盟"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#4E658D"/>
+
+
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/tv_mg"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="美国"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#4E658D"/>
+
+
+</LinearLayout>

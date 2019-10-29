@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="281dp"
+    android:background="@drawable/card_bg"
+    android:layout_marginLeft="34dp"
+    android:layout_marginRight="34dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/close_top" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/popu_qingsuan"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="清算成功"
+        android:textColor="#64E3AE"
+        android:textSize="14sp"
+        android:layout_marginTop="13dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="33dp"
+        android:layout_marginTop="10dp"
+        android:text="也是奖励发放的重要维度，信用分可由完成订单/邀请新节点等方式获得。一下接上信用分的获取及消除的明细信息"
+        android:textColor="#8D99B2"/>
+
+
+    <TextView
+        android:id="@+id/tv_OK"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@mipmap/bg_qingsuan"
+        android:text="确定"
+        android:textSize="17sp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"/>
+
+
+
+
+
+</LinearLayout>

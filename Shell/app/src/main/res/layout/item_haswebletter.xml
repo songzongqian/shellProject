@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#082946"
+    android:id="@+id/rootView">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这里是站内信标题"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"/>
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019-7-31 9:28:59"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="#8D99B2"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="14dp"
+            android:src="@mipmap/line_ju" />
+
+        <TextView
+            android:id="@+id/tv_Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019-点击标题展开的这就是内容点击标题展开的这就是内容点击标题
+展开的这就是内容点击标题展开的这就是内容......-31 9:28:59"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="22dp"
+            android:textColor="#8D99B2"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+       android:background="#04172A"/>
+
+
+</LinearLayout>

@@ -1,0 +1,615 @@
+package com.shell.home;
+
+
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
+
+import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.shell.R;
+import com.shell.base.BaseFragment;
+import com.shell.constant.AppUrl;
+import com.shell.dialog.MyWaitDialog;
+import com.shell.home.Bean.HomeUserBean;
+import com.shell.home.Bean.JiangLiBean;
+import com.shell.home.Bean.TopStaticBean;
+import com.shell.home.activity.SuanChartActivity;
+import com.shell.home.adapter.PopuCardAdapter;
+import com.shell.utils.GetTwoLetter;
+import com.shell.utils.PreManager;
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.rest.OnResponseListener;
+import com.yanzhenjie.nohttp.rest.Request;
+import com.yanzhenjie.nohttp.rest.RequestQueue;
+import com.yanzhenjie.nohttp.rest.Response;
+
+import org.json.JSONObject;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+public class HomeFragment extends BaseFragment {
+    public RequestQueue mQueue = NoHttp.newRequestQueue(1);
+    @BindView(R.id.iv_QiTa)
+    ImageView ivQiTa;
+    @BindView(R.id.MeiGuo)
+    ImageView MeiGuo;
+    @BindView(R.id.OuZhou)
+    ImageView OuZhou;
+    @BindView(R.id.ZhongGuo)
+    ImageView ZhongGuo;
+    @BindView(R.id.HanGuo)
+    ImageView HanGuo;
+    @BindView(R.id.RiBen)
+    ImageView RiBen;
+    @BindView(R.id.one2)
+    TextView one2;
+    @BindView(R.id.one1)
+    TextView one1;
+    @BindView(R.id.one3)
+    TextView one3;
+    @BindView(R.id.two2)
+    TextView two2;
+    @BindView(R.id.two1)
+    TextView two1;
+    @BindView(R.id.two3)
+    TextView two3;
+    @BindView(R.id.three2)
+    TextView three2;
+    @BindView(R.id.three1)
+    TextView three1;
+    @BindView(R.id.three3)
+    TextView three3;
+    @BindView(R.id.ll_gundong)
+    LinearLayout llGundong;
+    @BindView(R.id.viewFlipper)
+    ViewFlipper viewFlipper;
+    @BindView(R.id.ll_map)
+    RelativeLayout llMap;
+    private Request<JSONObject> request;
+    private int page = 1;
+    @BindView(R.id.all_suanli)
+    TextView allSuanli;
+    @BindView(R.id.rl_allsuanli)
+    RelativeLayout rlAllsuanli;
+    @BindView(R.id.tv_score)
+    TextView tvScore;
+    @BindView(R.id.ll_xinyong)
+    LinearLayout llXinyong;
+    @BindView(R.id.tv_suanLi)
+    TextView tvSuanLi;
+    @BindView(R.id.ll_mysuanli)
+    LinearLayout llMysuanli;
+    @BindView(R.id.tv_amount)
+    TextView tvAmount;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_content)
+    TextView tvContent;
+    @BindView(R.id.iv_more)
+    ImageView ivMore;
+    Unbinder unbinder;
+
+
+    private RecyclerView recyclerView;
+    private String creditScoreDesc;
+    private String hashRateDesc;
+    private List<TopStaticBean.ResultDataBean.CountryDataBean> countryList;
+    private List<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
+    private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initView(View rootView) {
+        ButterKnife.bind(getActivity());
+        ViewFlipper viewFlipper = mRootView.findViewById(R.id.viewFlipper);
+        viewFlipper.startFlipping();
+
+    }
+
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+        getStaticData();
+        getUserInfo();
+        getJiangLi();
+    }
+
+
+    //获取首页静态数据
+    private void getStaticData() {
+        request = NoHttp.createJsonObjectRequest(AppUrl.HomeStaticUrl, RequestMethod.GET);
+        mQueue.add(1, request, responseListener);
+    }
+
+    //获取用户账户数据需要登录
+    private void getUserInfo() {
+        String token = PreManager.instance().getString("token");
+        request = NoHttp.createJsonObjectRequest(AppUrl.HomeUserData, RequestMethod.GET);
+        String language = PreManager.instance().getString("language");
+        request.addHeader("lang", language);
+        request.addHeader("token", token);
+        request.add("token", token);
+        mQueue.add(2, request, responseListener);
+    }
+
+    //矿池奖励需要用户登录
+    private void getJiangLi() {
+        String token = PreManager.instance().getString("token");
+        request = NoHttp.createJsonObjectRequest(AppUrl.KuangChiJiangLi, RequestMethod.GET);
+        String language = PreManager.instance().getString("language");
+        request.addHeader("lang", language);
+        request.addHeader("token", token);
+        request.add("token", token);
+        mQueue.add(3, request, responseListener);
+    }
+
+
+    private MyWaitDialog myWaitDialog;
+    OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
+        @Override
+        public void onStart(int what) {
+            if (myWaitDialog == null) {
+                myWaitDialog = new MyWaitDialog(getActivity());
+                myWaitDialog.show();
+            } else {
+                myWaitDialog.show();
+            }
+        }
+
+
+        @Override
+        public void onSucceed(int what, Response<JSONObject> response) {
+            Gson gson = new Gson();
+            switch (what) {
+                case 1:
+                    Log.i("song", "首页静态数据的返回值" + String.valueOf(response));
+                    TopStaticBean topStaticBean = gson.fromJson(response.get().toString(), TopStaticBean.class);
+                    String resultCode = topStaticBean.getResultCode();
+                    if (resultCode.equals("999999")) {
+                        bottomList = topStaticBean.getResultData().getAllMilepost();
+                        countryList = topStaticBean.getResultData().getCountryData();
+                        creditScoreDesc = topStaticBean.getResultData().getCreditScoreDesc();
+                        hashRateDesc = topStaticBean.getResultData().getHashRateDesc();
+                        double hashRate = topStaticBean.getResultData().getNetworkHashRate().getHashRate();
+                        allSuanli.setText(hashRate + "");
+                        countryDataList = topStaticBean.getResultData().getCountryData();
+                        if (bottomList != null && bottomList.size() > 0) {
+                            TopStaticBean.ResultDataBean.AllMilepostBean allMilepostBean = bottomList.get(0);
+                            tvTime.setText(allMilepostBean.getTime());
+                            tvContent.setText(allMilepostBean.getDesc());
+                        }
+
+                    } else {
+
+                    }
+                    break;
+                case 2:
+                    Log.i("song", "首页用户数据的返回值" + String.valueOf(response));
+
+                    HomeUserBean homeUserBean = gson.fromJson(response.get().toString(), HomeUserBean.class);
+                    String successCode = homeUserBean.getResultCode();
+                    if (successCode.equals("999999")) {
+                        String creditScore = homeUserBean.getResultData().getCreditScore();
+                        String hashRate = homeUserBean.getResultData().getHashRate();
+                        String miningAward = homeUserBean.getResultData().getMiningAward();
+                        tvScore.setText(creditScore + "");
+                        tvSuanLi.setText(hashRate + "");
+                        tvAmount.setText(GetTwoLetter.getTwo(miningAward));
+                    } else {
+
+                    }
+                    break;
+
+                case 3:
+                    Log.i("song", "首页矿池奖励的返回值" + String.valueOf(response));
+                    JiangLiBean jiangLiBean = gson.fromJson(response.get().toString(), JiangLiBean.class);
+                    String jiangLiBeanResultCode = jiangLiBean.getResultCode();
+                    if (jiangLiBeanResultCode.equals("999999")) {
+                        List<JiangLiBean.ResultDataBean> jiangLiList = jiangLiBean.getResultData();
+                        //HomeAwardAdapter  homeAwardAdapter=new HomeAwardAdapter(getActivity(),jiangLiList);
+                        //listView.setAdapter(homeAwardAdapter);
+                        // new Timer().schedule(new TimeTaskScroll(getActivity(), listView,jiangLiList), 20, 20);
+
+                        if (jiangLiList != null && jiangLiList.size() >= 3) {
+                            llGundong.setVisibility(View.VISIBLE);
+                            JiangLiBean.ResultDataBean resultDataBean = jiangLiList.get(0);
+                            JiangLiBean.ResultDataBean resultDataBean1 = jiangLiList.get(1);
+                            JiangLiBean.ResultDataBean resultDataBean2 = jiangLiList.get(2);
+                            one1.setText(GetTwoLetter.getTwo(resultDataBean.getAmount()));
+                            one3.setText(resultDataBean.getCreateTime());
+                            two1.setText(GetTwoLetter.getTwo(resultDataBean1.getAmount()));
+                            two3.setText(resultDataBean.getCreateTime());
+                            three1.setText(GetTwoLetter.getTwo(resultDataBean2.getAmount()));
+                            three3.setText(resultDataBean2.getCreateTime());
+                        }
+                    } else {
+                        llGundong.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+
+            }
+
+
+        }
+
+
+        @Override
+        public void onFailed(int what, Response<JSONObject> response) {
+            Log.i("song", "卡片下方数据返回值错误" + String.valueOf(response));
+            myWaitDialog.cancel();
+
+
+        }
+
+        @Override
+        public void onFinish(int what) {
+            myWaitDialog.cancel();
+        }
+    };
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli, R.id.iv_more, R.id.ll_map,})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_allsuanli:
+                //全网算力图
+                Intent intent = new Intent(getActivity(), SuanChartActivity.class);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.ll_xinyong:
+                showPopuwindow("1");
+                break;
+            case R.id.ll_mysuanli:
+                showPopuwindow("2");
+                break;
+            case R.id.iv_more:
+                //里程碑更多
+                showCenter();
+                break;
+
+            case R.id.ll_map:
+                showTopFirstWindow(countryDataList);
+                break;
+
+        }
+    }
+
+
+    //上方国家的window
+    private void showTopWindow(int countryCode) {
+        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_home_top, null, false);
+        final PopupWindow window = new PopupWindow(inflate, 800, 600, true);
+        // final PopupWindow window = new PopupWindow(inflate, 252, 151, true);
+        TextView tvTopName = inflate.findViewById(R.id.tv_topName);
+        TextView tvRegisterCount = inflate.findViewById(R.id.tv_RegisterUser);
+        TextView tvOrderCount = inflate.findViewById(R.id.tv_orderCount);
+        TextView tvOrderMoney = inflate.findViewById(R.id.tv_orderMoney);
+        TextView tvOrderJieDian = inflate.findViewById(R.id.tv_JieDian);
+        ImageView ivClose = inflate.findViewById(R.id.iv_close);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window.dismiss();
+            }
+        });
+
+        if (countryCode == 4) {
+            //中国
+            TopStaticBean.ResultDataBean.CountryDataBean countryDataBean = countryList.get(4);
+            tvTopName.setText(countryDataBean.getName());
+            tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
+            tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
+            tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+        } else if (countryCode == 2) {
+            //韩国
+            TopStaticBean.ResultDataBean.CountryDataBean countryDataBean = countryList.get(2);
+            tvTopName.setText(countryDataBean.getName());
+            tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
+            tvOrderCount.setText(getString(R.string.home_ljoc) + countryDataBean.getOrderCount());
+            tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+
+        } else if (countryCode == 3) {
+            //日本
+            TopStaticBean.ResultDataBean.CountryDataBean countryDataBean = countryList.get(3);
+            tvTopName.setText(countryDataBean.getName());
+            tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
+            tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
+            tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+
+        } else if (countryCode == 0) {
+            //欧洲
+            TopStaticBean.ResultDataBean.CountryDataBean countryDataBean = countryList.get(0);
+            tvTopName.setText(countryDataBean.getName());
+            tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
+            tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
+            tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+
+        } else if (countryCode == 1) {
+            //美国
+            TopStaticBean.ResultDataBean.CountryDataBean countryDataBean = countryList.get(1);
+            tvTopName.setText(countryDataBean.getName());
+            tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
+            tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
+            tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+        }
+
+
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.TOP, 0, 300);
+    }
+
+
+    private void showCenter() {
+        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_center, null, false);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        recyclerView = inflate.findViewById(R.id.recyclerView);
+        SmartRefreshLayout smartRefreshLayout = inflate.findViewById(R.id.smartRefreshLayout);
+        ImageView ivMore = inflate.findViewById(R.id.iv_more);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //设置数据源
+        PopuCardAdapter answerCardAdapter = new PopuCardAdapter(bottomList, getActivity());
+        recyclerView.setAdapter(answerCardAdapter);
+
+        ivMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window.dismiss();
+            }
+        });
+
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
+
+
+    //弹出解释说明性文件
+    private void showPopuwindow(String value) {
+        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_xinyong, null, false);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView tvTitle = inflate.findViewById(R.id.tv_title);
+        TextView tvContent = inflate.findViewById(R.id.tv_content);
+
+        if ("1".equals(value)) {
+            tvTitle.setText("信用分说明");
+            tvContent.setText(creditScoreDesc);
+
+        } else if ("2".equals(value)) {
+            tvTitle.setText("算力说明");
+            tvContent.setText(hashRateDesc);
+        }
+
+        ImageView ivClose = inflate.findViewById(R.id.iv_close);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window.dismiss();
+            }
+        });
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
+
+
+
+    //弹出各大洲的数据
+    private void showTopFirstWindow(List<TopStaticBean.ResultDataBean.CountryDataBean> value) {
+        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_home_top1, null, false);
+        final PopupWindow firstWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        RelativeLayout llOZ=inflate.findViewById(R.id.ll_OZ);
+        TextView tvOZ=inflate.findViewById(R.id.tv_ozName);
+        TextView tvOZCount=inflate.findViewById(R.id.ozsl);
+
+        RelativeLayout llMZ=inflate.findViewById(R.id.ll_MZ);
+        TextView tvMZ=inflate.findViewById(R.id.tv_mz);
+        TextView tvMZCount=inflate.findViewById(R.id.mzsl);
+
+
+        RelativeLayout llYZ=inflate.findViewById(R.id.ll_YZ);
+        TextView tvYZ=inflate.findViewById(R.id.tv_YZ);
+        TextView tvYZCount=inflate.findViewById(R.id.yzsl);
+
+        RelativeLayout llDYZ=inflate.findViewById(R.id.ll_DYZ);
+        TextView tvDYZ=inflate.findViewById(R.id.tv_DYZ);
+        TextView tvDYZCount=inflate.findViewById(R.id.dyzsl);
+
+
+        RelativeLayout llFZ=inflate.findViewById(R.id.ll_FZ);
+        TextView tvFZ=inflate.findViewById(R.id.tv_FZ);
+        TextView tvFZCount=inflate.findViewById(R.id.fzsl);
+        tvOZ.setText(value.get(0).getName());
+        tvOZCount.setText(value.get(0).getUserCount()+"");
+        tvMZ.setText(value.get(1).getName());
+        tvMZCount.setText(value.get(1).getUserCount()+"");
+        tvYZ.setText(value.get(2).getName());
+        tvYZCount.setText(value.get(2).getUserCount()+"");
+        tvDYZ.setText(value.get(3).getName());
+        tvDYZCount.setText(value.get(3).getUserCount()+"");
+        tvFZ.setText(value.get(4).getName());
+        tvFZCount.setText(value.get(4).getUserCount()+"");
+
+
+        llOZ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstWindow.dismiss();
+                showTopWindow(0);
+            }
+        });
+
+        llMZ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstWindow.dismiss();
+                showTopWindow(1);
+            }
+        });
+
+        llYZ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstWindow.dismiss();
+                showTopWindow(2);
+
+            }
+        });
+
+
+        llDYZ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstWindow.dismiss();
+                showTopWindow(3);
+
+            }
+        });
+
+        llFZ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstWindow.dismiss();
+                showTopWindow(4);
+            }
+        });
+
+
+
+
+
+        backgroundAlpha(0.5f);
+        firstWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        firstWindow.setBackgroundDrawable(new BitmapDrawable());
+        firstWindow.setOutsideTouchable(true);
+        firstWindow.setTouchable(true);
+        firstWindow.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.TOP, 0, 300);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getActivity().getWindow().setAttributes(lp);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            //可见
+            Log.i("song", "HomeFragment可见");
+            getUserInfo();
+            getJiangLi();
+        } else {
+            //不可见
+            Log.i("song", "HomeFragment不可见");
+        }
+    }
+
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="281dp"
+    android:background="@drawable/card_bg"
+    android:layout_marginLeft="34dp"
+    android:layout_marginRight="34dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/close_top" />
+    </RelativeLayout>
+
+
+
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提示"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="13dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="33dp"
+        android:layout_marginTop="10dp"
+        android:text="开始接单后，系统开始派发订单，如若您信用大于300分，订单将直接派送至您订单明细中，直接处理即可。如您的信用小于300分，则在订单大厅中进行抢单。
+在您停止工作后，务必点击停止接单，派发的订单未处理将触发处罚机制。"
+        android:textColor="#8D99B2"/>
+
+
+    <TextView
+        android:id="@+id/tv_OK"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@mipmap/bg_qingsuan"
+        android:text="确定"
+        android:textSize="17sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="33dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"/>
+
+
+
+
+
+</LinearLayout>

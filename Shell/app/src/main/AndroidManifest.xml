@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.shell">
+
+    <uses-sdk tools:overrideLibrary="io.crossbar.autobahn"/>
+    <!-- 联网权限 -->
+    <uses-permission
+        android:name="android.permission.INTERNET" />
+    <!-- 获取机型信息权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/shell_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/shell_logo"
+        android:supportsRtl="true"
+        android:name=".MyApplication"
+        tools:replace="android:theme"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="812"/>
+
+        <activity android:name=".activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
+            android:configChanges="locale|layoutDirection|keyboard"/>
+        <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".mine.activity.SettingActivity"/>
+        <activity android:name=".home.activity.SuanChartActivity"/>
+        <activity android:name=".money.activity.ChongZhiActivity"/>
+        <activity android:name=".money.activity.QingSuanActivity"/>
+        <activity android:name=".money.activity.TiBiActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".money.activity.ZhiYaActivity"/>
+        <activity android:name=".mine.activity.NickActivity"/>
+        <activity android:name=".mine.activity.EmailActivity"/>
+        <activity android:name=".mine.activity.WebLetterActivity"/>
+        <activity android:name=".activity.ForgetActivity"/>
+        <activity android:name=".mine.activity.HelpFriendActivity"/>
+        <activity android:name=".mine.activity.MyFriendActivity"/>
+        <activity android:name=".mine.activity.OnLineHuiLvActivity"/>
+        <activity android:name=".mine.activity.JiaoYiActivity"/>
+        <activity android:name=".mine.activity.LanguageActivity"/>
+        <activity android:name=".mine.activity.AboutUsActivity"/>
+        <activity android:name=".mine.activity.ResetLoginActivity"/>
+        <activity android:name=".order.activity.OrderListActivity"/>
+        <activity android:name=".mine.activity.NewHelpFriendActivity"/>
+        <activity android:name=".activity.JiaDianActivity"/>
+        <activity android:name=".activity.MyShouYiActivity"/>
+        <activity android:name=".order.activity.UnFinishDetailActivity"/>
+    </application>
+
+</manifest>

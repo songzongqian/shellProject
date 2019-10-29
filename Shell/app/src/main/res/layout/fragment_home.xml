@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#04172A">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_64"
+                android:background="#061D34"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/ll_map">
+
+                <!--其他-->
+                <ImageView
+                    android:id="@+id/iv_QiTa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/qita"
+                    android:layout_marginLeft="31dp"/>
+
+                <!--美国-->
+                <ImageView
+                    android:id="@+id/MeiGuo"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="27dp"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/meiguo"/>
+
+                <!--欧洲-->
+                <ImageView
+                    android:id="@+id/OuZhou"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginLeft="161dp"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ouzhou"/>
+
+                <!--中国-->
+                <ImageView
+                    android:id="@+id/ZhongGuo"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="56dp"
+                    android:layout_marginLeft="248dp"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/zhongguo"/>
+
+                <!--韩国-->
+                <ImageView
+                    android:id="@+id/HanGuo"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginLeft="303dp"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/hanguo"/>
+
+                <!--日本-->
+                <ImageView
+                    android:id="@+id/RiBen"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginLeft="308dp"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/riben"/>
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_allsuanli"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+
+                <TextView
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="138dp"
+                    android:background="@drawable/circle_shi" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="55dp"
+                    android:text="@string/home_all_suanli"
+                    android:textColor="#156097"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/all_suanli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="19dp"
+                    android:text="0.01"
+                    android:textColor="#156097"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_xinyong"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_70"
+                    android:layout_weight="1"
+                    android:background="@drawable/card_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="14dp"
+                        android:text="@string/home_mycreide"
+                        android:textColor="#156097"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="2dp"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_mysuanli"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_70"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/card_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="14dp"
+                        android:text="@string/home_mysuanli"
+                        android:textColor="#156097"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_suanLi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="2dp"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/home_all_jl"
+                        android:textColor="#156097"
+                        android:textSize="12sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="17dp"
+                        android:layout_marginTop="2dp"
+                        android:text="100.42"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="17dp"
+                    android:layout_marginTop="11dp"
+                    android:src="@mipmap/line_ju" />
+
+               <!-- <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>-->
+
+
+
+             <ViewFlipper
+                    android:id="@+id/viewFlipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#08233F"
+                    android:flipInterval="5000"
+                    android:inAnimation="@anim/anim_comin"
+                    android:outAnimation="@anim/anim_out">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/ll_gundong">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp">
+
+
+
+                            <TextView
+                                android:id="@+id/one2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+
+                                android:text="矿池奖励"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/one1"
+                                android:layout_toRightOf="@id/one2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="+0.12USDT"
+                                android:textColor="#64E3AE"
+                                android:textSize="12sp" />
+
+
+
+                            <TextView
+                                android:id="@+id/one3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="17dp"
+                                android:text="2019-10-02 19:20:22"
+                                android:textColor="#8D99B2"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp">
+
+
+
+                            <TextView
+                                android:id="@+id/two2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="矿池奖励"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/two1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_toRightOf="@id/two2"
+                                android:text="+0.32USDT"
+                                android:textColor="#64E3AE"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/two3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="17dp"
+                                android:text="2019-10-02 19:21:22"
+                                android:textColor="#8D99B2"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp">
+
+
+                            <TextView
+                                android:id="@+id/three2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+
+                                android:text="矿池奖励"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/three1"
+                                android:layout_toRightOf="@id/three2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="+0.81USDT"
+                                android:textColor="#64E3AE"
+                                android:textSize="12sp" />
+
+
+
+                            <TextView
+                                android:id="@+id/three3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="17dp"
+                                android:text="2019-10-02 19:23:22"
+                                android:textColor="#8D99B2"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                           
+                </ViewFlipper>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/home_title1"
+                    android:textColor="#156097"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="22dp"
+                        android:background="@drawable/circle" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:text="2019-09-10"
+                        android:textColor="#8D99B2"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="9dp"
+                        android:text="美国、欧洲区正式开放"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <com.fang.dashview.DashView
+                    android:layout_marginLeft="26dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    app:dashWidth="2dp"
+                    app:lineWidth="4dp"
+                    app:lineColor="#B3BED9"
+                    app:dashOrientation="1"
+                    app:lineHeight="1dp"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/iv_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@mipmap/more_bottom" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

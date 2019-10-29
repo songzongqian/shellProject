@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#04172A"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_top" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#061D34">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="邀请好友"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/friend_bg"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/iv_qrCode"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="65dp"/>
+
+        <TextView
+            android:id="@+id/tv_helpCode"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邀请码：AEFGGG"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:textSize="17sp"/>
+
+
+     <Button
+         android:id="@+id/btn_save"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:layout_marginLeft="36dp"
+         android:layout_marginRight="36dp"
+         android:layout_marginTop="33dp"
+         android:text="保存为图片"
+         android:textSize="16sp"
+         android:background="@drawable/helpfriend"/>
+
+
+        <TextView
+            android:id="@+id/tv_copy"
+            android:layout_marginTop="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="复制邀请链接"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:textSize="17sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_marginTop="21dp"
+        android:layout_marginLeft="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1. 邀请新好友参与Shell生态即可获得2信用分"
+        android:textColor="#8D99B2"
+        android:textSize="14sp"/>
+
+
+
+
+</LinearLayout>

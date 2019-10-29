@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#061D34">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+            android:background="#061D34">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginTop="@dimen/dp_20">
+
+
+                <ImageView
+                    android:id="@+id/iv_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/re_topleft"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="28dp"/>
+
+                <TextView
+                    android:id="@+id/tv_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4E658D"
+                    android:text="中国"
+                    android:layout_marginLeft="53dp"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_rightTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="37dp"
+                    android:text="繁体中文"
+                    android:textColor="#8D99B2"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/indexright"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/logo_top"
+        android:layout_marginTop="54dp"
+        app:civ_border_width="2dp"
+        android:layout_gravity="center_horizontal"
+        app:civ_border_color="#65DFFE"/>
+
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/shell"
+            android:layout_gravity="center_horizontal"/>
+    
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_marginTop="49dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/register_hint_email"
+        android:textColorHint="#678DA8"
+        android:textColor="#678DA8"
+        android:paddingLeft="17dp"
+        android:textSize="14sp"
+        android:background="@drawable/input_login"/>
+
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <EditText
+                android:id="@+id/et_code"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/register_hintcode"
+                android:textColorHint="#678DA8"
+                android:textColor="#678DA8"
+                android:paddingLeft="17dp"
+                android:textSize="14sp"
+                android:background="@drawable/input_login"/>
+
+
+            <TextView
+                android:id="@+id/tv_Code"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:text="@string/re_getcode"
+                android:gravity="center_vertical"
+                android:textColor="#4AB2E7"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/ll_country"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <EditText
+                android:id="@+id/et_country"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="国家"
+                android:textColorHint="#678DA8"
+                android:textColor="#678DA8"
+                android:paddingLeft="17dp"
+                android:textSize="14sp"
+                android:background="@drawable/input_login"/>
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_country"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="#4AB2E7"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="35dp"
+                    android:src="@mipmap/icon_right"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/re_pwd"
+        android:textColorHint="#678DA8"
+        android:textColor="#678DA8"
+        android:paddingLeft="17dp"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        android:background="@drawable/input_login"/>
+
+    <EditText
+        android:id="@+id/et_friendCode"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/re_invitedcode"
+        android:textColorHint="#678DA8"
+        android:textColor="#678DA8"
+        android:paddingLeft="17dp"
+        android:textSize="14sp"
+        android:background="@drawable/input_login"/>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/re_register"
+        android:background="@drawable/button"/>
+
+
+    <Button
+        android:id="@+id/btn_toLogin"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/re_tologin"
+        android:textColor="#8D99B2"
+        android:background="@drawable/button_register"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

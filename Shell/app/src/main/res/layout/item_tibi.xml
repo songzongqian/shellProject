@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#08233F"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="22dp"
+            android:text="+ 1000"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/tv_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="117dp"
+            android:layout_marginTop="22dp"
+            android:text="已完成"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/tv_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="18dp"
+            android:text="2019-09-12 12:00:00"
+            android:textColor="#678DA8"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>
