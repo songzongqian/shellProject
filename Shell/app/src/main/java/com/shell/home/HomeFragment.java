@@ -296,7 +296,7 @@ public class HomeFragment extends BaseFragment {
                         creditScoreDesc = topStaticBean.getResultData().getCreditScoreDesc();
                         hashRateDesc = topStaticBean.getResultData().getHashRateDesc();
                         double hashRate = topStaticBean.getResultData().getNetworkHashRate().getHashRate();
-                        allSuanli.setText(hashRate + "");
+                        allSuanli.setText(GetTwoLetter.getTwo(hashRate + ""));
                         countryDataList = topStaticBean.getResultData().getCountryData();
 
                         int ouZhouCount = countryDataList.get(0).getUserCount();
