@@ -51,6 +51,7 @@ import butterknife.Unbinder;
 
 public class MoneyFragment extends BaseFragment {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
+
     @BindView(R.id.tv_myshouyi)
     TextView tvMyshouyi;
     @BindView(R.id.ll_shouyi)
