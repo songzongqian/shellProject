@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.shell.Bean.JieDianBean;
 import com.shell.R;
 import com.shell.activity.LoginActivity;
 import com.shell.activity.MyShouYiActivity;
@@ -168,6 +169,9 @@ public class MoneyFragment extends BaseFragment {
         mQueue.add(2, request, responseListener);
     }
 
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
@@ -254,7 +258,6 @@ public class MoneyFragment extends BaseFragment {
 
                         }
                     }
-
 
                     break;
             }

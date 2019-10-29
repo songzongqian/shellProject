@@ -182,7 +182,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="14dp"
-                        android:text="795 USDT"
+                        android:text="0 USDT"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp" />
                 </RelativeLayout>
