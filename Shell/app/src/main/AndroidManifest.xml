@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:allowBackup="true"
@@ -74,6 +75,7 @@
         <activity android:name=".activity.JiaDianActivity"/>
         <activity android:name=".activity.MyShouYiActivity"/>
         <activity android:name=".order.activity.UnFinishDetailActivity"/>
+
     </application>
 
 </manifest>

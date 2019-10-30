@@ -138,6 +138,8 @@
     <string name="qs_xieyi">我已知曉以上清算條款，並繼續清算</string>
     <string name="nick_finish">完成</string>
     <string name="pop_getorder">搶單</string>
+    <string name="version_title">提示</string>
+    <string name="version_sure">確定</string>
 
 
 </resources>

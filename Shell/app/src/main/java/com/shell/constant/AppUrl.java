@@ -4,7 +4,7 @@ public class AppUrl {
 
     public static final String CACAHE_DIRNAME = "/webcache";
 
-    public static final String BASE_URL = "https://t.tritonlab.net";
+    public static final String BASE_URL = "https://api.tritonlab.net";
 
 
     /**获取邮箱验证码*/
@@ -127,8 +127,10 @@ public class AppUrl {
      * 获取外网IP
      */
     public static final String Get_IP_Address = "http://apis.juhe.cn/ip/ipNew?ip=40.113.200.201&key=e2a0ddd8aa7463579a1d18da808868dc";
-
-
+    /**
+     * 版本是否升级
+     */
+    public static final String CheckUpdateVersion = BASE_URL + "/checkUpdates/android?";
 
 
 

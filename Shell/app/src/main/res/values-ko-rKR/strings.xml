@@ -138,6 +138,8 @@
     <string name="qs_xieyi">나는 이상 청산 조항을 알고 있고 계속 청산한다</string>
     <string name="nick_finish">완료</string>
     <string name="pop_getorder">주문 뺏기</string>
+    <string name="version_title">노티스</string>
+    <string name="version_sure">확인</string>
 
 
 </resources>

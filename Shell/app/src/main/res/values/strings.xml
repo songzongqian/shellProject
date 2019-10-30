@@ -156,4 +156,6 @@
     <string name="qs_xieyi">我已知晓以上清算条款，并继续清算</string>
     <string name="nick_finish">完成</string>
     <string name="pop_getorder">抢单</string>
+    <string name="version_title">提示</string>
+    <string name="version_sure">确定</string>
 </resources>

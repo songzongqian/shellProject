@@ -138,4 +138,6 @@
     <string name="qs_xieyi">上記の清算条件を認識し、清算を継続します</string>
     <string name="nick_finish">完了</string>
     <string name="pop_getorder">注文をつかむ</string>
+    <string name="version_title">提示</string>
+    <string name="version_sure">確定</string>
 </resources>
