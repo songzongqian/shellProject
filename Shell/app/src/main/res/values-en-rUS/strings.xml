@@ -138,6 +138,8 @@
     <string name="qs_xieyi">I am aware of the above liquidation terms and comfirm to continue the liquidation</string>
     <string name="nick_finish">carry out</string>
     <string name="pop_getorder">grab the order</string>
+    <string name="version_title">Reminding</string>
+    <string name="version_sure">Confirm</string>
 
     <string name="qw_suanlitu">Net diagram</string>
     <string name="qw_suanlitu_sm">Full network calculation force description</string>

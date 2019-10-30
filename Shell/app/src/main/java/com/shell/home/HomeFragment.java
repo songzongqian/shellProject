@@ -2,11 +2,16 @@ package com.shell.home;
 
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +30,8 @@ import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.shell.Bean.VersionBean;
+import com.shell.MyApplication;
 import com.shell.R;
 import com.shell.base.BaseFragment;
 import com.shell.constant.AppUrl;
@@ -38,8 +45,13 @@ import com.shell.home.adapter.PopuCardAdapter;
 import com.shell.utils.DividerListItemDecoration;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
+import com.vondear.rxtool.RxAppTool;
+import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.download.DownloadListener;
+import com.yanzhenjie.nohttp.download.DownloadQueue;
+import com.yanzhenjie.nohttp.download.DownloadRequest;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
@@ -129,6 +141,9 @@ public class HomeFragment extends BaseFragment {
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryList;
     private List<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
+    NotificationCompat.Builder builder;
+    Notification nf;
+    private NotificationManager notificationManager;
     //private int handlerPosition = 0;
     @SuppressLint("HandlerLeak")
     private Handler doActionHandler = new Handler() {
@@ -153,6 +168,7 @@ public class HomeFragment extends BaseFragment {
         }
     };
     private MessagesAdapter adapter;
+    private ProgressDialog psdialog;
 
     @Override
     protected int getLayoutId() {
@@ -198,7 +214,10 @@ public class HomeFragment extends BaseFragment {
         getStaticData();
         getUserInfo();
         getJiangLi();
+        checkVersion();
     }
+
+
 
     //获取首页静态数据
     private void getStaticData() {
@@ -228,6 +247,13 @@ public class HomeFragment extends BaseFragment {
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(3, request, responseListener);
+    }
+
+    //检查版本是否升级
+    private void checkVersion() {
+        request = NoHttp.createJsonObjectRequest(AppUrl.CheckUpdateVersion, RequestMethod.GET);
+        request.add("type","android");
+        mQueue.add(4, request, responseListener);
     }
 
 
@@ -393,6 +419,18 @@ public class HomeFragment extends BaseFragment {
                         }
                     } else {
                         llGundong.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+
+                case 4:
+                    Log.i("song", "首页检查版本更新的返回值" + String.valueOf(response));
+                    VersionBean versionBean = gson.fromJson(response.get().toString(), VersionBean.class);
+                    String versionCode = versionBean.getResultCode();
+                    if(versionCode.equals("999999")){
+                        VersionBean.ResultDataBean versionData = versionBean.getResultData();
+                        if(versionData!=null){
+                            showUpDateInfo(versionData);
+                        }
                     }
                     break;
 
@@ -702,6 +740,44 @@ public class HomeFragment extends BaseFragment {
     }
 
 
+
+
+
+
+    //显示更新版本提示
+    private void showUpDateInfo(VersionBean.ResultDataBean versionData) {
+        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_version_info, null, false);
+        final PopupWindow window = new PopupWindow(inflate, 800, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView tvTitle = inflate.findViewById(R.id.tv_title);
+        TextView tvContent = inflate.findViewById(R.id.tv_content);
+        TextView tvOk = inflate.findViewById(R.id.tv_OK);
+        String remark = versionData.getRemark();
+        String replace = remark.replace("\\r\\n", "\n");
+        tvTitle.setText(getString(R.string.version_title));
+        tvContent.setText(replace);
+        final String dataUrl = versionData.getUrl();
+
+
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downLoadApk(dataUrl,true);
+            }
+        });
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
+
+
     private void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha;
@@ -723,6 +799,74 @@ public class HomeFragment extends BaseFragment {
             //不可见
             Log.i("song", "HomeFragment不可见");
         }
+    }
+
+
+    //下载apk文件
+    private void downLoadApk(String uploadPath, final boolean isShow) {
+        psdialog = new ProgressDialog(getActivity());
+        String filefoder = null;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            filefoder = Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
+            filefoder = getActivity().getFilesDir().getAbsolutePath();//data/data/应用包名
+        }
+        DownloadQueue downloadQueue = NoHttp.newDownloadQueue();
+        DownloadRequest downloadRequest = NoHttp.createDownloadRequest(uploadPath, RequestMethod.GET, filefoder, "123.apk", true, true);
+        downloadQueue.add(123, downloadRequest, new DownloadListener() {
+            @Override
+            public void onDownloadError(int what, Exception exception) {
+                showToast(exception.toString());
+                if (isShow && psdialog != null) {
+                    psdialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onStart(int what, boolean isResume, long rangeSize, Headers responseHeaders, long allCount) {
+                if (isShow) {
+                    psdialog = new ProgressDialog(getActivity());
+                    psdialog.setTitle("");
+                    psdialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    psdialog.setCancelable(false);
+                    psdialog.setCanceledOnTouchOutside(false);
+                    psdialog.show();
+                    ////
+                    builder = new NotificationCompat.Builder(MyApplication.getAppInstance()).setSmallIcon(R.mipmap.ic_launcher).setContentInfo("").setContentTitle("正在下载");
+                    nf = builder.build();
+//               //使用默认的声音、振动、闪光
+                    nf.defaults = Notification.DEFAULT_ALL;
+                    notificationManager.notify(0, nf);
+                }
+            }
+
+            @Override
+            public void onProgress(int what, int progress, long fileCount, long speed) {
+                psdialog.setProgress(progress);
+                nf = builder.setProgress(100, progress, false).build();
+                notificationManager.notify(0, nf);
+                if (progress == 100) {    //下载完成后点击安装
+                    notificationManager.cancel(0);
+                }
+            }
+
+            @Override
+            public void onFinish(int what, String filePath) {
+                if (isShow) {
+                    psdialog.dismiss();
+                }
+                //安装apk
+                RxAppTool.installApp(getActivity(), filePath);
+            }
+
+            @Override
+            public void onCancel(int what) {
+                Log.e("SplshActivity", "onCancel");
+                if (isShow) {
+                    psdialog.dismiss();
+                }
+            }
+        });
     }
 
 }

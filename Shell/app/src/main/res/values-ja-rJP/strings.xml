@@ -154,4 +154,6 @@
     <string name="order">受注</string>
     <string name="no_content">内容がない</string>
     <string name="force_demonstrate">算力説明</string>
+    <string name="version_title">提示</string>
+    <string name="version_sure">確定</string>
 </resources>

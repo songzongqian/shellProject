@@ -172,4 +172,6 @@
     <string name="order">订单</string>
     <string name="no_content">暂无内容</string>
     <string name="force_demonstrate">算力说明</string>
+    <string name="version_title">提示</string>
+    <string name="version_sure">确定</string>
 </resources>
