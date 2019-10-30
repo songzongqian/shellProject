@@ -46,7 +46,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if (null != data) {
-            viewHolder.one2.setText(data.get(i));
+          //  viewHolder.one2.setText(data.get(i));
         }
     }
 

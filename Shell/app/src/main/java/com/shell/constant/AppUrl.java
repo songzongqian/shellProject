@@ -123,6 +123,10 @@ public class AppUrl {
     public static final String unorderDetail= BASE_URL + "/order/readOrderInfo/{orderId}?";
 
 
+    /**
+     * 获取外网IP
+     */
+    public static final String Get_IP_Address = "http://apis.juhe.cn/ip/ipNew?ip=40.113.200.201&key=e2a0ddd8aa7463579a1d18da808868dc";
 
 
 

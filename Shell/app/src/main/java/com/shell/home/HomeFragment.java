@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,6 +35,7 @@ import com.shell.home.Bean.TopStaticBean;
 import com.shell.home.activity.SuanChartActivity;
 import com.shell.home.adapter.MessagesAdapter;
 import com.shell.home.adapter.PopuCardAdapter;
+import com.shell.utils.DividerListItemDecoration;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -119,7 +121,6 @@ public class HomeFragment extends BaseFragment {
     ImageView ivMore;
     Unbinder unbinder;
     private Timer mTimer;
-
     ArrayList<String> mList = new ArrayList<>();
 
     private RecyclerView recyclerView;
@@ -128,7 +129,7 @@ public class HomeFragment extends BaseFragment {
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryList;
     private List<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
-    private int handlerPosition = 0;
+    //private int handlerPosition = 0;
     @SuppressLint("HandlerLeak")
     private Handler doActionHandler = new Handler() {
         @Override
@@ -137,16 +138,21 @@ public class HomeFragment extends BaseFragment {
             int msgId = msg.what;
             switch (msgId) {
                 case 1:
-                    handlerPosition--;
+                   // mList.add(0,"新添加的数据");
+                    mList.add(0, "11111111");
+                    adapter.notifyItemInserted(0);
+                    recyclerView.scrollToPosition(0);
+                /*    handlerPosition--;
                     if (0 < handlerPosition) {
                         recyclerView.smoothScrollToPosition(handlerPosition);
                     } else {
                         mTimer.cancel();
-                    }
+                    }*/
                     break;
             }
         }
     };
+    private MessagesAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -159,19 +165,19 @@ public class HomeFragment extends BaseFragment {
         ViewFlipper viewFlipper = mRootView.findViewById(R.id.viewFlipper);
         viewFlipper.startFlipping();
         recyclerView = mRootView.findViewById(R.id.recyclerView);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             mList.add("测试" + i);
         }
-        handlerPosition = mList.size();
-
-        MessagesAdapter adapter = new MessagesAdapter(getActivity(), mList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //  handlerPosition = mList.size();
+        adapter = new MessagesAdapter(getActivity(), mList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+       // layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-/*        mTimer = new Timer();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DividerListItemDecoration dividerListItemDecoration = new DividerListItemDecoration(getActivity(),DividerListItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(dividerListItemDecoration);
+        mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -179,50 +185,7 @@ public class HomeFragment extends BaseFragment {
                 message.what = 1;
                 doActionHandler.sendMessage(message);
             }
-        }, 1000, 2000*//* 表示1000毫秒之後，每隔1000毫秒執行一次 *//*);*/
-    }
-
-    /**
-     * 目标项是否在最后一个可见项之后
-     */
-    private boolean mShouldScroll;
-    /**
-     * 记录目标项位置
-     */
-    private int mToPosition;
-
-    /**
-     * 滑动到指定位置
-     *
-     * @param mRecyclerView
-     * @param position
-     */
-    private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
-        // 第一个可见位置
-        int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
-        // 最后一个可见位置
-        int lastItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1));
-        System.out.println("smoothMoveToPosition--" + lastItem);
-        if (position < firstItem) {
-            System.out.println("smoothMoveToPosition-11-" + lastItem);
-            // 如果跳转位置在第一个可见位置之前，就smoothScrollToPosition可以直接跳转
-            mRecyclerView.smoothScrollToPosition(position);
-        } else if (position <= lastItem) {
-            // 跳转位置在第一个可见项之后，最后一个可见项之前
-            // smoothScrollToPosition根本不会动，此时调用smoothScrollBy来滑动到指定位置
-            int movePosition = position - firstItem;
-            if (movePosition >= 0 && movePosition < mRecyclerView.getChildCount()) {
-                int top = mRecyclerView.getChildAt(movePosition).getTop();
-                mRecyclerView.smoothScrollBy(0, top);
-            }
-        } else {
-            // 如果要跳转的位置在最后可见项之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
-            // 再通过onScrollStateChanged控制再次调用smoothMoveToPosition，执行上一个判断中的方法
-            System.out.println("smoothMoveToPosition-33-" + position);
-            mRecyclerView.smoothScrollToPosition(position);
-            mToPosition = position;
-            mShouldScroll = true;
-        }
+        }, 1000, 2000 /*表示1000毫秒之後，每隔1000毫秒執行一次 */);
     }
 
     @Override
@@ -236,7 +199,6 @@ public class HomeFragment extends BaseFragment {
         getUserInfo();
         getJiangLi();
     }
-
 
     //获取首页静态数据
     private void getStaticData() {
@@ -378,7 +340,6 @@ public class HomeFragment extends BaseFragment {
                         } else if (FeiZhouCount > 50000) {
                             Feizhou.setImageResource(R.mipmap.feizhou6);
                         }
-
 
 
                         if (bottomList != null && bottomList.size() > 0) {
