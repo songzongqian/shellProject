@@ -69,7 +69,8 @@
                     android:textColor="#fff"
                     android:text="1"
                     android:gravity="center"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
 
 
                 <ImageView
@@ -370,7 +371,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="36dp"
-            android:text="V1.0.0"
+            android:text=""
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 

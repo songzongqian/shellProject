@@ -71,7 +71,7 @@ public class ResetLoginActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("修改登录密码");
+        tvTitle.setText(getString(R.string.setlogin));
         tvRightTitle.setVisibility(View.GONE);
 
     }
@@ -105,10 +105,10 @@ public class ResetLoginActivity extends BaseActivity {
                 String agianPwd = etAgianpwd.getText().toString().trim();
 
                 if(TextUtils.isEmpty(oldPwd) || TextUtils.isEmpty(firstPwd) || TextUtils.isEmpty(agianPwd)){
-                    Toast.makeText(this,"请输入密码",Toast.LENGTH_SHORT).show();
+
                 }else{
                     if(!firstPwd.equals(agianPwd)){
-                        Toast.makeText(this,"2次密码不一致",Toast.LENGTH_SHORT).show();
+
                     }else{
                         geToChange();
                     }

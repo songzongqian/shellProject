@@ -2,6 +2,8 @@ package com.shell.mine;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -151,6 +153,17 @@ public class MineFragment extends BaseFragment {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         } else {
+
+            PackageManager packageManager = getActivity().getPackageManager();
+            PackageInfo packInfo = null;
+            try {
+                packInfo = packageManager.getPackageInfo(getContext().getPackageName(),0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String currentVersion = packInfo.versionName;
+            String finalCurrent="V"+currentVersion;
+            tvVersion.setText(finalCurrent);
             getMyData();
             getMessageCount();
             getMyLevel();

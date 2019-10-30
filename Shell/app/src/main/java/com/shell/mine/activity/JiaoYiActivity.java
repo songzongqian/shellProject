@@ -76,7 +76,7 @@ public class JiaoYiActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("修改交易密码");
+        tvTitle.setText(getString(R.string.tv_jy));
         tvRightTitle.setVisibility(View.GONE);
     }
 

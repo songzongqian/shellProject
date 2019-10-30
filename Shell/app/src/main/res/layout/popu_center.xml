@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_marginLeft="17dp"
     android:layout_marginRight="17dp"
-    android:background="@drawable/card_bg">
+    android:background="@drawable/card_bg"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,26 +15,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="里程碑"
-            android:textSize="16sp"
-            android:textColor="#156097"
             android:layout_marginLeft="22dp"
-            android:layout_marginTop="19dp"/>
+            android:layout_marginTop="19dp"
+            android:text="@string/libei"
+            android:textColor="#156097"
+            android:textSize="16sp" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/smartRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-           >
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
 
                 <android.support.v7.widget.RecyclerView
@@ -43,24 +29,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-            </RelativeLayout>
-
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/more_top"
+    <RelativeLayout
+        android:id="@+id/rl_More"
+        android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp"/>
+        android:layout_height="40dp">
 
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/more_top" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

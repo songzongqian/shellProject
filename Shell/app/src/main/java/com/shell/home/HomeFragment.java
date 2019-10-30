@@ -6,13 +6,14 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -109,6 +110,8 @@ public class HomeFragment extends BaseFragment {
     ImageView DaYangZhou;
     @BindView(R.id.tv_word)
     TextView tvWord;
+    @BindView(R.id.rl_GetMore)
+    RelativeLayout rlGetMore;
     private Request<JSONObject> request;
     private int page = 1;
     @BindView(R.id.all_suanli)
@@ -153,7 +156,7 @@ public class HomeFragment extends BaseFragment {
             int msgId = msg.what;
             switch (msgId) {
                 case 1:
-                   // mList.add(0,"新添加的数据");
+                    // mList.add(0,"新添加的数据");
                     mList.add(0, "11111111");
                     adapter.notifyItemInserted(0);
                     recyclerView.scrollToPosition(0);
@@ -187,11 +190,11 @@ public class HomeFragment extends BaseFragment {
         //  handlerPosition = mList.size();
         adapter = new MessagesAdapter(getActivity(), mList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-       // layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        // layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.setStackFromEnd(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DividerListItemDecoration dividerListItemDecoration = new DividerListItemDecoration(getActivity(),DividerListItemDecoration.VERTICAL_LIST);
+        DividerListItemDecoration dividerListItemDecoration = new DividerListItemDecoration(getActivity(), DividerListItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(dividerListItemDecoration);
         mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
@@ -218,12 +221,11 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
     //获取首页静态数据
     private void getStaticData() {
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeStaticUrl, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-       // request.addHeader("lang", language);
+        // request.addHeader("lang", language);
         mQueue.add(1, request, responseListener);
     }
 
@@ -232,7 +234,7 @@ public class HomeFragment extends BaseFragment {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeUserData, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-      //  request.addHeader("lang", language);
+        //  request.addHeader("lang", language);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(2, request, responseListener);
@@ -243,7 +245,7 @@ public class HomeFragment extends BaseFragment {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.KuangChiJiangLi, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-       // request.addHeader("lang", language);
+        // request.addHeader("lang", language);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(3, request, responseListener);
@@ -252,7 +254,7 @@ public class HomeFragment extends BaseFragment {
     //检查版本是否升级
     private void checkVersion() {
         request = NoHttp.createJsonObjectRequest(AppUrl.CheckUpdateVersion, RequestMethod.GET);
-        request.add("type","android");
+        request.add("type", "android");
         mQueue.add(4, request, responseListener);
     }
 
@@ -426,10 +428,24 @@ public class HomeFragment extends BaseFragment {
                     Log.i("song", "首页检查版本更新的返回值" + String.valueOf(response));
                     VersionBean versionBean = gson.fromJson(response.get().toString(), VersionBean.class);
                     String versionCode = versionBean.getResultCode();
-                    if(versionCode.equals("999999")){
+                    if (versionCode.equals("999999")) {
                         VersionBean.ResultDataBean versionData = versionBean.getResultData();
-                        if(versionData!=null){
-                            showUpDateInfo(versionData);
+                        if (versionData != null) {
+                            String serverVersion = versionData.getVersion();
+                            PackageManager packageManager = getActivity().getPackageManager();
+                            PackageInfo packInfo = null;
+                            try {
+                                packInfo = packageManager.getPackageInfo(getContext().getPackageName(),0);
+                            } catch (PackageManager.NameNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            String currentVersion = packInfo.versionName;
+                            String finalCurrent="v"+currentVersion;
+                            if(serverVersion.equals(finalCurrent)){
+
+                            }else{
+                                showUpDateInfo(versionData);
+                            }
                         }
                     }
                     break;
@@ -469,7 +485,7 @@ public class HomeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli, R.id.iv_more, R.id.ll_map,})
+    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli,R.id.rl_GetMore, R.id.ll_map,})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_allsuanli:
@@ -483,7 +499,7 @@ public class HomeFragment extends BaseFragment {
             case R.id.ll_mysuanli:
                 showPopuwindow("2");
                 break;
-            case R.id.iv_more:
+            case R.id.rl_GetMore:
                 //里程碑更多
                 showCenter();
                 break;
@@ -499,7 +515,7 @@ public class HomeFragment extends BaseFragment {
     //上方国家的window
     private void showTopWindow(int countryCode) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_home_top, null, false);
-        final PopupWindow window = new PopupWindow(inflate, 800, 600, true);
+        final PopupWindow window = new PopupWindow(inflate, 800, 450, true);
         // final PopupWindow window = new PopupWindow(inflate, 252, 151, true);
         TextView tvTopName = inflate.findViewById(R.id.tv_topName);
         TextView tvRegisterCount = inflate.findViewById(R.id.tv_RegisterUser);
@@ -576,10 +592,9 @@ public class HomeFragment extends BaseFragment {
 
     private void showCenter() {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_center, null, false);
-        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, 1300, true);
         recyclerView = inflate.findViewById(R.id.recyclerView);
-        SmartRefreshLayout smartRefreshLayout = inflate.findViewById(R.id.smartRefreshLayout);
-        ImageView ivMore = inflate.findViewById(R.id.iv_more);
+        RelativeLayout rlMore = inflate.findViewById(R.id.rl_More);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -587,7 +602,7 @@ public class HomeFragment extends BaseFragment {
         PopuCardAdapter answerCardAdapter = new PopuCardAdapter(bottomList, getActivity());
         recyclerView.setAdapter(answerCardAdapter);
 
-        ivMore.setOnClickListener(new View.OnClickListener() {
+        rlMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 window.dismiss();
@@ -740,10 +755,6 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
-
-
-
     //显示更新版本提示
     private void showUpDateInfo(VersionBean.ResultDataBean versionData) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_version_info, null, false);
@@ -761,7 +772,7 @@ public class HomeFragment extends BaseFragment {
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downLoadApk(dataUrl,true);
+                downLoadApk(dataUrl, true);
             }
         });
         backgroundAlpha(0.5f);

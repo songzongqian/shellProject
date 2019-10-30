@@ -316,7 +316,8 @@
             android:text="上滑加载更多......"
             android:textColor="#156097"
             android:layout_marginTop="22dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

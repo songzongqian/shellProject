@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
 
-            android:text="矿池奖励"
+            android:text="@string/home_jl"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
 
