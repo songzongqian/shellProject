@@ -269,7 +269,6 @@ public class MineFragment extends BaseFragment {
         Glide.with(getActivity()).load(headUrl).into(ivHead);
     }
 
-
     private MyWaitDialog myWaitDialog;
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override

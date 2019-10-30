@@ -108,28 +108,28 @@ public class LanguageActivity extends BaseActivity {
                     Toast.makeText(LanguageActivity.this,"请先选择语言",Toast.LENGTH_SHORT).show();
                 }else{
                    if(flag==1){
-                       selectLanguage(1);
                        //EventBus.getDefault().post(new LanguageEvent("繁体中文"));
                        PreManager.instance().putString("language", "zh_HK");
                        PreManager.instance().putString("mychoose", "繁体中文");
+                       selectLanguage(1);
                        finish();
                    }else if(flag==2){
-                       selectLanguage(2);
                        //EventBus.getDefault().post(new LanguageEvent("English"));
                        PreManager.instance().putString("language", "en_US");
                        PreManager.instance().putString("mychoose", "English");
+                       selectLanguage(2);
                        finish();
                    }else if(flag==3){
-                       selectLanguage(3);
                       // EventBus.getDefault().post(new LanguageEvent("한국어"));
                        PreManager.instance().putString("language", "ko_KR");
                        PreManager.instance().putString("mychoose", "한국어");
+                       selectLanguage(3);
                        finish();
                    }else if(flag==4){
-                       selectLanguage(4);
                        //EventBus.getDefault().post(new LanguageEvent("日本語"));
                        PreManager.instance().putString("language", "ja_JP");
                        PreManager.instance().putString("mychoose", "日本語");
+                       selectLanguage(4);
                        finish();
                    }
                 }

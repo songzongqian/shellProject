@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             }
             mTabFragment.put(index, fragment);
         } else {
-
+            System.out.println("------" + "fn");
         }
         return fragment;
     }

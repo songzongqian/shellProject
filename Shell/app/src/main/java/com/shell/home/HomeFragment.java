@@ -204,7 +204,7 @@ public class HomeFragment extends BaseFragment {
     private void getStaticData() {
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeStaticUrl, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-        request.addHeader("lang", language);
+       // request.addHeader("lang", language);
         mQueue.add(1, request, responseListener);
     }
 
@@ -213,7 +213,7 @@ public class HomeFragment extends BaseFragment {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeUserData, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-        request.addHeader("lang", language);
+      //  request.addHeader("lang", language);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(2, request, responseListener);
@@ -224,7 +224,7 @@ public class HomeFragment extends BaseFragment {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.KuangChiJiangLi, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-        request.addHeader("lang", language);
+       // request.addHeader("lang", language);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(3, request, responseListener);

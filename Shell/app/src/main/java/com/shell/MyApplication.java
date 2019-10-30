@@ -96,7 +96,8 @@ public class MyApplication extends Application {
 
 
 
-    private void initNet() {
+    public static void initNet() {
+        String language = PreManager.instance().getString("language");
         // 初始化nohttp 网络框架
         InitializationConfig nohttpConfig = InitializationConfig.newBuilder(MyApplication.getAppInstance())
                 // 设置全局连接超时时间，单位毫秒，默认10s。
@@ -105,15 +106,16 @@ public class MyApplication extends Application {
                 .readTimeout(30 * 1000)
                 // 配置缓存，默认保存数据库DBCacheStore，保存到SD卡使用DiskCacheStore。
                 .cacheStore(
-                        new DBCacheStore(this).setEnable(true) // 如果不使用缓存，设置setEnable(false)禁用。
+                        new DBCacheStore(app).setEnable(true) // 如果不使用缓存，设置setEnable(false)禁用。
                 )
                 // 配置Cookie，默认保存数据库DBCookieStore，开发者可以自己实现。
                 .cookieStore(
-                        new DBCookieStore(this).setEnable(false) // 如果不维护cookie，设置false禁用。
+                        new DBCookieStore(app).setEnable(false) // 如果不维护cookie，设置false禁用。
                 )
                 // 配置网络层，URLConnectionNetworkExecutor，如果想用OkHttp：OkHttpNetworkExecutor。
                 .networkExecutor(new OkHttpNetworkExecutor())
                 // 全局通用Header，add是添加，多次调用add不会覆盖上次add。
+                .addHeader("lang",language)
                 .retry(3) // 全局重试次数，配置后每个请求失败都会重试x次。
                 .build();
         NoHttp.initialize(nohttpConfig);

@@ -37,8 +37,8 @@
     <string name="or_account">Account</string>
     <string name="or_edu">Limit：</string>
     <string name="or_shouyi">Profit：</string>
-    <string name="or_begin">Start receiving order</string>
-    <string name="or_endorder">Stop receiving order</string>
+    <string name="or_begin">Start</string>
+    <string name="or_endorder">Stop</string>
     <string name="or_unfinishorder">Pending order</string>
     <string name="or_all">All</string>
     <string name="or_orderNumber">Order number</string>
