@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#04172A">
+    android:background="#04172A"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/layout_top"/>
+    <include layout="@layout/layout_top" />
 
-
-    <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/lineChat"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginRight="21dp"
-        android:layout_marginTop="29dp"/>
+        android:layout_height="@dimen/dp_300" />
 
-
-   <TextView
-       android:id="@+id/tv_notice"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="全网算力说明"
-       android:textColor="#FFFFFF"
-       android:textSize="15sp"
-       android:layout_marginLeft="16dp"
-       android:layout_marginTop="30dp"/>
+    <TextView
+        android:id="@+id/tv_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/qw_suanlitu_sm"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
 
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="16dp"
-        android:textColor="#678DA8"
+        android:layout_marginTop="20dp"
         android:text="全网算力由等等等因素决定，这里文案待完善，以下全部为
-文案说明..."/>
+文案说明..."
+        android:textColor="#678DA8" />
 
 </LinearLayout>

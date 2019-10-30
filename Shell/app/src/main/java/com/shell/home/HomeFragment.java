@@ -578,11 +578,11 @@ public class HomeFragment extends BaseFragment {
         TextView tvContent = inflate.findViewById(R.id.tv_content);
 
         if ("1".equals(value)) {
-            tvTitle.setText("信用分说明");
+            tvTitle.setText(getString(R.string.credit_description));
             tvContent.setText(creditScoreDesc);
 
         } else if ("2".equals(value)) {
-            tvTitle.setText("算力说明");
+            tvTitle.setText(getString(R.string.force_demonstrate));
             tvContent.setText(hashRateDesc);
         }
 

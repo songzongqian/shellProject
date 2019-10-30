@@ -215,11 +215,16 @@ public class OrderFragment extends BaseFragment {
                     AllNetTopBean allNetTopBean = gson.fromJson(response.get().toString(), AllNetTopBean.class);
                     if (allNetTopBean.getResultCode().equals("999999")) {
                         AllNetTopBean.ResultDataBean resultData = allNetTopBean.getResultData();
-                        tvOrderFirst.setText(GetTwoLetter.getTwo(resultData.getOrderAll()));
+                     /*   tvOrderFirst.setText(GetTwoLetter.getTwo(resultData.getOrderAll()));
                         tvAmountFirst.setText(GetTwoLetter.getTwo(resultData.getOrderAllAmount()) + " " + "USDT");
                         tvOrderSecond.setText(GetTwoLetter.getTwo(resultData.getOrderToday()));
                         tvSystemRun.setText(GetTwoLetter.getTwo(resultData.getHours()));
-                        tvOnlinePerson.setText(GetTwoLetter.getTwo(resultData.getOnlineUser()));
+                        tvOnlinePerson.setText(GetTwoLetter.getTwo(resultData.getOnlineUser()));*/
+                        tvOrderFirst.setText(resultData.getOrderAll());
+                        tvAmountFirst.setText(resultData.getOrderAllAmount() + " " + "USDT");
+                        tvOrderSecond.setText(resultData.getOrderToday());
+                        tvSystemRun.setText(resultData.getHours() + " " + getString(R.string.house));
+                        tvOnlinePerson.setText(resultData.getOnlineUser());
                     } else {
 
                     }
@@ -234,7 +239,7 @@ public class OrderFragment extends BaseFragment {
                         if (currentOrder.equals("off")) {
                             btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
                             btnStartOrder.setText(R.string.or_begin);
-                        }else if(currentOrder.equals("on")){
+                        } else if (currentOrder.equals("on")) {
                             btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
                             btnStartOrder.setText(R.string.or_endorder);
                         }

@@ -78,8 +78,8 @@ public class LanguageActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("选择语言");
-        tvRightTitle.setText("完成");
+        tvTitle.setText(getString(R.string.choose_language));
+        tvRightTitle.setText(getString(R.string.complete));
     }
 
     @Override

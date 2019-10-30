@@ -139,5 +139,18 @@
     <string name="nick_finish">完成</string>
     <string name="pop_getorder">搶單</string>
 
-
+    <string name="qw_suanlitu">全網算力圖</string>
+    <string name="qw_suanlitu_sm">全網算力說明</string>
+    <string name="house">小時</string>
+    <string name="prompt">提示</string>
+    <string name="determine">確定</string>
+    <string name="start_order">開始接單後，系統開始派發訂單，如若您信用大於300分，訂單將直接派送至您訂單明細中，直接處理即可。如您的信用小於300分，則在訂單大廳中進行搶單。
+在您停止工作後，務必點擊停止接單，派發的訂單未處理將觸發處罰機制。</string>
+    <string name="choose_language">選擇語言</string>
+    <string name="complete">完成</string>
+    <string name="credit_description">信用分說明</string>
+    <string name="credit_description_contont">信用分三評判節點貢獻的壹個重要指標，也是獎勵發放的重要維度，信用分可由完成訂單/邀請新節點等方式獲得。壹下接上信用分的獲取及消除的明細信息</string>
+    <string name="order">訂單</string>
+    <string name="no_content">暫無內容</string>
+    <string name="force_demonstrate">算力說明</string>
 </resources>

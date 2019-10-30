@@ -138,4 +138,20 @@
     <string name="qs_xieyi">上記の清算条件を認識し、清算を継続します</string>
     <string name="nick_finish">完了</string>
     <string name="pop_getorder">注文をつかむ</string>
+
+
+    <string name="qw_suanlitu">全メッシュ計算図</string>
+    <string name="qw_suanlitu_sm">全ネット算力説明</string>
+    <string name="house">時間</string>
+    <string name="prompt">提示</string>
+    <string name="determine">確定</string>
+    <string name="start_order">受注開始後、システムは注文の配付を開始し、300点以上の信用があれば、注文明細書に直接配付し、直接処理すればよい。あなたの信用が300点以下であれば、注文ホールでスクリーニングを行います。
+あなたが仕事を停止した後、必ずクリックして仕事を停止し、配った注文の未処理は処罰の仕組みをトリガします。</string>
+    <string name="choose_language">言語を選択する</string>
+    <string name="complete">完成</string>
+    <string name="credit_description">信用分節</string>
+    <string name="credit_description_contont">信用分三はノードの貢献を評価する重要な指標の一つであり、奨励発行の重要な次元でもあり、信用分は注文を完成する/新しいノードを招待するなどの方式で獲得できる。次にクレジット分の取得および消去の内訳情報を受け取る</string>
+    <string name="order">受注</string>
+    <string name="no_content">内容がない</string>
+    <string name="force_demonstrate">算力説明</string>
 </resources>

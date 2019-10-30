@@ -73,7 +73,7 @@ public class OrderListActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("订单");
+        tvTitle.setText(getString(R.string.order));
         tvRightTitle.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

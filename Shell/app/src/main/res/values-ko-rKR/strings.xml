@@ -139,5 +139,18 @@
     <string name="nick_finish">완료</string>
     <string name="pop_getorder">주문 뺏기</string>
 
-
+    <string name="qw_suanlitu">온 네트워크로 극력 도모하다</string>
+    <string name="qw_suanlitu_sm">풀 네트워크 어프로치 설명</string>
+    <string name="house">시간</string>
+    <string name="prompt">제시</string>
+    <string name="determine">확정</string>
+    <string name="start_order">주문서접수가 시작된후, 시스템에서는 주문서를 발송하기 시작하는데, 만약 당신의 신용이 300점 이상이라면, 주문서는 직접 당신의 주문명세서에 보내서 직접 처리하면 됩니다.만약 당신의 신용이 300점 이하라면, 주문서 홀에서 외상을 강탈할 것입니다.
+귀하가 작업을 중단한 후, 반드시 영수증을 정지하시려면 클릭하십시오. 배부한 주문서가 처리되지 않으면 처벌 장치가 촉발됩니다.</string>
+    <string name="choose_language">언어 선택</string>
+    <string name="complete">완료</string>
+    <string name="credit_description">크레디트 어그리먼트</string>
+    <string name="credit_description_contont">신용은 세개의 노드 기여도를 평가하는 중요한 지표이며, 보너스 지급의 중요한 차원이며, 신용은 주문/신규 노드 요청 등의 방식으로 획득할 수 있다.신용점의 취득 및 제거된 명세를 잇다</string>
+    <string name="order">수주</string>
+    <string name="no_content">잠시 내용이 없다.</string>
+    <string name="force_demonstrate">셈법 설명</string>
 </resources>

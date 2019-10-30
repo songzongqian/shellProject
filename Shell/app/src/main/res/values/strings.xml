@@ -116,7 +116,7 @@
     <string name="mf_first">跨境支付新模式</string>
     <string name="mf_second">玩法多样 轻松赚钱</string>
     <string name="mf_third">交易佣金 矿池收益 节点奖励</string>
-    <string name="mf_fourth">Shell，轻松赚取交易佣金</string>
+    <string name="mf_fourth">轻松赚取交易佣金</string>
     <string name="mf_five">注册时请填写邀请码：</string>
     <string name="mf_six">长按识别二维码：</string>
     <string name="mf_invcode">邀请码：AEFGGG</string>
@@ -156,4 +156,20 @@
     <string name="qs_xieyi">我已知晓以上清算条款，并继续清算</string>
     <string name="nick_finish">完成</string>
     <string name="pop_getorder">抢单</string>
+
+    <!--王俊刚-->
+    <string name="qw_suanlitu">全网算力图</string>
+    <string name="qw_suanlitu_sm">全网算力说明</string>
+    <string name="house">小时</string>
+    <string name="prompt">提示</string>
+    <string name="determine">确定</string>
+    <string name="start_order">开始接单后，系统开始派发订单，如若您信用大于300分，订单将直接派送至您订单明细中，直接处理即可。如您的信用小于300分，则在订单大厅中进行抢单。
+在您停止工作后，务必点击停止接单，派发的订单未处理将触发处罚机制。</string>
+    <string name="choose_language">选择语言</string>
+    <string name="complete">完成</string>
+    <string name="credit_description">信用分说明</string>
+    <string name="credit_description_contont">信用分三评判节点贡献的一个重要指标，也是奖励发放的重要维度，信用分可由完成订单/邀请新节点等方式获得。一下接上信用分的获取及消除的明细信息</string>
+    <string name="order">订单</string>
+    <string name="no_content">暂无内容</string>
+    <string name="force_demonstrate">算力说明</string>
 </resources>

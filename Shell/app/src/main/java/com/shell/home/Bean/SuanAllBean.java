@@ -77,7 +77,7 @@ public class SuanAllBean {
 
             private int createBy;
             private String createTime;
-            private double hashRate;
+            private String hashRate;
             private int id;
             private String isDeleted;
             private double pledgeAmount;
@@ -100,11 +100,11 @@ public class SuanAllBean {
                 this.createTime = createTime;
             }
 
-            public double getHashRate() {
+            public String getHashRate() {
                 return hashRate;
             }
 
-            public void setHashRate(double hashRate) {
+            public void setHashRate(String hashRate) {
                 this.hashRate = hashRate;
             }
 

@@ -26,7 +26,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="信用分说明"
+        android:text="@string/credit_description"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:layout_gravity="center_horizontal"/>
@@ -40,7 +40,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginBottom="33dp"
         android:layout_marginTop="10dp"
-        android:text="信用分三评判节点贡献的一个重要指标，也是奖励发放的重要维度，信用分可由完成订单/邀请新节点等方式获得。一下接上信用分的获取及消除的明细信息"
+        android:text="@string/credit_description_contont"
         android:textColor="#8D99B2"/>
 
 

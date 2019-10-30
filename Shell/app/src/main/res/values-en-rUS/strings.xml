@@ -13,7 +13,7 @@
     <string name="log_forgetpwd">Forgot password?</string>
     <string name="forget_title">Forgot password?</string>
     <string name="for_emailcode">E-mail verification code</string>
-    <string name="for_getcode">Get the verification code</string>
+    <string name="for_getcode">Get verification code</string>
     <string name="for_newpwd">New password</string>
     <string name="for_agianpwd">Re-enter password</string>
     <string name="for_setpwd">重置密码</string>
@@ -139,5 +139,18 @@
     <string name="nick_finish">carry out</string>
     <string name="pop_getorder">grab the order</string>
 
-
+    <string name="qw_suanlitu">Net diagram</string>
+    <string name="qw_suanlitu_sm">Full network calculation force description</string>
+    <string name="house">hours</string>
+    <string name="prompt">prompt</string>
+    <string name="determine">determine</string>
+    <string name="start_order">After receiving orders, the system starts to distribute orders. If your credit score is more than 300 points, the orders will be directly sent to your order details for direct processing. If your credit score is less than 300 points, the order will be snatched in the order hall.
+After you stop working, be sure to click stop receiving orders. Unprocessed orders will trigger a penalty mechanism.</string>
+    <string name="choose_language">Select the language</string>
+    <string name="complete">complete</string>
+    <string name="credit_description">Credit score description complete</string>
+    <string name="credit_description_contont">Credit score three is an important index to evaluate the contribution of nodes and also an important dimension of award issuance. Credit score can be obtained by completing orders/inviting new nodes and so on. Details of credit score acquisition and elimination are shown below</string>
+    <string name="order">The order</string>
+    <string name="no_content">No content</string>
+    <string name="force_demonstrate">Force was introduced to demonstrate</string>
 </resources>

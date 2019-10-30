@@ -106,7 +106,11 @@ public class SettingActivity extends BaseActivity {
         String nickName = getIntent().getStringExtra("nickName");
         String myEmail = getIntent().getStringExtra("myEmail");
 
-        Glide.with(SettingActivity.this).load(headUrl).into(ivHead);
+        if (TextUtils.isEmpty(headUrl)){
+            Glide.with(SettingActivity.this).load(R.mipmap.avator).into(ivHead);
+        }else {
+            Glide.with(SettingActivity.this).load(headUrl).into(ivHead);
+        }
         tvNickName.setText(nickName);
         tvMyEmail.setText(myEmail);
     }
