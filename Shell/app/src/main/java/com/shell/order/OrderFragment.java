@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.shell.Bean.GetServerBean;
 import com.shell.Bean.LanguageEvent;
+import com.shell.Bean.NoticeBean;
 import com.shell.Bean.OrderEvent;
 import com.shell.R;
 import com.shell.activity.LoginActivity;
@@ -41,6 +42,8 @@ import com.shell.order.adapter.OrderListAdapter;
 import com.shell.order.adapter.OrderPartAdapter;
 import com.shell.order.bean.AllNetTopBean;
 import com.shell.order.bean.CurrentOrderStatue;
+import com.shell.order.bean.OFFSuccessBean;
+import com.shell.order.bean.OnSuccessBean;
 import com.shell.order.bean.OrderListBean;
 import com.shell.order.bean.ServerOrderBean;
 import com.shell.utils.GetTwoLetter;
@@ -152,8 +155,6 @@ public class OrderFragment extends BaseFragment {
         getTopData();
         getMiddleData();
         getOrderData();
-        getOrderWord(); //获取接单文案
-
     }
 
 
@@ -186,15 +187,32 @@ public class OrderFragment extends BaseFragment {
         mQueue.add(3, request, responseListener);
     }
 
-    //上传当前的接单状态
-    private void PostOrderStatue(String off) {
+    //关闭接单按钮
+    private void PostOrderStatueOff() {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.getOrderStatue, RequestMethod.POST);
         request.addHeader("token", token);
         request.add("token", token);
-        request.add("status", off);
+        request.add("status", "off");
+        mQueue.add(7, request, responseListener);
+    }
+
+
+    //打开接单按钮
+    private void PostOrderStatueOn() {
+        Log.i("song", "进入打开按钮" );
+        String token = PreManager.instance().getString("token");
+        request = NoHttp.createJsonObjectRequest(AppUrl.getOrderStatue, RequestMethod.POST);
+        request.addHeader("token", token);
+        request.add("token", token);
+        request.add("status", "on");
         mQueue.add(4, request, responseListener);
     }
+
+
+
+
+
 
     //获取接单文案
     private void getOrderWord() {
@@ -285,8 +303,19 @@ public class OrderFragment extends BaseFragment {
                     break;
 
                 case 4:
-                    Log.i("song", "上传接单的状态" + String.valueOf(response));
-
+                    Log.i("song", "上传打开接单的状态" + String.valueOf(response));
+                    OnSuccessBean onSuccessBean = gson.fromJson(response.get().toString(), OnSuccessBean.class);
+                    String onSuccessBeanResultCode = onSuccessBean.getResultCode();
+                    String resultDesc = onSuccessBean.getResultDesc();
+                    if(onSuccessBeanResultCode.equals("999999")){
+                        //修改成功
+                        flag = 1;
+                        btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
+                        btnStartOrder.setText(R.string.or_endorder);
+                        WebSocketHandler.getDefault().reconnect();
+                    }else{
+                        Toast.makeText(getActivity(),resultDesc,Toast.LENGTH_SHORT).show();
+                    }
                     break;
 
                 case 5:
@@ -302,7 +331,27 @@ public class OrderFragment extends BaseFragment {
 
                 case 6:
                     Log.i("song", "获取接单的文案" + String.valueOf(response));
+                    NoticeBean noticeBean = gson.fromJson(response.get().toString(), NoticeBean.class);
+                    if(noticeBean.getResultCode().equals("999999")){
+                        showOrderInfo(noticeBean.getResultData());
+                    }
+                    break;
 
+                case 7:
+                    Log.i("song", "上传关闭接单的状态" + String.valueOf(response));
+                    OFFSuccessBean offSuccessBean = gson.fromJson(response.get().toString(), OFFSuccessBean.class);
+                    String offSuccessBeanResultCode = offSuccessBean.getResultCode();
+                    String offdesc = offSuccessBean.getResultDesc();
+                    if(offSuccessBeanResultCode.equals("999999")){
+                        //关闭成功
+                        //处于停止接单状态
+                        flag = 0;
+                        btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
+                        btnStartOrder.setText(R.string.or_begin);
+                        WebSocketHandler.getDefault().disConnect();
+                    }else{
+                        Toast.makeText(getActivity(),offdesc,Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
@@ -340,21 +389,10 @@ public class OrderFragment extends BaseFragment {
             case R.id.btn_startOrder:
                 //显示接单注意事项
                 if (flag == 0) {
-                    //处于已经开始接单的状态
-                    btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
-                    showOrderInfo();
-                    flag = 1;
-                    btnStartOrder.setText(R.string.or_endorder);
-                    WebSocketHandler.getDefault().reconnect();
-                    PostOrderStatue("on");
-
+                    //1、请求文案接口
+                    getOrderWord();
                 } else if (flag == 1) {
-                    //处于停止接单状态
-                    WebSocketHandler.getDefault().disConnect();
-                    btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
-                    btnStartOrder.setText(R.string.or_begin);
-                    flag = 0;
-                    PostOrderStatue("off");
+                    PostOrderStatueOff();
                 }
                 break;
             case R.id.ll_more:
@@ -400,7 +438,7 @@ public class OrderFragment extends BaseFragment {
         });
 
 
-        //TODO  内容区域需要申请接口获取
+
 
 
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -426,15 +464,23 @@ public class OrderFragment extends BaseFragment {
 
 
     //显示抢单提示
-    private void showOrderInfo() {
+    private void showOrderInfo(String resultData) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_order_info, null, false);
         final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         TextView tvTitle = inflate.findViewById(R.id.tv_title);
         TextView tvContent = inflate.findViewById(R.id.tv_content);
         ImageView ivClose = inflate.findViewById(R.id.iv_close);
         TextView tvOk = inflate.findViewById(R.id.tv_OK);
+        tvContent.setText(resultData);
 
-        //TODO  内容区域需要申请接口获取
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //修改接单状态
+                PostOrderStatueOn();
+
+            }
+        });
 
 
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -444,12 +490,6 @@ public class OrderFragment extends BaseFragment {
             }
         });
 
-        tvOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                window.dismiss();
-            }
-        });
         backgroundAlpha(0.5f);
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -462,6 +502,8 @@ public class OrderFragment extends BaseFragment {
         window.setTouchable(true);
         window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
     }
+
+
 
     private void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
