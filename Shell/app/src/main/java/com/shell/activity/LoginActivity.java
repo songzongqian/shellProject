@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.LoginBean;
 import com.shell.R;
@@ -54,7 +55,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.tv_rightTitle)
     TextView tvRightTitle;
     @BindView(R.id.profile_image)
-    CircleImageView profileImage;
+    RoundedImageView profileImage;
     @BindView(R.id.et_account)
     EditText etAccount;
     @BindView(R.id.et_pwd)

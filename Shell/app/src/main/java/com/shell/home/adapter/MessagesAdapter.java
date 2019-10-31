@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.laojiang.imagepickers.utils.DateUtil;
 import com.shell.R;
+import com.shell.home.Bean.JiangLiBean;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,10 +30,10 @@ import butterknife.ButterKnife;
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
 
     private Activity activity;
-    private List<String> data;
+    private List<JiangLiBean.ResultDataBean> data;
 
 
-    public MessagesAdapter(Activity activity, List<String> data) {
+    public MessagesAdapter(Activity activity, List<JiangLiBean.ResultDataBean> data) {
         this.activity = activity;
         this.data = data;
     }

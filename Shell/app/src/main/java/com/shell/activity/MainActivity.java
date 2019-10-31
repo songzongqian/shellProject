@@ -1,10 +1,13 @@
 package com.shell.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.OrderEvent;
+import com.shell.Bean.OrePoolRewardBean;
 import com.shell.MyApplication;
 import com.shell.R;
 import com.shell.base.BaseActivity;
@@ -49,7 +53,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private FragmentManager mFragmentmanager;
     private RadioGroup radioGroup;
     private RadioButton rbtn0, rbtn1, rbtn2, rbtn3, rbtn4;
-    public final static HashMap<Integer, Fragment> mTabFragment = new HashMap<Integer, Fragment>();
+    private  HashMap<Integer, Fragment> mTabFragment = new HashMap<Integer, Fragment>();
     private int currentIndex = 0;
 
 
@@ -87,6 +91,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 EventBus.getDefault().post(new OrderEvent(message));
             } else if (message.contains("hashAward")) {
                 //一样的信息
+                // 这是是不是矿池奖励数据？
+                EventBus.getDefault().post(new OrePoolRewardBean(message));
             }
         }
 
@@ -95,7 +101,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
         }
     };
-
 
     @Override
     protected void initToolBar() {

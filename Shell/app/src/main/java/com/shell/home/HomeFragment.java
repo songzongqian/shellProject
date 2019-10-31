@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.shell.Bean.OrderEvent;
+import com.shell.Bean.OrePoolRewardBean;
 import com.shell.Bean.VersionBean;
 import com.shell.MyApplication;
 import com.shell.R;
@@ -42,6 +45,7 @@ import com.shell.home.Bean.TopStaticBean;
 import com.shell.home.activity.SuanChartActivity;
 import com.shell.home.adapter.MessagesAdapter;
 import com.shell.home.adapter.PopuCardAdapter;
+import com.shell.order.bean.ServerOrderBean;
 import com.shell.utils.DividerListItemDecoration;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
@@ -57,6 +61,9 @@ import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -133,8 +140,9 @@ public class HomeFragment extends BaseFragment {
     ImageView ivMore;
     Unbinder unbinder;
     private Timer mTimer;
-    ArrayList<String> mList = new ArrayList<>();
-
+    ArrayList<JiangLiBean.ResultDataBean> mList = new ArrayList<>();
+    private List<JiangLiBean.ResultDataBean> jiangLiList = new ArrayList<>();
+    private int index = 0;
     private RecyclerView recyclerView;
     private String creditScoreDesc;
     private String hashRateDesc;
@@ -153,10 +161,14 @@ public class HomeFragment extends BaseFragment {
             int msgId = msg.what;
             switch (msgId) {
                 case 1:
-                   // mList.add(0,"新添加的数据");
-                    mList.add(0, "11111111");
-                    adapter.notifyItemInserted(0);
-                    recyclerView.scrollToPosition(0);
+                    if (mList.size() < jiangLiList.size()) {
+                        mList.add(0, jiangLiList.get(index));
+                        adapter.notifyItemInserted(0);
+                        recyclerView.scrollToPosition(0);
+                        index++;
+                    } else {
+                        mTimer.cancel();
+                    }
                 /*    handlerPosition--;
                     if (0 < handlerPosition) {
                         recyclerView.smoothScrollToPosition(handlerPosition);
@@ -178,30 +190,20 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View rootView) {
         ButterKnife.bind(getActivity());
+        EventBus.getDefault().register(this);
         ViewFlipper viewFlipper = mRootView.findViewById(R.id.viewFlipper);
         viewFlipper.startFlipping();
         recyclerView = mRootView.findViewById(R.id.recyclerView);
-        for (int i = 0; i < 3; i++) {
-            mList.add("测试" + i);
-        }
         //  handlerPosition = mList.size();
         adapter = new MessagesAdapter(getActivity(), mList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-       // layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        // layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.setStackFromEnd(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DividerListItemDecoration dividerListItemDecoration = new DividerListItemDecoration(getActivity(),DividerListItemDecoration.VERTICAL_LIST);
+        DividerListItemDecoration dividerListItemDecoration = new DividerListItemDecoration(getActivity(), DividerListItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(dividerListItemDecoration);
         mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Message message = new Message();
-                message.what = 1;
-                doActionHandler.sendMessage(message);
-            }
-        }, 1000, 2000 /*表示1000毫秒之後，每隔1000毫秒執行一次 */);
     }
 
     @Override
@@ -218,12 +220,11 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
     //获取首页静态数据
     private void getStaticData() {
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeStaticUrl, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-       // request.addHeader("lang", language);
+        // request.addHeader("lang", language);
         mQueue.add(1, request, responseListener);
     }
 
@@ -232,7 +233,7 @@ public class HomeFragment extends BaseFragment {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.HomeUserData, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-      //  request.addHeader("lang", language);
+        //  request.addHeader("lang", language);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(2, request, responseListener);
@@ -243,7 +244,7 @@ public class HomeFragment extends BaseFragment {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.KuangChiJiangLi, RequestMethod.GET);
         String language = PreManager.instance().getString("language");
-       // request.addHeader("lang", language);
+        // request.addHeader("lang", language);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(3, request, responseListener);
@@ -252,7 +253,7 @@ public class HomeFragment extends BaseFragment {
     //检查版本是否升级
     private void checkVersion() {
         request = NoHttp.createJsonObjectRequest(AppUrl.CheckUpdateVersion, RequestMethod.GET);
-        request.add("type","android");
+        request.add("type", "android");
         mQueue.add(4, request, responseListener);
     }
 
@@ -400,12 +401,19 @@ public class HomeFragment extends BaseFragment {
                     JiangLiBean jiangLiBean = gson.fromJson(response.get().toString(), JiangLiBean.class);
                     String jiangLiBeanResultCode = jiangLiBean.getResultCode();
                     if (jiangLiBeanResultCode.equals("999999")) {
-                        List<JiangLiBean.ResultDataBean> jiangLiList = jiangLiBean.getResultData();
+                        jiangLiList.addAll(jiangLiBean.getResultData());
                         //HomeAwardAdapter  homeAwardAdapter=new HomeAwardAdapter(getActivity(),jiangLiList);
                         //listView.setAdapter(homeAwardAdapter);
                         // new Timer().schedule(new TimeTaskScroll(getActivity(), listView,jiangLiList), 20, 20);
-
-                        if (jiangLiList != null && jiangLiList.size() >= 3) {
+                        mTimer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                Message message = new Message();
+                                message.what = 1;
+                                doActionHandler.sendMessage(message);
+                            }
+                        }, 1000, 2000 /*表示1000毫秒之後，每隔1000毫秒執行一次 */);
+                  /*      if (jiangLiList != null && jiangLiList.size() >= 3) {
                             llGundong.setVisibility(View.VISIBLE);
                             JiangLiBean.ResultDataBean resultDataBean = jiangLiList.get(0);
                             JiangLiBean.ResultDataBean resultDataBean1 = jiangLiList.get(1);
@@ -416,7 +424,7 @@ public class HomeFragment extends BaseFragment {
                             two3.setText(resultDataBean.getCreateTime());
                             three1.setText(GetTwoLetter.getTwo(resultDataBean2.getAmount()));
                             three3.setText(resultDataBean2.getCreateTime());
-                        }
+                        }*/
                     } else {
                         llGundong.setVisibility(View.INVISIBLE);
                     }
@@ -426,9 +434,9 @@ public class HomeFragment extends BaseFragment {
                     Log.i("song", "首页检查版本更新的返回值" + String.valueOf(response));
                     VersionBean versionBean = gson.fromJson(response.get().toString(), VersionBean.class);
                     String versionCode = versionBean.getResultCode();
-                    if(versionCode.equals("999999")){
+                    if (versionCode.equals("999999")) {
                         VersionBean.ResultDataBean versionData = versionBean.getResultData();
-                        if(versionData!=null){
+                        if (versionData != null) {
                             showUpDateInfo(versionData);
                         }
                     }
@@ -454,6 +462,23 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OrePoolRewardBean event) {
+        String message = event.getMessage();
+        Gson gson = new Gson();
+        JiangLiBean jiangLiBean = gson.fromJson(message, JiangLiBean.class);
+        List<JiangLiBean.ResultDataBean> resultData = jiangLiBean.getResultData();
+        jiangLiList.addAll(resultData);
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                doActionHandler.sendMessage(message);
+            }
+        }, 1000, 2000 /*表示1000毫秒之後，每隔1000毫秒執行一次 */);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -740,10 +765,6 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
-
-
-
     //显示更新版本提示
     private void showUpDateInfo(VersionBean.ResultDataBean versionData) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_version_info, null, false);
@@ -761,7 +782,7 @@ public class HomeFragment extends BaseFragment {
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downLoadApk(dataUrl,true);
+                downLoadApk(dataUrl, true);
             }
         });
         backgroundAlpha(0.5f);

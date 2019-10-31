@@ -243,6 +243,11 @@ public class MineFragment extends BaseFragment {
                 //清除token
                 PreManager.instance().putBoolean("ISLogin", false);
                 PreManager.instance().putString("token", "");
+                //关闭其他Activity
+                List<Activity> activityList = MyApplication.activityList;
+                for (int i = 0; i < activityList.size(); i++) {
+                    activityList.get(i).finish();
+                }
                 Intent intent9 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent9);
                 break;

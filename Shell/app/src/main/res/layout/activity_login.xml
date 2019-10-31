@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#061D34"
@@ -71,15 +72,15 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/profile_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="54dp"
+        android:scaleType="fitXY"
         android:src="@mipmap/logo_top"
-        app:civ_border_color="#65DFFE"
-        app:civ_border_width="2dp" />
+        app:riv_corner_radius="@dimen/dp_5"/>
 
 
     <ImageView

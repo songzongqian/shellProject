@@ -79,6 +79,7 @@ android {
         implementation 'com.veken:chart_view:1.0.2'
 
         implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
+        //头像控件
+        implementation 'com.makeramen:roundedimageview:2.2.1'
     }
 }
