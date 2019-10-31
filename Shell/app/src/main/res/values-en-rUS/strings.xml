@@ -7,7 +7,7 @@
     <string name="re_invitedcode">Invitation code(Non-required)</string>
     <string name="re_register">Sign up</string>
     <string name="re_tologin">Already have account, log in directly</string>
-    <string name="log_cancle">取消</string>
+    <string name="log_cancle">Cancel</string>
     <string name="log_login">Log in</string>
     <string name="log_noaccount">Sign up now</string>
     <string name="log_forgetpwd">Forgot password?</string>

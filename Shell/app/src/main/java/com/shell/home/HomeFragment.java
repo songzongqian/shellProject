@@ -462,7 +462,7 @@ public class HomeFragment extends BaseFragment {
                             if(serverVersion.equals(finalCurrent)){
 
                             }else{
-                                //showUpDateInfo(versionData);
+                                showUpDateInfo(versionData);
                             }
                         }
                     }
@@ -821,7 +821,7 @@ public class HomeFragment extends BaseFragment {
         window.setBackgroundDrawable(new BitmapDrawable());
         window.setOutsideTouchable(false);
         window.setTouchable(true);
-        window.setFocusable(false);
+       // window.setFocusable(false);
         window.setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -854,7 +854,6 @@ public class HomeFragment extends BaseFragment {
             getStaticData();
             getUserInfo();
             getJiangLi();
-            checkVersion();
         } else {
             //不可见
             Log.i("song", "HomeFragment不可见");

@@ -7,7 +7,7 @@
     <string name="re_invitedcode">요청번호(비필수항목)</string>
     <string name="re_register">신규등록</string>
     <string name="re_tologin">이미존재하는 아이디입니다.</string>
-    <string name="log_cancle">取消</string>
+    <string name="log_cancle">취소</string>
     <string name="log_login">로그인</string>
     <string name="log_noaccount">존재하지 않은 아이디입니다? 바로 신규등록</string>
     <string name="log_forgetpwd">암호를 잊어버림</string>
