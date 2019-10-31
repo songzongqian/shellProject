@@ -2,6 +2,7 @@ package com.shell.home;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -19,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -503,7 +505,6 @@ public class HomeFragment extends BaseFragment {
                 //里程碑更多
                 showCenter();
                 break;
-
             case R.id.ll_map:
                 showTopFirstWindow(countryDataList);
                 break;
@@ -767,12 +768,13 @@ public class HomeFragment extends BaseFragment {
         tvTitle.setText(getString(R.string.version_title));
         tvContent.setText(replace);
         final String dataUrl = versionData.getUrl();
+        final String replaceUrl = dataUrl.replaceAll(" ", "");
 
 
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downLoadApk(dataUrl, true);
+                downLoadApk(replaceUrl, true);
             }
         });
         backgroundAlpha(0.5f);
@@ -783,8 +785,19 @@ public class HomeFragment extends BaseFragment {
             }
         });
         window.setBackgroundDrawable(new BitmapDrawable());
-        window.setOutsideTouchable(true);
+        window.setOutsideTouchable(false);
         window.setTouchable(true);
+        window.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !window.isFocusable()) {
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+        });
         window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
     }
 
@@ -806,6 +819,7 @@ public class HomeFragment extends BaseFragment {
             getStaticData();
             getUserInfo();
             getJiangLi();
+            checkVersion();
         } else {
             //不可见
             Log.i("song", "HomeFragment不可见");
@@ -815,6 +829,7 @@ public class HomeFragment extends BaseFragment {
 
     //下载apk文件
     private void downLoadApk(String uploadPath, final boolean isShow) {
+        notificationManager = (NotificationManager) getActivity().getSystemService(Activity.NOTIFICATION_SERVICE);
         psdialog = new ProgressDialog(getActivity());
         String filefoder = null;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -823,7 +838,7 @@ public class HomeFragment extends BaseFragment {
             filefoder = getActivity().getFilesDir().getAbsolutePath();
         }
         DownloadQueue downloadQueue = NoHttp.newDownloadQueue();
-        DownloadRequest downloadRequest = NoHttp.createDownloadRequest("http://111.6.77.90:7301/swdj/res/app/swdj.apk", RequestMethod.GET, filefoder, "123.apk", true, true);
+        DownloadRequest downloadRequest = NoHttp.createDownloadRequest(uploadPath, RequestMethod.GET, filefoder, "123.apk", true, true);
         downloadQueue.add(123, downloadRequest, new DownloadListener() {
             @Override
             public void onDownloadError(int what, Exception exception) {
