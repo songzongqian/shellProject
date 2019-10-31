@@ -234,8 +234,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="22dp"
+        android:visibility="invisible"
         android:background="@drawable/button_unfinish"
-        android:text="转出 （14:45）"
+        android:text="@string/or_out"
         android:textColor="#FFFFFF"
         android:textSize="17sp" />
 

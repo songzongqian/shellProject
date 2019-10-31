@@ -120,7 +120,7 @@ public class AppUrl {
     public static final String QingSuanURL= BASE_URL + "/order/clear?";
 
     /**根据id获取订单详情*/
-    public static final String unorderDetail= BASE_URL + "/order/readOrderInfo/{orderId}?";
+    public static final String unorderDetail= BASE_URL + "/order/readOrderInfo/";
 
 
     /**
@@ -138,6 +138,12 @@ public class AppUrl {
     public static final String getOrderWord = BASE_URL + "/order/getUserStatusTextDesc?";
 
 
+
+
+    /**
+     * 转出订单
+     */
+    public static final String ZhuanChu_Ordert = BASE_URL + "/order/process";
 
 
 
