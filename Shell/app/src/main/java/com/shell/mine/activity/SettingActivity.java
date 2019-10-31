@@ -105,7 +105,6 @@ public class SettingActivity extends BaseActivity {
         String headUrl = getIntent().getStringExtra("headUrl");
         String nickName = getIntent().getStringExtra("nickName");
         String myEmail = getIntent().getStringExtra("myEmail");
-
         if (TextUtils.isEmpty(headUrl)){
             Glide.with(SettingActivity.this).load(R.mipmap.avator).into(ivHead);
         }else {

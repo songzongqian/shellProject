@@ -149,6 +149,8 @@ public class HomeFragment extends BaseFragment {
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryList;
     private List<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
+    //fragment loading只显示一次  没时间了
+    private boolean isLoading = true;
     NotificationCompat.Builder builder;
     Notification nf;
     private NotificationManager notificationManager;
@@ -167,7 +169,7 @@ public class HomeFragment extends BaseFragment {
                         recyclerView.scrollToPosition(0);
                         index++;
                     } else {
-                        mTimer.cancel();
+                        //mTimer.cancel();
                     }
                 /*    handlerPosition--;
                     if (0 < handlerPosition) {
@@ -262,12 +264,16 @@ public class HomeFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (myWaitDialog == null) {
-                myWaitDialog = new MyWaitDialog(getActivity());
-                myWaitDialog.show();
-            } else {
-                myWaitDialog.show();
+            if (isLoading){
+                if (myWaitDialog == null) {
+                    myWaitDialog = new MyWaitDialog(getActivity());
+                    myWaitDialog.show();
+                } else {
+                    myWaitDialog.show();
+                }
+                isLoading = false;
             }
+
         }
 
 
@@ -458,7 +464,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void onFinish(int what) {
-            myWaitDialog.cancel();
+           // myWaitDialog.cancel();
         }
     };
 

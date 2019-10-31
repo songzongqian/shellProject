@@ -74,7 +74,7 @@ android {
         implementation 'me.zhouzhuo.zzhorizontalprogressbar:zz-horizontal-progressbar:1.1.0'
         implementation 'com.github.jokar:multi-languages:0.0.5'
 
-        //implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+        implementation 'com.github.lecho:hellocharts-android:v1.5.8'
 
         implementation 'com.veken:chart_view:1.0.2'
 

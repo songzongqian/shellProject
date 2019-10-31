@@ -8,10 +8,14 @@
 
     <include layout="@layout/layout_top" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/lineChat"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_300" />
+        android:layout_height="300dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginTop="29dp"/>
 
     <TextView
         android:id="@+id/tv_notice"

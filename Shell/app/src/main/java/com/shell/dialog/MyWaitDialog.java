@@ -18,11 +18,22 @@ package com.shell.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.shell.MyApplication;
 import com.shell.R;
 
 
@@ -81,6 +92,32 @@ public class MyWaitDialog {
         TextView text = (TextView) view.findViewById(R.id.progress_message);
         //text.setText("正在加载，请稍后");
         ImageView loadingImage = (ImageView) view.findViewById(R.id.progress_view);
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                //.placeholder(R.mipmap.ic_launcher_round)
+                .error(android.R.drawable.stat_notify_error)
+                .priority(Priority.HIGH)
+                //.skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+
+        Glide.with(MyApplication.topactivity)
+                .load(R.mipmap.logo)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .apply(options)
+                //.thumbnail(Glide.with(this).load(R.mipmap.ic_launcher))
+                .into(loadingImage);
+
         //loadingImage.setImageResource(R.drawable.progress_dialog_loding);
 //        Glide.with(context).load(R.drawable.progress1)
 //                .diskCacheStrategy(DiskCacheStrategy.ALL).into(loadingImage);
@@ -98,6 +135,22 @@ public class MyWaitDialog {
 
     public void show() {
         mDialog.show();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1500);//让他显示1.5秒后，取消ProgressDialog
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (mDialog.isShowing()){
+                    mDialog.dismiss();
+                }
+            }
+
+        });
+
+        t.start();
     }
 
     public void setCanceledOnTouchOutside(boolean cancel) {

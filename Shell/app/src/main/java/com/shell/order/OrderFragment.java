@@ -122,7 +122,8 @@ public class OrderFragment extends BaseFragment {
     private TimeCount mTiemTimeCount;
     private TextView tvSecond;
     private PopupWindow orderWindow;
-
+    //fragment loading只显示一次  没时间了
+    private boolean isLoading = true;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order;
@@ -197,11 +198,14 @@ public class OrderFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (myWaitDialog == null) {
-                myWaitDialog = new MyWaitDialog(getActivity());
-                myWaitDialog.show();
-            } else {
-                myWaitDialog.show();
+            if (isLoading){
+                if (myWaitDialog == null) {
+                    myWaitDialog = new MyWaitDialog(getActivity());
+                    myWaitDialog.show();
+                } else {
+                    myWaitDialog.show();
+                }
+                isLoading = false;
             }
         }
 
@@ -294,7 +298,7 @@ public class OrderFragment extends BaseFragment {
 
         @Override
         public void onFinish(int what) {
-            myWaitDialog.cancel();
+            //myWaitDialog.cancel();
         }
     };
 

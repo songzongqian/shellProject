@@ -88,7 +88,8 @@ public class MoneyFragment extends BaseFragment {
     TextView tvMore;
     Unbinder unbinder;
     private String balance;
-
+    //fragment loading只显示一次  没时间了
+    private boolean isLoading = true;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_money;
@@ -220,11 +221,14 @@ public class MoneyFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (myWaitDialog == null) {
-                myWaitDialog = new MyWaitDialog(getActivity());
-                myWaitDialog.show();
-            } else {
-                myWaitDialog.show();
+            if (isLoading){
+                if (myWaitDialog == null) {
+                    myWaitDialog = new MyWaitDialog(getActivity());
+                    myWaitDialog.show();
+                } else {
+                    myWaitDialog.show();
+                }
+                isLoading = false;
             }
         }
 
@@ -276,7 +280,7 @@ public class MoneyFragment extends BaseFragment {
 
         @Override
         public void onFinish(int what) {
-            myWaitDialog.cancel();
+           // myWaitDialog.cancel();
         }
     };
 

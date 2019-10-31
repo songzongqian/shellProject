@@ -117,7 +117,8 @@ public class MineFragment extends BaseFragment {
     private String nickName;
     private String myHewad;
     private String myEmail;
-
+    //fragment loading只显示一次  没时间了
+    private boolean isLoading = true;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_mine;
@@ -278,11 +279,14 @@ public class MineFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (myWaitDialog == null) {
-                myWaitDialog = new MyWaitDialog(getActivity());
-                myWaitDialog.show();
-            } else {
-                myWaitDialog.show();
+            if (isLoading){
+                if (myWaitDialog == null) {
+                    myWaitDialog = new MyWaitDialog(getActivity());
+                    myWaitDialog.show();
+                } else {
+                    myWaitDialog.show();
+                }
+                isLoading = false;
             }
         }
 
@@ -348,12 +352,12 @@ public class MineFragment extends BaseFragment {
 
         @Override
         public void onFailed(int what, Response<JSONObject> response) {
-            myWaitDialog.cancel();
+           // myWaitDialog.cancel();
         }
 
         @Override
         public void onFinish(int what) {
-            myWaitDialog.cancel();
+           // myWaitDialog.cancel();
         }
     };
 
