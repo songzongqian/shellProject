@@ -7,7 +7,7 @@
     <string name="re_invitedcode">招待コード（必ず記入無し）</string>
     <string name="re_register">登録</string>
     <string name="re_tologin">アカウントがあって、直接ログイン</string>
-    <string name="log_cancle">取消</string>
+    <string name="log_cancle">キャンセル</string>
     <string name="log_login">ログイン</string>
     <string name="log_noaccount">アカウントがないか？すぐに登録</string>
     <string name="log_forgetpwd">パスワードを忘れた？</string>
