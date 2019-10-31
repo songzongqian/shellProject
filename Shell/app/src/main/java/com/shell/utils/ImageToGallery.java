@@ -8,6 +8,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.shell.R;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -47,7 +49,7 @@ public class ImageToGallery {
         Uri uri = Uri.fromFile(file);
         intent.setData(uri);
         context.sendBroadcast(intent);
-        Toast.makeText(context, "图片保存成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.sasuccess), Toast.LENGTH_SHORT).show();
     }
 
 }

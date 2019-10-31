@@ -4,7 +4,7 @@
     <string name="register_hintcode">郵箱驗證碼</string>
     <string name="re_getcode">獲取驗證碼</string>
     <string name="re_pwd">密碼</string>
-    <string name="re_invitedcode">邀請碼（非必填</string>
+    <string name="re_invitedcode">邀請碼（非必填）</string>
     <string name="re_register">註冊</string>
     <string name="re_tologin">已有帳號，直接登錄</string>
     <string name="log_cancle">取消</string>
@@ -98,7 +98,7 @@
     <string name="mf_first">跨境支付新模式</string>
     <string name="mf_second">玩法多樣 輕鬆賺錢</string>
     <string name="mf_third">交易傭金 礦池收益 節點獎勵</string>
-    <string name="mf_fourth">Shell，Shell，輕鬆賺取交易傭金</string>
+    <string name="mf_fourth">Shell，輕鬆賺取交易傭金</string>
     <string name="mf_five">註冊時請填寫邀請碼：</string>
     <string name="mf_six">長按識別二維碼：</string>
     <string name="mf_invcode">推薦碼</string>
@@ -155,4 +155,14 @@
     <string name="order">訂單</string>
     <string name="no_content">暫無內容</string>
     <string name="force_demonstrate">算力說明</string>
+    <string name="home_jl">礦池獎勵</string>
+    <string name="fr_tuijian">推薦碼</string>
+    <string name="libei">Milestone</string>
+    <string name="sasuccess">保存成功</string>
+    <string name="setlogin">修改登錄密碼</string>
+    <string name="lg_yuanshi">原密碼</string>
+    <string name="lg_new">新密碼</string>
+    <string name="lg_agian">重新輸入新密碼</string>
+    <string name="tv_jy">修改交易密碼</string>
+    <string name="tv_post">提交</string>
 </resources>

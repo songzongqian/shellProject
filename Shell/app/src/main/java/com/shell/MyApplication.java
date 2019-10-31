@@ -130,7 +130,7 @@ public class MyApplication extends Application {
         //连接地址，必填，例如 wss://echo.websocket.org
         //String token="a506145814f245d8897935589e4a4db8";
         String token = PreManager.instance().getString("token");
-        setting.setConnectUrl("wss://t.tritonlab.net/webSocket/"+token);//必填
+        setting.setConnectUrl("wss://api.tritonlab.net/webSocket"+token);//必填
 
         //设置连接超时时间
         setting.setConnectTimeout(15 * 1000);

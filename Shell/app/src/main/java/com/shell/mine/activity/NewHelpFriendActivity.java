@@ -133,7 +133,7 @@ public class NewHelpFriendActivity extends BaseActivity {
                         Bitmap qrImage = ZXingUtils.createQRImage(inviteUrl);
                         ivQrCode.setImageBitmap(qrImage);
                         String myinviteCode = resultData.getMyinviteCode();
-                        tvHelpCode.setText(R.string.my_jiedian + " " + myinviteCode);
+                        tvHelpCode.setText(getString(R.string.fr_tuijian)+" " +myinviteCode);
                         tvWww.setText(myinviteCode);
                         tv1.setText(resultData.getDescText());
                     } else {

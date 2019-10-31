@@ -16,7 +16,7 @@
     <string name="for_getcode">검증번호 획득</string>
     <string name="for_newpwd">신규 암호</string>
     <string name="for_agianpwd">신규 암호 재확인</string>
-    <string name="for_setpwd">重置密码</string>
+    <string name="for_setpwd">비밀번호 재설정</string>
     <string name="index_kc">폴</string>
     <string name="index_jd">오더 접수</string>
     <string name="index_qb">지갑</string>
@@ -155,4 +155,14 @@
     <string name="order">수주</string>
     <string name="no_content">잠시 내용이 없다.</string>
     <string name="force_demonstrate">셈법 설명</string>
+    <string name="home_jl">폴장례금</string>
+    <string name="fr_tuijian">추천코드</string>
+    <string name="libei">마일스톤</string>
+    <string name="sasuccess">보존성공</string>
+    <string name="setlogin">암호수정</string>
+    <string name="lg_yuanshi">기존암호</string>
+    <string name="lg_new">신규암호</string>
+    <string name="lg_agian">신규암호재확인</string>
+    <string name="tv_jy">거래암호수정</string>
+    <string name="tv_post">제출</string>
 </resources>

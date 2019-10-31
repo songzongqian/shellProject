@@ -252,9 +252,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="34dp"
             android:layout_marginTop="22dp"
-            android:text="矿池奖励"
+            android:text="@string/home_jl"
             android:textColor="#678DA8"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
     </RelativeLayout>
 
 

@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shell.Bean.JieDianBean;
@@ -115,7 +116,10 @@ public class JiaDianActivity extends BaseActivity {
     protected void initData() {
         String headUrl = getIntent().getStringExtra("headUrl");
         String nickName = getIntent().getStringExtra("nickName");
-        Glide.with(this).load(headUrl).into(ivHead);
+        RequestOptions options=new RequestOptions();
+        options.placeholder(R.mipmap.person); //添加占位图
+        options.error(R.mipmap.person);
+        Glide.with(this).load(headUrl).apply(options).into(ivHead);
         tvNickName.setText(nickName);
 
         String token = PreManager.instance().getString("token");

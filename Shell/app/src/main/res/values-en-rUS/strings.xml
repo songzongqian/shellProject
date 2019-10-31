@@ -2,7 +2,7 @@
 <resources>
     <string name="register_hint_email">E-mail</string>
     <string name="register_hintcode">E-mail verification code</string>
-    <string name="re_getcode">Get the verification code</string>
+    <string name="re_getcode">Get verification code</string>
     <string name="re_pwd">Password</string>
     <string name="re_invitedcode">Invitation code(Non-required)</string>
     <string name="re_register">Sign up</string>
@@ -16,7 +16,7 @@
     <string name="for_getcode">Get verification code</string>
     <string name="for_newpwd">New password</string>
     <string name="for_agianpwd">Re-enter password</string>
-    <string name="for_setpwd">重置密码</string>
+    <string name="for_setpwd">Reset Password</string>
     <string name="index_kc">Mining pool</string>
     <string name="index_jd">Receive order</string>
     <string name="index_qb">Wallet</string>
@@ -155,4 +155,14 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="order">The order</string>
     <string name="no_content">No content</string>
     <string name="force_demonstrate">Force was introduced to demonstrate</string>
+    <string name="home_jl">Reward of mining pool</string>
+    <string name="fr_tuijian">Recommendation code</string>
+    <string name="libei">Milestone</string>
+    <string name="sasuccess">Save success</string>
+    <string name="setlogin">Reset password</string>
+    <string name="lg_yuanshi">Original password</string>
+    <string name="lg_new">New password</string>
+    <string name="lg_agian">Re-enter new password</string>
+    <string name="tv_jy">Reset transaction password</string>
+    <string name="tv_post">Submit</string>
 </resources>

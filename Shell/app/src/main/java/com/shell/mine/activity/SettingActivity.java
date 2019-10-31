@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.laojiang.imagepickers.ImagePicker;
 import com.laojiang.imagepickers.data.ImagePickType;
@@ -106,10 +107,15 @@ public class SettingActivity extends BaseActivity {
         String nickName = getIntent().getStringExtra("nickName");
         String myEmail = getIntent().getStringExtra("myEmail");
         if (TextUtils.isEmpty(headUrl)){
-            Glide.with(SettingActivity.this).load(R.mipmap.avator).into(ivHead);
+            Glide.with(SettingActivity.this).load(R.mipmap.person).into(ivHead);
         }else {
-            Glide.with(SettingActivity.this).load(headUrl).into(ivHead);
+            RequestOptions options=new RequestOptions();
+            options.placeholder(R.mipmap.person); //添加占位图
+            options.error(R.mipmap.person);
+            Glide.with(SettingActivity.this).load(headUrl).apply(options).into(ivHead);
         }
+
+
         tvNickName.setText(nickName);
         tvMyEmail.setText(myEmail);
     }

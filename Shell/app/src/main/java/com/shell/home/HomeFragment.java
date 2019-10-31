@@ -2,23 +2,26 @@ package com.shell.home;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -116,6 +119,8 @@ public class HomeFragment extends BaseFragment {
     ImageView DaYangZhou;
     @BindView(R.id.tv_word)
     TextView tvWord;
+    @BindView(R.id.rl_GetMore)
+    RelativeLayout rlGetMore;
     private Request<JSONObject> request;
     private int page = 1;
     @BindView(R.id.all_suanli)
@@ -171,6 +176,7 @@ public class HomeFragment extends BaseFragment {
                     } else {
                         //mTimer.cancel();
                     }
+                    // mList.add(0,"新添加的数据");
                 /*    handlerPosition--;
                     if (0 < handlerPosition) {
                         recyclerView.smoothScrollToPosition(handlerPosition);
@@ -444,6 +450,21 @@ public class HomeFragment extends BaseFragment {
                         VersionBean.ResultDataBean versionData = versionBean.getResultData();
                         if (versionData != null) {
                             showUpDateInfo(versionData);
+                            String serverVersion = versionData.getVersion();
+                            PackageManager packageManager = getActivity().getPackageManager();
+                            PackageInfo packInfo = null;
+                            try {
+                                packInfo = packageManager.getPackageInfo(getContext().getPackageName(),0);
+                            } catch (PackageManager.NameNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            String currentVersion = packInfo.versionName;
+                            String finalCurrent="v"+currentVersion;
+                            if(serverVersion.equals(finalCurrent)){
+
+                            }else{
+                                showUpDateInfo(versionData);
+                            }
                         }
                     }
                     break;
@@ -500,7 +521,7 @@ public class HomeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli, R.id.iv_more, R.id.ll_map,})
+    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli,R.id.rl_GetMore, R.id.ll_map,})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_allsuanli:
@@ -514,11 +535,10 @@ public class HomeFragment extends BaseFragment {
             case R.id.ll_mysuanli:
                 showPopuwindow("2");
                 break;
-            case R.id.iv_more:
+            case R.id.rl_GetMore:
                 //里程碑更多
                 showCenter();
                 break;
-
             case R.id.ll_map:
                 showTopFirstWindow(countryDataList);
                 break;
@@ -530,7 +550,7 @@ public class HomeFragment extends BaseFragment {
     //上方国家的window
     private void showTopWindow(int countryCode) {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_home_top, null, false);
-        final PopupWindow window = new PopupWindow(inflate, 800, 600, true);
+        final PopupWindow window = new PopupWindow(inflate, 800, 450, true);
         // final PopupWindow window = new PopupWindow(inflate, 252, 151, true);
         TextView tvTopName = inflate.findViewById(R.id.tv_topName);
         TextView tvRegisterCount = inflate.findViewById(R.id.tv_RegisterUser);
@@ -607,10 +627,9 @@ public class HomeFragment extends BaseFragment {
 
     private void showCenter() {
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popu_center, null, false);
-        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, 1300, true);
         recyclerView = inflate.findViewById(R.id.recyclerView);
-        SmartRefreshLayout smartRefreshLayout = inflate.findViewById(R.id.smartRefreshLayout);
-        ImageView ivMore = inflate.findViewById(R.id.iv_more);
+        RelativeLayout rlMore = inflate.findViewById(R.id.rl_More);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -618,7 +637,7 @@ public class HomeFragment extends BaseFragment {
         PopuCardAdapter answerCardAdapter = new PopuCardAdapter(bottomList, getActivity());
         recyclerView.setAdapter(answerCardAdapter);
 
-        ivMore.setOnClickListener(new View.OnClickListener() {
+        rlMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 window.dismiss();
@@ -783,12 +802,14 @@ public class HomeFragment extends BaseFragment {
         tvTitle.setText(getString(R.string.version_title));
         tvContent.setText(replace);
         final String dataUrl = versionData.getUrl();
+        final String replaceUrl = dataUrl.replaceAll(" ", "");
 
 
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 downLoadApk(dataUrl, true);
+                downLoadApk(replaceUrl, true);
             }
         });
         backgroundAlpha(0.5f);
@@ -799,8 +820,19 @@ public class HomeFragment extends BaseFragment {
             }
         });
         window.setBackgroundDrawable(new BitmapDrawable());
-        window.setOutsideTouchable(true);
+        window.setOutsideTouchable(false);
         window.setTouchable(true);
+        window.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !window.isFocusable()) {
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+        });
         window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
     }
 
@@ -822,6 +854,7 @@ public class HomeFragment extends BaseFragment {
             getStaticData();
             getUserInfo();
             getJiangLi();
+            checkVersion();
         } else {
             //不可见
             Log.i("song", "HomeFragment不可见");
@@ -831,12 +864,13 @@ public class HomeFragment extends BaseFragment {
 
     //下载apk文件
     private void downLoadApk(String uploadPath, final boolean isShow) {
+        notificationManager = (NotificationManager) getActivity().getSystemService(Activity.NOTIFICATION_SERVICE);
         psdialog = new ProgressDialog(getActivity());
         String filefoder = null;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             filefoder = Environment.getExternalStorageDirectory().getAbsolutePath();
         } else {
-            filefoder = getActivity().getFilesDir().getAbsolutePath();//data/data/应用包名
+            filefoder = getActivity().getFilesDir().getAbsolutePath();
         }
         DownloadQueue downloadQueue = NoHttp.newDownloadQueue();
         DownloadRequest downloadRequest = NoHttp.createDownloadRequest(uploadPath, RequestMethod.GET, filefoder, "123.apk", true, true);
@@ -861,7 +895,7 @@ public class HomeFragment extends BaseFragment {
                     ////
                     builder = new NotificationCompat.Builder(MyApplication.getAppInstance()).setSmallIcon(R.mipmap.ic_launcher).setContentInfo("").setContentTitle("正在下载");
                     nf = builder.build();
-//               //使用默认的声音、振动、闪光
+//                  //使用默认的声音、振动、闪光
                     nf.defaults = Notification.DEFAULT_ALL;
                     notificationManager.notify(0, nf);
                 }

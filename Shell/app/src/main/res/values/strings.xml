@@ -174,4 +174,14 @@
     <string name="force_demonstrate">算力说明</string>
     <string name="version_title">提示</string>
     <string name="version_sure">确定</string>
+    <string name="home_jl">矿池奖励</string>
+    <string name="fr_tuijian">推荐码</string>
+    <string name="libei">里程碑</string>
+    <string name="sasuccess">保存成功</string>
+    <string name="setlogin">修改登录密码</string>
+    <string name="lg_yuanshi">原始密码</string>
+    <string name="lg_new">新密码</string>
+    <string name="lg_agian">重新输入新密码</string>
+    <string name="tv_jy">修改交易密码</string>
+    <string name="tv_post">提交</string>
 </resources>
