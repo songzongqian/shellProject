@@ -152,8 +152,11 @@ public class OrderFragment extends BaseFragment {
         getTopData();
         getMiddleData();
         getOrderData();
+        getOrderWord(); //获取接单文案
 
     }
+
+
 
 
     private void getTopData() {
@@ -191,6 +194,15 @@ public class OrderFragment extends BaseFragment {
         request.add("token", token);
         request.add("status", off);
         mQueue.add(4, request, responseListener);
+    }
+
+    //获取接单文案
+    private void getOrderWord() {
+        String token = PreManager.instance().getString("token");
+        request = NoHttp.createJsonObjectRequest(AppUrl.getOrderWord, RequestMethod.GET);
+        request.addHeader("token", token);
+        request.add("token", token);
+        mQueue.add(6, request, responseListener);
     }
 
 
@@ -287,6 +299,11 @@ public class OrderFragment extends BaseFragment {
                         Toast.makeText(getActivity(), getServerBean.getResultDesc(), Toast.LENGTH_SHORT).show();
                     }
                     break;
+
+                case 6:
+                    Log.i("song", "获取接单的文案" + String.valueOf(response));
+
+                    break;
             }
         }
 
@@ -298,7 +315,7 @@ public class OrderFragment extends BaseFragment {
 
         @Override
         public void onFinish(int what) {
-            //myWaitDialog.cancel();
+            myWaitDialog.cancel();
         }
     };
 
@@ -322,23 +339,17 @@ public class OrderFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btn_startOrder:
                 //显示接单注意事项
-                //showOrderInfo();
                 if (flag == 0) {
+                    //处于已经开始接单的状态
                     btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
-                    if (titleFlag == 0) {
-                        showOrderInfo();
-                        titleFlag = 1;
-                    } else {
-
-                    }
+                    showOrderInfo();
                     flag = 1;
                     btnStartOrder.setText(R.string.or_endorder);
                     WebSocketHandler.getDefault().reconnect();
-                    //开始接单状态
                     PostOrderStatue("on");
 
                 } else if (flag == 1) {
-                    //停止接单状态
+                    //处于停止接单状态
                     WebSocketHandler.getDefault().disConnect();
                     btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
                     btnStartOrder.setText(R.string.or_begin);
@@ -411,7 +422,6 @@ public class OrderFragment extends BaseFragment {
         orderWindow.setOutsideTouchable(true);
         orderWindow.setTouchable(true);
         orderWindow.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.BOTTOM, 0, 0);
-
     }
 
 

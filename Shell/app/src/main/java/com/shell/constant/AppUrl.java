@@ -132,6 +132,11 @@ public class AppUrl {
      */
     public static final String CheckUpdateVersion = BASE_URL + "/checkUpdates/android?";
 
+    /**
+     * 获取接单文案
+     */
+    public static final String getOrderWord = BASE_URL + "/order/getUserStatusTextDesc?";
+
 
 
 

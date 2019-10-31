@@ -449,7 +449,6 @@ public class HomeFragment extends BaseFragment {
                     if (versionCode.equals("999999")) {
                         VersionBean.ResultDataBean versionData = versionBean.getResultData();
                         if (versionData != null) {
-                            showUpDateInfo(versionData);
                             String serverVersion = versionData.getVersion();
                             PackageManager packageManager = getActivity().getPackageManager();
                             PackageInfo packInfo = null;
@@ -463,7 +462,7 @@ public class HomeFragment extends BaseFragment {
                             if(serverVersion.equals(finalCurrent)){
 
                             }else{
-                                showUpDateInfo(versionData);
+                                //showUpDateInfo(versionData);
                             }
                         }
                     }
@@ -822,6 +821,7 @@ public class HomeFragment extends BaseFragment {
         window.setBackgroundDrawable(new BitmapDrawable());
         window.setOutsideTouchable(false);
         window.setTouchable(true);
+        window.setFocusable(false);
         window.setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
