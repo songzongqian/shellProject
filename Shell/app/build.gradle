@@ -83,3 +83,7 @@ android {
         implementation 'com.makeramen:roundedimageview:2.2.1'
     }
 }
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}

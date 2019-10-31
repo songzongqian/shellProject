@@ -8,6 +8,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.shell.Bean.HistoryShouYiBean;
 import com.shell.R;
@@ -56,14 +66,14 @@ public class SuanChartActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.tv_rightTitle)
     TextView tvRightTitle;
-    @BindView(R.id.lineChat)
-    LineChartView lineChat;
     @BindView(R.id.tv_notice)
     TextView tvNotice;
     @BindView(R.id.tv_content)
     TextView tvContent;
-    private List<AxisValue> axisXs1 = new ArrayList<>();//橫轴值集合
-    private List<PointValue> values = new ArrayList<>(); //橫、纵坐标值
+    @BindView(R.id.chart1)
+    LineChart chart;
+    private ArrayList<String> dataText = new ArrayList<>();
+    private List<SuanAllBean.ResultDataBean.DataBean> data;
 
     @Override
     protected void initToolBar() {
@@ -87,6 +97,146 @@ public class SuanChartActivity extends BaseActivity {
         tvRightTitle.setVisibility(View.GONE);
     }
 
+    private void initInitView() {
+
+        chart.setViewPortOffsets(100, 100, 100, 100);
+        chart.setBackgroundColor(Color.rgb(7, 24, 38));
+
+        // no description text
+        chart.getDescription().setEnabled(false);
+
+        // enable touch gestures
+        chart.setTouchEnabled(true);
+
+        // enable scaling and dragging
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        chart.setPinchZoom(false);
+
+        chart.setDrawGridBackground(false);
+        chart.setMaxHighlightDistance(300);
+        // create marker to display box when values are selected
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view,dataText,data);
+
+        // Set the marker to the chart
+        mv.setChartView(chart);
+        chart.setMarker(mv);
+
+        ValueFormatter xAxisFormatter = new DayAxisValueFormatter(chart,data);
+
+        XAxis x = chart.getXAxis();
+        x.setTextColor(Color.rgb(36, 72, 110));
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        x.setTextSize(12f);
+        x.setLabelCount(6, false);
+        x.setDrawGridLines(false);
+        x.setAxisLineColor(Color.rgb(34, 62, 92));
+        x.enableAxisLineDashedLine(10f, 10f, 0f);//虚线
+        x.enableGridDashedLine(10f, 10f, 0f);
+
+        x.setValueFormatter(xAxisFormatter);
+        x.setGranularity(1f);//禁止放大后x轴标签重绘
+
+        YAxis y = chart.getAxisLeft();
+        y.setTextSize(12f);
+        y.setLabelCount(6, false);
+        y.setTextColor(Color.rgb(36, 72, 110));
+        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);//YAxis.YAxisLabelPosition.INSIDE_CHART
+        y.setZeroLineColor(Color.rgb(36, 72, 110));
+        y.setAxisLineColor(Color.rgb(36, 72, 110));
+        y.setGridColor(Color.rgb(36, 72, 110));
+        y.setDrawAxisLine(false);//坐标轴的线是否绘制
+        y.setDrawGridLines(true);//是否绘制中间的提示线
+        y.enableGridDashedLine(10f, 10f, 0f);//虚线
+
+
+        chart.getAxisRight().setEnabled(false);
+
+
+        chart.getLegend().setEnabled(false);
+
+        chart.animateXY(2000, 2000);
+
+
+        setData(dataText.size(),dataText.size());
+
+
+        List<ILineDataSet> sets = chart.getData().getDataSets();
+
+        for (ILineDataSet iSet : sets) {
+
+            LineDataSet set = (LineDataSet) iSet;
+            set.setDrawFilled(true);//是否覆盖
+            set.setDrawCircles(true);//是否有点
+            set.setMode(LineDataSet.Mode.CUBIC_BEZIER);//是否是曲线相连
+
+
+            set.setCircleColor(Color.rgb(89, 173, 229));//点外面颜色
+            set.setCircleHoleColor(Color.rgb(11, 19, 44));//点里面颜色
+            set.setColor(Color.rgb(89, 173, 229));//线的颜色
+            set.setFillColor(Color.rgb(51, 70, 89));//覆盖物的颜色
+            set.setCubicIntensity(0.2f);//贝塞尔曲线的一个什么值
+            set.setLineWidth(2.5f);//线宽
+            set.setCircleRadius(4f);//点外圈的半径
+            set.setCircleHoleRadius(2.5f);//点里面的半径
+            set.setHighLightColor(Color.TRANSPARENT);
+            //  set.setHighlightEnabled(false);
+//            set.setFillAlpha(100);//覆盖物透明度
+        }
+
+        // don't forget to refresh the drawing
+        chart.invalidate();
+    }
+    private void setData(int count, float range) {
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            values.add(new Entry(i, Float.parseFloat(dataText.get(i))));
+        }
+
+        LineDataSet set1;
+
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
+        } else {
+            // create a dataset and give it a type
+            set1 = new LineDataSet(values, "DataSet 1");
+
+            set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set1.setDrawCircles(true);
+            set1.setDrawFilled(true);
+            set1.setCubicIntensity(0.2f);
+            set1.setCircleRadius(4f);
+            set1.setLineWidth(1.8f);
+            set1.setCircleColor(Color.WHITE);
+            set1.setHighLightColor(Color.rgb(244, 117, 117));
+            set1.setColor(Color.WHITE);
+            set1.setFillColor(Color.WHITE);
+            set1.setFillAlpha(100);
+            set1.setDrawHorizontalHighlightIndicator(false);
+            set1.setFillFormatter(new IFillFormatter() {
+                @Override
+                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+                    return chart.getAxisLeft().getAxisMinimum();
+                }
+            });
+
+            // create a data object with the data sets
+            LineData data = new LineData(set1);
+            data.setValueTextSize(9f);
+            data.setDrawValues(false);
+
+            // set data
+            chart.setData(data);
+        }
+    }
     @Override
     protected void setListener() {
 
@@ -100,90 +250,6 @@ public class SuanChartActivity extends BaseActivity {
         request.add("token", token);
         mQueue.add(1, request, responseListener);
 
-    }
-
-    private void initLineChart() {
-
-
-        //线
-        Line line = new Line(values)
-                .setColor(Color.parseColor("#187AC2"))//线颜色
-                .setCubic(true)//曲线是否平滑
-                .setStrokeWidth(2)//线粗细
-                .setPointRadius(3)//坐标点大小
-                .setHasLabels(false)//是否显示坐标文本备注（纵坐标数值）
-//				.setHasLabelsOnlyForSelected(true)//点击数据坐标提示数值（设置了这个line.setHasLabels(true);就无效）
-                .setHasLines(true)//是否有线（默认true）
-                .setHasPoints(true)//是否有点（默认true）
-                .setShape(ValueShape.CIRCLE)//点形状ValueShape.CIRCLE（圆形）、ValueShape.DIAMOND（棱形）、ValueShape.SQUARE(正方形)《默认圆形》
-                .setFilled(true);//是否填充曲线的面积（默认为false）
-
-        //线集合
-        List<Line> lines = new ArrayList<>();
-        //线集合添加线（添加几条线，一张表中就有几条）
-        lines.add(line);
-        //橫轴
-        Axis axisX = new Axis()
-                .setHasLines(false)//是否显示轴网格线
-                .setTextColor(Color.parseColor("#1666A0"))//坐标轴文字颜色
-                .setTextSize(8)//坐标轴文字大小
-                .setLineColor(Color.parseColor("#187AC2"))//线颜色(横轴为网格竖线，纵轴为网格横线)
-                .setHasTiltedLabels(false)//坐标轴文字是否倾斜(默认为false,不倾斜)
-                .setInside(false)//坐标值文字在图标内部还是在轴下面（默认为flase,在轴下面）
-                .setMaxLabelChars(3)//最大间隔
-                .setValues(axisXs1);//轴数值
-        //纵轴
-        Axis axisY = new Axis()
-                .setHasLines(true)
-                .setHasSeparationLine(true)
-                .setTextSize(8)
-                .setMaxLabelChars(3)//最大间隔
-                .setInside(false)
-                .setTextColor(Color.parseColor("#1666A0"))//坐标轴文字颜色
-                .setLineColor(Color.parseColor("#00000000"));//线颜色(横轴为网格竖线，纵轴为网格横线)
-
-
-        //线图表数据
-        LineChartData data = new LineChartData();
-        //设置坐标点旁边的文字背景
-        data.setValueLabelBackgroundColor(Color.parseColor("#1ca0aa"));
-        //设置坐标点旁文字背景此方法必须设置为false
-        data.setValueLabelBackgroundAuto(false);
-        //设置坐标点旁文字背景是否可见（在line.setHasLines为true的情况下，默认为true）
-        data.setValueLabelBackgroundEnabled(true);
-        //设置坐标点旁边的文字颜色
-        data.setValueLabelsTextColor(Color.BLACK);
-        //设置坐标点旁边的文字大小
-        data.setValueLabelTextSize(8);
-        //设置左侧轴
-        data.setAxisYLeft(axisY);
-        //设置底部轴
-        data.setAxisXBottom(axisX);
-        //线图表数据设置线集合
-        data.setLines(lines);
-        //视图设置图表
-        lineChat.setLineChartData(data);
-        //是否可以拉伸，默认为true
-        lineChat.setInteractive(true);
-        //是否可以放大，默认为true（设置为true的前提是setInteractive为true）
-        lineChat.setZoomEnabled(true);
-        //设置放大类型
-        lineChat.setZoomType(ZoomType.HORIZONTAL_AND_VERTICAL);
-        //点值是否可以点击
-        lineChat.setValueTouchEnabled(true);
-        //设置交叉模式
-
-        lineChat.setOnValueTouchListener(new LineChartOnValueSelectListener() {
-            @Override
-            public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-                Toast.makeText(SuanChartActivity.this, "Selected: " + value, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onValueDeselected() {
-
-            }
-        });
     }
 
 
@@ -210,14 +276,13 @@ public class SuanChartActivity extends BaseActivity {
                     String resultCode = suanAllBean.getResultCode();
                     if (resultCode.equals("999999")) {
                         tvContent.setText(suanAllBean.getResultData().getDescText());
-                        List<SuanAllBean.ResultDataBean.DataBean> data = suanAllBean.getResultData().getData();
+                        data = suanAllBean.getResultData().getData();
                         DecimalFormat myformat = new DecimalFormat("0.0");
                         for (int i = 0; i < data.size(); i++) {
-                            axisXs1.add(new AxisValue(i).setLabel(data.get(i).getStatisticalTime().substring(5, 11)));
-                            float v = Float.parseFloat(myformat.format(Float.parseFloat(data.get(i).getHashRate())));
-                            values.add(new PointValue(i,v*10));
-                            initLineChart();
+                            dataText.add(data.get(i).getHashRate());
+                            //datass.add(Float.parseFloat(data.get(i).getStatisticalTime()));
                         }
+                        initInitView();
                     } else {
                         Toast.makeText(SuanChartActivity.this, suanAllBean.getResultDesc(), Toast.LENGTH_SHORT).show();
                     }
