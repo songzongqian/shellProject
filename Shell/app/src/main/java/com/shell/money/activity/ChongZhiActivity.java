@@ -86,7 +86,7 @@ public class ChongZhiActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("USDT充币");
+        tvTitle.setText(getString(R.string.usdtchar));
         tvRightTitle.setVisibility(View.GONE);
     }
 

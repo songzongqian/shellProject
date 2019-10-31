@@ -200,4 +200,10 @@
     <string name="To_pledge">可质押(USDT)</string>
 
     <string name="earnings">收益</string>
+    <string name="wb_nodata">无记录</string>
+    <string name="tv_hascopy">已复制</string>
+    <string name="my_shouyi">我的收益</string>
+    <string name="usdtchar">USDT充币</string>
+    <string name="putword">请输入</string>
+    <string name="zy_other">其他</string>
 </resources>

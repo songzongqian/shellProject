@@ -207,7 +207,7 @@ public class RegisterActivity extends BaseActivity {
     private void getEmailCode() {
         inputEmail = etAccount.getText().toString().trim();
         if (TextUtils.isEmpty(inputEmail)) {
-            Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
+
         } else {
             mTiemTimeCount.start();
             request = NoHttp.createJsonObjectRequest(AppUrl.getEmailCode, RequestMethod.POST);
@@ -286,12 +286,12 @@ public class RegisterActivity extends BaseActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             tvCode.setClickable(false);
-            tvCode.setText(millisUntilFinished / 1000 + "秒后重新发送");
+            tvCode.setText(millisUntilFinished / 1000 + "s");
         }
 
         @Override
         public void onFinish() {
-            tvCode.setText("获取验证码");
+            tvCode.setText(R.string.re_getcode);
             tvCode.setClickable(true);
         }
     }
