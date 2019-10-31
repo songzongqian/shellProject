@@ -152,7 +152,7 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="complete">complete</string>
     <string name="credit_description">Credit score description complete</string>
     <string name="credit_description_contont">Credit score three is an important index to evaluate the contribution of nodes and also an important dimension of award issuance. Credit score can be obtained by completing orders/inviting new nodes and so on. Details of credit score acquisition and elimination are shown below</string>
-    <string name="order">The order</string>
+    <string name="order">order</string>
     <string name="no_content">No content</string>
     <string name="force_demonstrate">Force was introduced to demonstrate</string>
     <string name="home_jl">Reward of mining pool</string>
@@ -168,4 +168,10 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="home_all_suanli_S">Whole network computing power</string>
     <string name="Net_trade_volume">Net trade volume</string>
     <string name="So_the_pledge">So the pledge</string>
+    <string name="untreated">untreated</string>
+    <string name="Have_to_dealwith">Have to deal with</string>
+    <string name="The_pledge_rights">The pledge rights</string>
+    <string name="Benefits_that">Benefits that</string>
+    <string name="To_pledge">To pledge(USDT)</string>
+    <string name="earnings">earnings</string>
 </resources>

@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="13dp"
-        android:text="收益说明"
+        android:text="@string/Benefits_that"
         android:textColor="#FFFFFF"
         android:textSize="14sp" />
 
@@ -50,7 +50,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="28dp"
                 android:layout_marginTop="22dp"
-                android:text="信用分"
+                android:text="@string/mf_creiscore"
                 android:textColor="#678DA8"
                 android:textSize="14sp" />
 
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="11dp"
                 android:layout_marginTop="22dp"
                 android:layout_toRightOf="@id/tv_one"
-                android:text="可质押(USDT)"
+                android:text="@string/To_pledge"
                 android:textColor="#678DA8"
                 android:textSize="14sp" />
 
@@ -76,7 +76,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="22dp"
                 android:layout_toRightOf="@id/tv_two"
-                android:text="订单"
+                android:text="@string/order"
                 android:textColor="#678DA8"
                 android:textSize="14sp" />
 
@@ -89,7 +89,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="49dp"
                 android:layout_marginTop="22dp"
-                android:text="收益"
+                android:text="@string/earnings"
                 android:textColor="#678DA8"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -113,7 +113,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@mipmap/bg_qingsuan"
         android:gravity="center"
-        android:text="确定"
+        android:text="@string/tb_ok"
         android:layout_marginTop="17dp"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="28dp"

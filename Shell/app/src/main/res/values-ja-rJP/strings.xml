@@ -169,4 +169,10 @@
     <string name="home_all_suanli_S">全ネット計算力</string>
     <string name="Net_trade_volume">全ネット取引量</string>
     <string name="So_the_pledge">全ネットが品質管理されている</string>
+    <string name="untreated">未処理</string>
+    <string name="Have_to_dealwith">処理済み</string>
+    <string name="The_pledge_rights">質的権益</string>
+    <string name="Benefits_that">収益説明</string>
+    <string name="To_pledge">可質入れ(USDT)</string>
+    <string name="earnings">収益</string>
 </resources>

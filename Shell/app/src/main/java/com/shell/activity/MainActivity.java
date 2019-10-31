@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
         @Override
         public <T> void onMessage(String message, T data) {
+            Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT).show();
             Log.w("song", "服务器推送的消息" + message);
             if (message.contains("userEmail")) {
                 EventBus.getDefault().post(new OrderEvent(message));

@@ -169,4 +169,10 @@
     <string name="home_all_suanli_S">全網算力</string>
     <string name="Net_trade_volume">全網交易量</string>
     <string name="So_the_pledge">全網質押</string>
+    <string name="untreated">未處理</string>
+    <string name="Have_to_dealwith">已處理</string>
+    <string name="The_pledge_rights">質押權益</string>
+    <string name="Benefits_that">收益說明</string>
+    <string name="To_pledge">可質押(USDT)</string>
+    <string name="earnings">收益</string>
 </resources>

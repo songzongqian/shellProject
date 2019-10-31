@@ -93,7 +93,7 @@ public class SuanChartActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("全网算力图");
+        tvTitle.setText(getString(R.string.qw_suanlitu));
         tvRightTitle.setVisibility(View.GONE);
     }
 

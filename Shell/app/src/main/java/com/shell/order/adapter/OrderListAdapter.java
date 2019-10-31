@@ -48,9 +48,9 @@ public class OrderListAdapter extends RecyclerView.Adapter {
         holder.tvOrderAddress.setText("地址:"+dataBean.getTargetAddress());
         String status = dataBean.getStatus();
         if(status.equals("10")){
-            holder.orderStatue.setText("未处理");
+            holder.orderStatue.setText(context.getString(R.string.untreated));
         }else if(status.equals("20")){
-            holder.orderStatue.setText("已处理");
+            holder.orderStatue.setText(context.getString(R.string.Have_to_dealwith));
         }
         holder.tvClockTime.setText(dataBean.getCreateTime());
 

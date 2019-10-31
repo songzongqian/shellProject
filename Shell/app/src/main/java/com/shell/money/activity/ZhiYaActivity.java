@@ -101,8 +101,8 @@ public class ZhiYaActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("质押");
-        tvRightTitle.setText("质押权益");
+        tvTitle.setText(getString(R.string.or_zhiya));
+        tvRightTitle.setText(getString(R.string.The_pledge_rights));
         tvRightTitle.setVisibility(View.VISIBLE);
     }
 

@@ -168,4 +168,10 @@
     <string name="home_all_suanli_S">서버 총 계산력</string>
     <string name="Net_trade_volume">네트워크 전체의 거래량</string>
     <string name="So_the_pledge">전 인터넷 질권</string>
+    <string name="untreated">처리되지 않음</string>
+    <string name="Have_to_dealwith">처리됨</string>
+    <string name="The_pledge_rights">질권</string>
+    <string name="Benefits_that">이익설명</string>
+    <string name="To_pledge">질권 가능(USDT)</string>
+    <string name="earnings">수익</string>
 </resources>

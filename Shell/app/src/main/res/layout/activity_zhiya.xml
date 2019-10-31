@@ -109,7 +109,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="26dp"
         android:background="@drawable/button"
-        android:text="质押"
+        android:text="@string/or_zhiya"
         android:textColor="#ffffff" />
 
 </LinearLayout>

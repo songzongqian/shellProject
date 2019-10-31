@@ -141,7 +141,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="银行买入"
+                            android:text="@string/hv_bankin"
                             android:textColor="#6699BF"
                             android:textSize="14sp" />
 
@@ -159,7 +159,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="银行卖出"
+                            android:text="@string/hv_bankout"
                             android:textColor="#6699BF"
                             android:textSize="14sp" />
 
