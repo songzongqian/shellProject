@@ -34,14 +34,59 @@
                 android:background="@mipmap/bancircle"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="34dp"
-                    android:layout_marginTop="60dp"
-                    android:text="@string/rmb_hasamount"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+
+
+
+                    <TextView
+                        android:id="@+id/tv_chiyouword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="34dp"
+                        android:layout_marginTop="60dp"
+                        android:text="@string/rmb_hasamount"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                <RelativeLayout
+                    android:layout_below="@+id/tv_keyongCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_chiyouCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="28dp"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_qingsuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_toLeftOf="@+id/tv_tibi"
+                        android:text="@string/rmb_qingsuan"
+                        android:textColor="#576E98"
+                        android:textSize="12sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_tibi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="28dp"
+                        android:text="@string/rmb_tibi"
+                        android:textColor="#576E98"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
 
 
                 <RelativeLayout
@@ -67,6 +112,9 @@
                         android:text="0"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp" />
+
+
+
                 </RelativeLayout>
 
 
@@ -94,45 +142,6 @@
                         android:textColor="#FFFFFF"
                         android:textSize="12sp" />
 
-                    <RelativeLayout
-                        android:layout_below="@+id/tv_keyongCount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tv_chiyouCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="28dp"
-                            android:text=""
-                            android:textColor="#FFFFFF"
-                            android:textSize="30sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_qingsuan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="@dimen/dp_10"
-                            android:layout_toLeftOf="@+id/tv_tibi"
-                            android:text="@string/rmb_qingsuan"
-                            android:textColor="#576E98"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_tibi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="28dp"
-                            android:text="@string/rmb_tibi"
-                            android:textColor="#576E98"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
                 </RelativeLayout>
 
 

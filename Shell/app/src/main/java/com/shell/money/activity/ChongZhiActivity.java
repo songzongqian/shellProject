@@ -64,8 +64,6 @@ public class ChongZhiActivity extends BaseActivity {
     ListView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    @BindView(R.id.tv_more)
-    TextView tvMore;
     private String chongZhiUrl;
 
     @Override
@@ -194,7 +192,7 @@ public class ChongZhiActivity extends BaseActivity {
             case R.id.rl_copy:
                 ClipboardManager cmb1 = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cmb1.setText(chongZhiUrl);
-                Toast.makeText(ChongZhiActivity.this, "已复制", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChongZhiActivity.this, getString(R.string.tv_hascopy), Toast.LENGTH_SHORT).show();
 
 
                 break;
