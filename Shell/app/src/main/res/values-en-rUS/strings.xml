@@ -165,4 +165,7 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="lg_agian">Re-enter new password</string>
     <string name="tv_jy">Reset transaction password</string>
     <string name="tv_post">Submit</string>
+    <string name="home_all_suanli_S">Whole network computing power</string>
+    <string name="Net_trade_volume">Net trade volume</string>
+    <string name="So_the_pledge">So the pledge</string>
 </resources>

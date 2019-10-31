@@ -26,6 +26,7 @@ import java.util.List;
 @SuppressLint("ViewConstructor")
 public class MyMarkerView extends MarkerView {
 
+    private Context context;
     private final TextView tvContent;
     private  List<SuanAllBean.ResultDataBean.DataBean> data;
     private List<String> dataText;
@@ -35,6 +36,7 @@ public class MyMarkerView extends MarkerView {
 
     public MyMarkerView(Context context, int layoutResource, ArrayList<String> dataText, List<SuanAllBean.ResultDataBean.DataBean> data) {
         super(context, layoutResource);
+        this.context = context;
         this.dataText = dataText;
         this.data = data;
         tvContent = findViewById(R.id.pop_time);
@@ -68,9 +70,9 @@ public class MyMarkerView extends MarkerView {
             tvContent.setText(data.get(index).getStatisticalTime());
             float x = e.getX();
             float y = e.getY();
-            pop_text_1.setText("全网算力: " + data.get(index).getHashRate());
-            pop_text_2.setText("全网交易量: " + data.get(index).getTradingAmount());
-            pop_text_3.setText("全网质押USDT: " + data.get(index).getPledgeAmount());
+            pop_text_1.setText(context.getString(R.string.home_all_suanli_S)+": " + data.get(index).getHashRate());
+            pop_text_2.setText(context.getString(R.string.Net_trade_volume)+": " + data.get(index).getTradingAmount());
+            pop_text_3.setText(context.getString(R.string.So_the_pledge)+"USDT: " + data.get(index).getPledgeAmount());
         }
 
 

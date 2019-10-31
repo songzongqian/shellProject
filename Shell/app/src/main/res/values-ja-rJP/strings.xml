@@ -166,4 +166,7 @@
     <string name="lg_agian">新たなパスワード再入力</string>
     <string name="tv_jy">取引パスワード変更</string>
     <string name="tv_post">提出する</string>
+    <string name="home_all_suanli_S">全ネット計算力</string>
+    <string name="Net_trade_volume">全ネット取引量</string>
+    <string name="So_the_pledge">全ネットが品質管理されている</string>
 </resources>

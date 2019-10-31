@@ -150,6 +150,7 @@ public class SuanChartActivity extends BaseActivity {
         y.setDrawAxisLine(false);//坐标轴的线是否绘制
         y.setDrawGridLines(true);//是否绘制中间的提示线
         y.enableGridDashedLine(10f, 10f, 0f);//虚线
+        y.setLabelCount(11);
 
 
         chart.getAxisRight().setEnabled(false);

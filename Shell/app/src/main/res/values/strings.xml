@@ -184,4 +184,8 @@
     <string name="lg_agian">重新输入新密码</string>
     <string name="tv_jy">修改交易密码</string>
     <string name="tv_post">提交</string>
+
+    <string name="home_all_suanli_S">全网算力</string>
+    <string name="Net_trade_volume">全网交易量</string>
+    <string name="So_the_pledge">全网质押</string>
 </resources>
