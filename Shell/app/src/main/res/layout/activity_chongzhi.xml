@@ -157,13 +157,4 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-    <TextView
-        android:id="@+id/tv_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="上滑加载更多......"
-        android:textColor="#156097"
-        android:layout_marginTop="22dp"
-        android:layout_gravity="center_horizontal"/>
-
 </LinearLayout>

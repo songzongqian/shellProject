@@ -23,6 +23,7 @@
 
 
                 <ImageView
+                    android:visibility="invisible"
                     android:id="@+id/iv_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
                     android:textColor="#4E658D"
                     android:text="中国"
                     android:layout_marginLeft="53dp"
+                    android:visibility="invisible"
                     android:layout_centerVertical="true"/>
 
                 <TextView

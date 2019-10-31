@@ -174,4 +174,10 @@
     <string name="Benefits_that">이익설명</string>
     <string name="To_pledge">질권 가능(USDT)</string>
     <string name="earnings">수익</string>
+    <string name="wb_nodata">기록없음</string>
+    <string name="tv_hascopy">복사성공</string>
+    <string name="my_shouyi">나의 수익</string>
+    <string name="usdtchar">충전</string>
+    <string name="putword">입력 해주세요</string>
+    <string name="zy_other">기타</string>
 </resources>

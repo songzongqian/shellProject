@@ -175,4 +175,10 @@
     <string name="Benefits_that">收益說明</string>
     <string name="To_pledge">可質押(USDT)</string>
     <string name="earnings">收益</string>
+    <string name="wb_nodata">無記錄</string>
+    <string name="tv_hascopy">複製成功</string>
+    <string name="my_shouyi">我的收益</string>
+    <string name="usdtchar">充值</string>
+    <string name="putword">請輸入</string>
+    <string name="zy_other">其他</string>
 </resources>

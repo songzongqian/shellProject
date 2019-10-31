@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="6dp"
-            android:text="暂无内容"
+            android:text="@string/wb_nodata"
             android:textColor="#8D99B2"
             android:textSize="16sp"
             />

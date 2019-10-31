@@ -184,7 +184,7 @@ public class NewHelpFriendActivity extends BaseActivity {
             case R.id.tv_copy:
                 ClipboardManager cmb1 = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cmb1.setText(inviteUrl);
-                Toast.makeText(NewHelpFriendActivity.this, "已复制", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewHelpFriendActivity.this, getString(R.string.tv_hascopy), Toast.LENGTH_SHORT).show();
                 break;
         }
     }

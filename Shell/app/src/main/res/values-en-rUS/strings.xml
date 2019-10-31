@@ -174,4 +174,10 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="Benefits_that">Benefits that</string>
     <string name="To_pledge">To pledge(USDT)</string>
     <string name="earnings">earnings</string>
+    <string name="wb_nodata">No record</string>
+    <string name="tv_hascopy">Copy success</string>
+    <string name="my_shouyi">my income</string>
+    <string name="usdtchar">Recharge</string>
+    <string name="putword">please enter</string>
+    <string name="zy_other">Other</string>
 </resources>

@@ -90,7 +90,7 @@ public class MyShouYiActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("我的收益");
+        tvTitle.setText(getString(R.string.my_shouyi));
         tvRightTitle.setVisibility(View.GONE);
     }
 

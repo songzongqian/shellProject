@@ -105,7 +105,7 @@ public class LanguageActivity extends BaseActivity {
             case R.id.tv_rightTitle:
                 //完成切换语言
                 if(flag==0){
-                    Toast.makeText(LanguageActivity.this,"请先选择语言",Toast.LENGTH_SHORT).show();
+
                 }else{
                    if(flag==1){
                        //EventBus.getDefault().post(new LanguageEvent("繁体中文"));

@@ -278,7 +278,7 @@ public class ZhiYaActivity extends BaseActivity {
     //显示质押权益列表
     private void showPopuScore() {
         View inflate = LayoutInflater.from(this).inflate(R.layout.popu_zhiyascore, null, false);
-        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         window.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 

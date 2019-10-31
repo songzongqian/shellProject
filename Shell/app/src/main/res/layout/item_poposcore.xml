@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="180dp"
+            android:layout_marginLeft="130dp"
             android:text="派单"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="26dp"
+            android:layout_marginRight="18dp"
             android:clickable="true"
             app:halfstart="true"
             app:starCount="5"
