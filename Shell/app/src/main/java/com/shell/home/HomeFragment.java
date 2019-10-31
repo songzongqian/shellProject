@@ -820,10 +820,10 @@ public class HomeFragment extends BaseFragment {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             filefoder = Environment.getExternalStorageDirectory().getAbsolutePath();
         } else {
-            filefoder = getActivity().getFilesDir().getAbsolutePath();//data/data/应用包名
+            filefoder = getActivity().getFilesDir().getAbsolutePath();
         }
         DownloadQueue downloadQueue = NoHttp.newDownloadQueue();
-        DownloadRequest downloadRequest = NoHttp.createDownloadRequest(uploadPath, RequestMethod.GET, filefoder, "123.apk", true, true);
+        DownloadRequest downloadRequest = NoHttp.createDownloadRequest("http://111.6.77.90:7301/swdj/res/app/swdj.apk", RequestMethod.GET, filefoder, "123.apk", true, true);
         downloadQueue.add(123, downloadRequest, new DownloadListener() {
             @Override
             public void onDownloadError(int what, Exception exception) {
@@ -845,7 +845,7 @@ public class HomeFragment extends BaseFragment {
                     ////
                     builder = new NotificationCompat.Builder(MyApplication.getAppInstance()).setSmallIcon(R.mipmap.ic_launcher).setContentInfo("").setContentTitle("正在下载");
                     nf = builder.build();
-//               //使用默认的声音、振动、闪光
+//                  //使用默认的声音、振动、闪光
                     nf.defaults = Notification.DEFAULT_ALL;
                     notificationManager.notify(0, nf);
                 }

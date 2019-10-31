@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,22 +17,32 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.OrderEvent;
+import com.shell.Bean.VersionBean;
 import com.shell.MyApplication;
 import com.shell.R;
 import com.shell.base.BaseActivity;
+import com.shell.constant.AppUrl;
 import com.shell.home.HomeFragment;
 import com.shell.mine.MineFragment;
 import com.shell.money.MoneyFragment;
 import com.shell.order.OrderFragment;
 import com.shell.utils.PreManager;
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.rest.OnResponseListener;
+import com.yanzhenjie.nohttp.rest.Request;
+import com.yanzhenjie.nohttp.rest.RequestQueue;
+import com.yanzhenjie.nohttp.rest.Response;
 import com.zhangke.websocket.SimpleListener;
 import com.zhangke.websocket.SocketListener;
 import com.zhangke.websocket.WebSocketHandler;
 import com.zhangke.websocket.response.ErrorResponse;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
@@ -51,6 +63,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private RadioButton rbtn0, rbtn1, rbtn2, rbtn3, rbtn4;
     public final static HashMap<Integer, Fragment> mTabFragment = new HashMap<Integer, Fragment>();
     private int currentIndex = 0;
+
 
 
     private SocketListener socketListener = new SimpleListener() {
@@ -83,10 +96,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         public <T> void onMessage(String message, T data) {
             Log.w("song", "服务器推送的消息" + message);
             if (message.contains("userEmail")) {
-                //订单消息
                 EventBus.getDefault().post(new OrderEvent(message));
             } else if (message.contains("hashAward")) {
-                //一样的信息
+
             }
         }
 
@@ -259,6 +271,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
 
     }
+
+
+
+
+
 
 
     @Override
