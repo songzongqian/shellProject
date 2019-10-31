@@ -1,5 +1,6 @@
 package com.shell.mine.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -111,7 +112,7 @@ public class NickActivity extends BaseActivity {
         request = NoHttp.createJsonObjectRequest(AppUrl.ChangNick, RequestMethod.POST);
         request.addHeader("token", token);
         request.add("token",token);
-        request.addHeader("name", inputNick);
+        request.add("name", inputNick);
         mQueue.add(1, request, responseListener);
     }
 
@@ -138,6 +139,10 @@ public class NickActivity extends BaseActivity {
                     NickBean nickBean= gson.fromJson(response.get().toString(), NickBean.class);
                     if(nickBean.getResultCode().equals("999999")){
                         Toast.makeText(NickActivity.this,nickBean.getResultDesc(),Toast.LENGTH_SHORT).show();
+                        Intent intent = getIntent();
+                        intent.putExtra("name",inputNick);
+                        setResult(RESULT_OK,intent);
+                        finish();
                     }else{
                         Toast.makeText(NickActivity.this,nickBean.getResultDesc(),Toast.LENGTH_SHORT).show();
                     }

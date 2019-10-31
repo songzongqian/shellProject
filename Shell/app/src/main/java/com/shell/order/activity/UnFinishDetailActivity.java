@@ -212,7 +212,7 @@ public class UnFinishDetailActivity extends BaseActivity {
         Button btnOK = inflate.findViewById(R.id.btn_ok);
 
         final CodeInputView editText = inflate.findViewById(R.id.editText);
-        
+
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

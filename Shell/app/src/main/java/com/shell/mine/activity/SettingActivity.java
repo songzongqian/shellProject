@@ -139,7 +139,7 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.ll_nick:
                 Intent intent = new Intent(SettingActivity.this, NickActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,10001);
                 break;
         }
     }
@@ -247,6 +247,9 @@ public class SettingActivity extends BaseActivity {
                 ivHead.setImageBitmap(loacalBitmap);
                 upFileList();
             }
+        }else if (requestCode == 10001){
+            String names = data.getStringExtra("name");
+            tvNickName.setText(names);
         }
 
     }
