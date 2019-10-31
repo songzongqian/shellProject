@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
@@ -116,8 +117,8 @@ public class QingSuanActivity extends BaseActivity {
                     QingSuanDescBean qingSuanDescBean = gson.fromJson(response.get().toString(), QingSuanDescBean.class);
                     String descBeanResultCode = qingSuanDescBean.getResultCode();
                     if (descBeanResultCode.equals("999999")) {
-                     tvContent.setText(qingSuanDescBean.getResultData());
-                    }else{
+                        tvContent.setText(qingSuanDescBean.getResultData());
+                    } else {
 
                     }
                     break;
@@ -154,7 +155,11 @@ public class QingSuanActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_qingsuan:
-                showPopuwindow();
+                if (checkBox.isChecked()) {
+                    showPopuwindow();
+                } else {
+                    Toast.makeText(QingSuanActivity.this, "请勾选我已知晓选项", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

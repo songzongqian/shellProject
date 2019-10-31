@@ -154,7 +154,7 @@ public class JiaDianActivity extends BaseActivity {
                   JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
                     if(jieDianBean.getResultCode().equals("999999")) {
                          JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
-                         tvVip.setText("BLv"+dataBean.getLevel());
+                         tvVip.setText("Blv"+dataBean.getLevel());
                          tvProgress.setText(dataBean.getBrokerComplete()+"/"+dataBean.getBrokerNeed());
                          tvSuanliValue.setText(GetTwoLetter.getTwo(dataBean.getHashRate()));
                          tvSuanli2Value.setText(GetTwoLetter.getTwo(dataBean.getAllHashRate()));

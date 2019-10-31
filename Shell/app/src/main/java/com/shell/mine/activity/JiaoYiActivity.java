@@ -23,6 +23,7 @@ import com.shell.activity.RegisterActivity;
 import com.shell.base.BaseActivity;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
+import com.shell.utils.CountDownTimerUtils;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -159,6 +160,8 @@ public class JiaoYiActivity extends BaseActivity {
                     Log.i("song", "交易获取的短信验证码" + String.valueOf(response));
                     EmailCodeBean emailCodeBean = gson.fromJson(response.get().toString(), EmailCodeBean.class);
                     if (emailCodeBean.getResultCode().equals("999999")) {
+                        CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(tvCode, 60000, 1000);
+                        mCountDownTimerUtils.start();
                         emailCode = emailCodeBean.getResultData();
                     }
                     break;

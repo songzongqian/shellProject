@@ -355,7 +355,7 @@ public class MineFragment extends BaseFragment {
                     JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
                     if(jieDianBean.getResultCode().equals("999999")) {
                         JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
-                        tvVip.setText("BLv"+dataBean.getLevel());
+                        tvVip.setText("Blv"+dataBean.getLevel());
                     }
                     break;
 
