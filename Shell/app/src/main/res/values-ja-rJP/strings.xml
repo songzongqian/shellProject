@@ -181,4 +181,6 @@
     <string name="usdtchar">チャージ</string>
     <string name="putword">入力してください</string>
     <string name="zy_other">その他</string>
+    <string name="your_friend">あなたの親友</string>
+    <string name="invited_to_join">お招きします</string>
 </resources>

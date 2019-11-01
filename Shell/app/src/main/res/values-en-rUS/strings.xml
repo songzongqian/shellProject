@@ -180,4 +180,6 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="usdtchar">Recharge</string>
     <string name="putword">please enter</string>
     <string name="zy_other">Other</string>
+    <string name="your_friend">Your friend</string>
+    <string name="invited_to_join">You are invited to join</string>
 </resources>

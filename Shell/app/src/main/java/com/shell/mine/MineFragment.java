@@ -323,7 +323,6 @@ public class MineFragment extends BaseFragment {
                         options.placeholder(R.mipmap.person); //添加占位图
                         options.error(R.mipmap.person);
 
-
                         // person
                         Glide.with(getActivity()).load(myHewad).apply(options).into(ivHead);
                         tvNickName.setText(nickName);

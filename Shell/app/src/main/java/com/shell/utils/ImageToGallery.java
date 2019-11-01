@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shell.R;
@@ -17,7 +19,7 @@ import java.io.IOException;
 
 public class ImageToGallery {
 
-    public static void saveImageToGallery(Context context, Bitmap bmp) {
+    public static void saveImageToGallery(Context context, Bitmap bmp, TextView send_name) {
         // 首先保存图片路径
         File appDir = new File(Environment.getExternalStorageDirectory(), "camera");
         if (!appDir.exists()) {
@@ -50,6 +52,7 @@ public class ImageToGallery {
         intent.setData(uri);
         context.sendBroadcast(intent);
         Toast.makeText(context, context.getString(R.string.sasuccess), Toast.LENGTH_SHORT).show();
+        send_name.setVisibility(View.GONE);
     }
 
 }

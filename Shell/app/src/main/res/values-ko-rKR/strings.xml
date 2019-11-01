@@ -180,4 +180,6 @@
     <string name="usdtchar">충전</string>
     <string name="putword">입력 해주세요</string>
     <string name="zy_other">기타</string>
+    <string name="your_friend">당신의 좋은 친구</string>
+    <string name="invited_to_join">가입 요청</string>
 </resources>

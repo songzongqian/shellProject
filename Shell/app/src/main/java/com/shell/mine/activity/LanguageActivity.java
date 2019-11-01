@@ -80,6 +80,28 @@ public class LanguageActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.choose_language));
         tvRightTitle.setText(getString(R.string.complete));
+        String language = PreManager.instance().getString("language");
+        if ("zh_HK".equals(language)){
+            ivOne.setVisibility(View.VISIBLE);
+            ivTwo.setVisibility(View.GONE);
+            ivThree.setVisibility(View.GONE);
+            ivFour.setVisibility(View.GONE);
+        }else if ("en_US".equals(language)){
+            ivOne.setVisibility(View.GONE);
+            ivTwo.setVisibility(View.VISIBLE);
+            ivThree.setVisibility(View.GONE);
+            ivFour.setVisibility(View.GONE);
+        }else if ("ko_KR".equals(language)){
+            ivOne.setVisibility(View.GONE);
+            ivTwo.setVisibility(View.GONE);
+            ivThree.setVisibility(View.VISIBLE);
+            ivFour.setVisibility(View.GONE);
+        }else if ("ja_JP".equals(language)){
+            ivOne.setVisibility(View.GONE);
+            ivTwo.setVisibility(View.GONE);
+            ivThree.setVisibility(View.GONE);
+            ivFour.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

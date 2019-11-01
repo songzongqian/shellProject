@@ -1,9 +1,14 @@
 package com.shell.mine.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.ClipboardManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -52,8 +57,6 @@ public class NewHelpFriendActivity extends BaseActivity {
     TextView tvRightTitle;
     @BindView(R.id.tv_jinE)
     TextView tvJinE;
-    @BindView(R.id.tv_www)
-    TextView tvWww;
     @BindView(R.id.iv_qrCode)
     ImageView ivQrCode;
     @BindView(R.id.tv_helpCode)
@@ -64,7 +67,12 @@ public class NewHelpFriendActivity extends BaseActivity {
     TextView tvCopy;
     @BindView(R.id.tv_1)
     TextView tv1;
+    @BindView(R.id.save_image)
+    LinearLayout save_image;
     private String inviteUrl;
+    @BindView(R.id.send_name)
+    TextView send_name;
+    private String myEmail;
 
     @Override
     protected void initToolBar() {
@@ -87,8 +95,7 @@ public class NewHelpFriendActivity extends BaseActivity {
         tvTitle.setText(R.string.my_jiedian);
         tvRightTitle.setText(getString(R.string.my_myfriend));
         tvRightTitle.setVisibility(View.VISIBLE);
-
-
+        myEmail = PreManager.instance().getString("myEmail");
     }
 
     @Override
@@ -133,9 +140,10 @@ public class NewHelpFriendActivity extends BaseActivity {
                         Bitmap qrImage = ZXingUtils.createQRImage(inviteUrl);
                         ivQrCode.setImageBitmap(qrImage);
                         String myinviteCode = resultData.getMyinviteCode();
-                        tvHelpCode.setText(getString(R.string.fr_tuijian)+" " +myinviteCode);
-                        tvWww.setText(myinviteCode);
+                        tvHelpCode.setText(getString(R.string.fr_tuijian) + " " + myinviteCode);
+                        tvJinE.setText(getString(R.string.mf_five) + myinviteCode);
                         tv1.setText(resultData.getDescText());
+                        send_name.setText(getString(R.string.your_friend) + myEmail + getString(R.string.invited_to_join));
                     } else {
 
                     }
@@ -164,6 +172,15 @@ public class NewHelpFriendActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
+    @SuppressLint("HandlerLeak")
+    private Handler doActionHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bitmap bitmap = loadBitmapFromView(save_image);
+            ImageToGallery.saveImageToGallery(NewHelpFriendActivity.this, bitmap, send_name);
+        }
+    };
 
     @OnClick({R.id.rl_back, R.id.tv_rightTitle, R.id.iv_qrCode, R.id.btn_save, R.id.tv_copy})
     public void onViewClicked(View view) {
@@ -178,8 +195,23 @@ public class NewHelpFriendActivity extends BaseActivity {
             case R.id.iv_qrCode:
                 break;
             case R.id.btn_save:
-                Bitmap bitmap = loadBitmapFromView(llRootView);
-                ImageToGallery.saveImageToGallery(NewHelpFriendActivity.this,bitmap);
+                send_name.setVisibility(View.VISIBLE);
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(10);//休眠3秒
+                            doActionHandler.sendEmptyMessage(0);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        /**
+                         * 要执行的操作
+                         */
+                    }
+                }.start();
+
                 break;
             case R.id.tv_copy:
                 ClipboardManager cmb1 = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -191,24 +223,12 @@ public class NewHelpFriendActivity extends BaseActivity {
 
 
     public Bitmap loadBitmapFromView(View view) {
-        if (view == null) {
-            return null;
-        }
-
-        WindowManager manager = getWindowManager();
-        DisplayMetrics metrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;  //以要素为单位
-        int height = metrics.heightPixels;
-        view.setDrawingCacheEnabled(true);
-        //调用下面这个方法非常重要，如果没有调用这个方法，得到的bitmap为null
-        view.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
-        //这个方法也非常重要，设置布局的尺寸和位置
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        //获得绘图缓存中的Bitmap
-        view.buildDrawingCache();
-        return view.getDrawingCache();
+        Bitmap drawingCache = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(drawingCache);
+        c.drawColor(Color.WHITE);
+        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        view.draw(c);
+        return drawingCache;
 
     }
 }

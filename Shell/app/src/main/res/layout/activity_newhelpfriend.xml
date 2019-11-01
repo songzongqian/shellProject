@@ -18,101 +18,105 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <LinearLayout
+                android:id="@+id/save_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_50"
                 android:background="#210145"
                 android:orientation="vertical">
 
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:gravity="center"
                     android:text="@string/mf_first"
                     android:textColor="#FFFFFF"
-                    android:textSize="32sp" />
-
+                    android:textSize="@dimen/dp_26" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/mf_second"
                     android:textColor="#FFFFFF"
-                    android:textSize="28sp" />
+                    android:textSize="@dimen/dp_22" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:text="@string/mf_third"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
-
+                    android:textSize="@dimen/dp_13" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:src="@mipmap/ta" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="wrap_content"
                     android:background="#FFFFFF"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="19dp"
                             android:text="@string/mf_fourth"
                             android:textColor="#04172A"
                             android:textSize="16sp" />
 
+                        <TextView
+                            android:id="@+id/send_name"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#8D99B2"
+                            android:textSize="12sp"  />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="5dp">
 
                             <TextView
                                 android:id="@+id/tv_jinE"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="19dp"
                                 android:text="@string/mf_five"
                                 android:textColor="#8D99B2"
                                 android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/tv_www"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="6dp"
-                                android:layout_toRightOf="@id/tv_jinE"
-                                android:text=""
-                                android:textSize="14sp"
-                                android:textColor="#000000"/>
                         </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="19dp"
                             android:layout_marginTop="4dp"
                             android:text="@string/mf_six"
                             android:textColor="#8D99B2"
@@ -120,24 +124,12 @@
 
                     </LinearLayout>
 
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/iv_qrCode"
-                            android:layout_width="86dp"
-                            android:layout_height="86dp"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="65dp" />
-
-                    </RelativeLayout>
-
+                    <ImageView
+                        android:id="@+id/iv_qrCode"
+                        android:layout_width="@dimen/dp_70"
+                        android:layout_height="@dimen/dp_70" />
                 </LinearLayout>
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/tv_helpCode"
@@ -153,13 +145,14 @@
             <Button
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginRight="36dp"
-                android:layout_marginTop="33dp"
-                android:background="@drawable/helpfriend"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_50"
+                android:background="@mipmap/save_background"
                 android:text="@string/mf_savephoto"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
 
 
             <TextView
@@ -167,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="21dp"
+                android:layout_marginTop="@dimen/dp_18"
                 android:text="@string/mf_copycode"
                 android:textColor="#ffffff"
                 android:textSize="17sp" />
@@ -176,8 +169,10 @@
                 android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="21dp"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_marginRight="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_30"
                 android:text="1. 邀请新好友参与Shell生态即可获得2信用分"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />

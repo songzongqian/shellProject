@@ -116,7 +116,7 @@
     <string name="mf_first">跨境支付新模式</string>
     <string name="mf_second">玩法多样 轻松赚钱</string>
     <string name="mf_third">交易佣金 矿池收益 节点奖励</string>
-    <string name="mf_fourth">轻松赚取交易佣金</string>
+    <string name="mf_fourth">Shell,轻松赚取交易佣金</string>
     <string name="mf_five">注册时请填写邀请码：</string>
     <string name="mf_six">长按识别二维码：</string>
     <string name="mf_invcode">邀请码：AEFGGG</string>
@@ -206,4 +206,7 @@
     <string name="usdtchar">USDT充币</string>
     <string name="putword">请输入</string>
     <string name="zy_other">其他</string>
+
+    <string name="your_friend">您的好友</string>
+    <string name="invited_to_join">邀请您加入</string>
 </resources>
