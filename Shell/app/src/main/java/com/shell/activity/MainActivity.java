@@ -81,6 +81,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private RadioButton rbtn0, rbtn1, rbtn2, rbtn3, rbtn4;
     private  HashMap<Integer, Fragment> mTabFragment = new HashMap<Integer, Fragment>();
     private int currentIndex = 0;
+    private WebSocketClient client;
 
 
 
@@ -347,7 +348,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     public void linkSocket(String url) {
         try {
-            WebSocketClient client = new WebSocketClient(new URI(url)) {
+            client = new WebSocketClient(new URI(url)) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.e("onOpen:", "------连接成功!!!");
@@ -366,10 +367,18 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 }
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
+                    if (null != client && !client.isOpen()) {
+                        //LogUtils.showLog("socket onStartConnect");
+                        client.reconnect();
+                    }
                     Log.e("onClose:", "------连接关闭!!!" + reason);
                 }
                 @Override
                 public void onError(Exception ex) {
+                    if (null != client && !client.isOpen()) {
+                        //LogUtils.showLog("socket onStartConnect");
+                        client.reconnect();
+                    }
                     Log.e("onError:", ex.toString());
                 }
             };
