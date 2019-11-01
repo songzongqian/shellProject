@@ -1,11 +1,15 @@
 package com.shell.constant;
 
+import com.shell.Bean.OutNetIpBean;
+
 public class AppUrl {
 
     public static final String CACAHE_DIRNAME = "/webcache";
 
     public static final String BASE_URL = "https://api.tritonlab.net";
 
+
+    public static final String WebSocket = "wss://api.tritonlab.net/webSocket/";
 
     /**获取邮箱验证码*/
     public static final String getEmailCode = BASE_URL + "/sendRegisterEmail?";

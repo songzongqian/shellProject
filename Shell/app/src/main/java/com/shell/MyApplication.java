@@ -56,7 +56,7 @@ public class MyApplication extends Application {
         super.onCreate();
         app = this;
         initNet();
-        initWebSocket();
+        //initWebSocket();
 
         MultiLanguage.init(new LanguageLocalListener() {
             @Override
@@ -129,8 +129,8 @@ public class MyApplication extends Application {
         WebSocketSetting setting = new WebSocketSetting();
         //连接地址，必填，例如 wss://echo.websocket.org
         String token = PreManager.instance().getString("token");
-       // setting.setConnectUrl("wss://api.tritonlab.net/webSocket"+token);//必填
-        setting.setConnectUrl("wss://api.tritonlab.net/webSocket/61286e6eb1834f2f903ee2670f398650");//必填
+        setting.setConnectUrl("wss://echo.websocket.org");//必填
+       // setting.setConnectUrl("wss://api.tritonlab.net/webSocket/61286e6eb1834f2f903ee2670f398650");//必填
         //设置连接超时时间
         setting.setConnectTimeout(15 * 1000);
 

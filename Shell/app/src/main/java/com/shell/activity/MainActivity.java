@@ -46,15 +46,29 @@ import com.zhangke.websocket.WebSocketHandler;
 import com.zhangke.websocket.response.ErrorResponse;
 
 import org.greenrobot.eventbus.EventBus;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -70,7 +84,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
 
 
-    private SocketListener socketListener = new SimpleListener() {
+  /*  private SocketListener socketListener = new SimpleListener() {
         @Override
         public void onConnected() {
             Log.i("song", "onConnected()");
@@ -113,7 +127,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         public <T> void onMessage(ByteBuffer bytes, T data) {
 
         }
-    };
+    };*/
 
     @Override
     protected void initToolBar() {
@@ -253,7 +267,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     @Override
     protected void initData() {
-        WebSocketHandler.getDefault().addListener(socketListener);
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (isLogin){
+            String token = PreManager.instance().getString("token");
+            linkSocket(AppUrl.WebSocket+token);
+        }
+        //WebSocketHandler.getDefault().addListener(socketListener);
         if (Build.VERSION.SDK_INT >= 23) {
             String[] mPermissionList = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -277,12 +296,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
 
     }
-
-
-
-
-
-
 
     @Override
     protected void onResume() {
@@ -330,6 +343,69 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public void linkSocket(String url) {
+        try {
+            WebSocketClient client = new WebSocketClient(new URI(url)) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                    Log.e("onOpen:", "------连接成功!!!");
+                }
+                @Override
+                public void onMessage(String message) {
+                    Log.e("onMessage:", message);
+                    Log.w("song", "服务器推送的消息" + message);
+                    if (message.contains("userEmail")) {
+                        EventBus.getDefault().post(new OrderEvent(message));
+                    } else if (message.contains("hashAward")) {
+                        //一样的信息
+                        // 这是是不是矿池奖励数据？
+                        EventBus.getDefault().post(new OrePoolRewardBean(message));
+                    }
+                }
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    Log.e("onClose:", "------连接关闭!!!" + reason);
+                }
+                @Override
+                public void onError(Exception ex) {
+                    Log.e("onError:", ex.toString());
+                }
+            };
+            // wss需添加
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[]{new X509TrustManager() {
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) {
+
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) {
+
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+            }}, new SecureRandom());
+            SSLSocketFactory factory = sslContext.getSocketFactory();
+            client.setSocket(factory.createSocket());
+            client.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public void onBackPressed() {
