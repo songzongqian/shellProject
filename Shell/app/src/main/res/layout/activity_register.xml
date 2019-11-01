@@ -22,24 +22,22 @@
                 android:layout_marginTop="@dimen/dp_20">
 
 
-                <ImageView
-                    android:visibility="invisible"
-                    android:id="@+id/iv_country"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/re_topleft"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="28dp"/>
+                <RelativeLayout
+                    android:id="@+id/rlLeft"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_country"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#4E658D"
-                    android:text="中国"
-                    android:layout_marginLeft="53dp"
-                    android:visibility="invisible"
-                    android:layout_centerVertical="true"/>
+                    <TextView
+                        android:id="@+id/tv_leftTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="37dp"
+                        android:text="@string/log_cancle"
+                        android:textColor="#8D99B2"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_title"

@@ -206,4 +206,5 @@
     <string name="usdtchar">USDT充币</string>
     <string name="putword">请输入</string>
     <string name="zy_other">其他</string>
+    <string name="country_f">选择国家</string>
 </resources>

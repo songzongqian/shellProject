@@ -181,4 +181,5 @@
     <string name="usdtchar">チャージ</string>
     <string name="putword">入力してください</string>
     <string name="zy_other">その他</string>
+    <string name="country_f">国を選択してください</string>
 </resources>

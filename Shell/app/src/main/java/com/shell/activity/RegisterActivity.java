@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,16 +44,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
-    @BindView(R.id.iv_country)
-    ImageView ivCountry;
-    @BindView(R.id.tv_country)
-    TextView tvCountry;
     @BindView(R.id.et_country)
     EditText etCountry;
     @BindView(R.id.ll_country)
     RelativeLayout llCountry;
     @BindView(R.id.rl_country)
     RelativeLayout rlCountry;
+    @BindView(R.id.tv_leftTitle)
+    TextView tvLeftTitle;
+    @BindView(R.id.rlLeft)
+    RelativeLayout rlLeft;
     private Request<JSONObject> request;
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -102,6 +102,12 @@ public class RegisterActivity extends BaseActivity {
         tvTitle.setText(R.string.re_register);
         EventBus.getDefault().register(this);
         mTiemTimeCount = new TimeCount(60000, 1000);
+        rlLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -126,7 +132,7 @@ public class RegisterActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.profile_image, R.id.tv_Code, R.id.btn_register, R.id.btn_toLogin, R.id.tv_rightTitle, R.id.iv_country, R.id.rl_country})
+    @OnClick({R.id.profile_image, R.id.tv_Code, R.id.btn_register, R.id.btn_toLogin, R.id.tv_rightTitle, R.id.rl_country})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.profile_image:
@@ -145,42 +151,11 @@ public class RegisterActivity extends BaseActivity {
                 Intent intent6 = new Intent(RegisterActivity.this, LanguageActivity.class);
                 startActivity(intent6);
                 break;
-            case R.id.iv_country:
-                //选择国家的动作
-                if (mypopuWindow == null) {
-                    OnClickLintener paramOnclickListen = new OnClickLintener();
-                    mypopuWindow = new MypopuWindow(RegisterActivity.this, paramOnclickListen, 250, 500);
-                    mypopuWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View view, boolean b) {
-                            if (!b) {
-                                mypopuWindow.dismiss();
-                            }
-                        }
-                    });
-                }
-                mypopuWindow.setFocusable(true);
-                mypopuWindow.showAsDropDown(ivCountry, 0, 0);
-                mypopuWindow.update();
-                break;
-
 
             case R.id.rl_country:
-                if (mypopuWindow == null) {
-                    OnClickLintener paramOnclickListen = new OnClickLintener();
-                    mypopuWindow = new MypopuWindow(RegisterActivity.this, paramOnclickListen, 250, 500);
-                    mypopuWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View view, boolean b) {
-                            if (!b) {
-                                mypopuWindow.dismiss();
-                            }
-                        }
-                    });
-                }
-                mypopuWindow.setFocusable(true);
-                mypopuWindow.showAsDropDown(ivCountry, 0, 0);
-                mypopuWindow.update();
+                Intent intent1 = new Intent();
+                intent1.setClass(RegisterActivity.this, CountryActivity.class);
+                startActivityForResult(intent1, 12);
                 break;
         }
     }
@@ -304,53 +279,24 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-    class OnClickLintener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.tv_zhongguo:
-                    PreManager.instance().putString("country", "中国");
-                    country = "中国";
-                    etCountry.setText("中国");
-                    tvCountry.setText("中国");
-                    mypopuWindow.dismiss();
-                    break;
-                case R.id.tv_hanguo:
-                    PreManager.instance().putString("country", "韩国");
-                    country = "韩国";
-                    tvCountry.setText("韩国");
-                    etCountry.setText("韩国");
-                    mypopuWindow.dismiss();
-                    break;
-                case R.id.tv_riben:
-                    PreManager.instance().putString("country", "日本");
-                    country = "日本";
-                    tvCountry.setText("日本");
-                    etCountry.setText("日本");
-                    mypopuWindow.dismiss();
-                    break;
-                case R.id.tv_om:
-                    PreManager.instance().putString("country", "欧盟");
-                    country = "欧盟";
-                    tvCountry.setText("欧盟");
-                    etCountry.setText("欧盟");
-                    mypopuWindow.dismiss();
-                    break;
-                case R.id.tv_mg:
-                    PreManager.instance().putString("country", "美国");
-                    country = "美国";
-                    tvCountry.setText("美国");
-                    etCountry.setText("美国");
-                    mypopuWindow.dismiss();
-                    break;
-                default:
-                    break;
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case 12:
+                if (resultCode == RESULT_OK) {
+                    Bundle bundle = data.getExtras();
+                    String countryName = bundle.getString("countryName");
+                    PreManager.instance().putString("country", countryName);
+                    country = countryName;
+                    etCountry.setText(countryName);
+                }
+                break;
 
+            default:
+                break;
         }
-
+        super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     @Override
     public void onBackPressed() {

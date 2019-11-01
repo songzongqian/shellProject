@@ -75,6 +75,7 @@
         <activity android:name=".activity.JiaDianActivity" />
         <activity android:name=".activity.MyShouYiActivity" />
         <activity android:name=".order.activity.UnFinishDetailActivity" />
+        <activity android:name="com.shell.activity.CountryActivity"/>
     </application>
 
 </manifest>
