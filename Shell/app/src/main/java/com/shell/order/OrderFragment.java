@@ -390,6 +390,7 @@ public class OrderFragment extends BaseFragment {
                 //显示接单注意事项
                 if (flag == 0) {
                     //1、请求文案接口
+                    WebSocketHandler.getDefault().reconnect();
                     getOrderWord();
                 } else if (flag == 1) {
                     PostOrderStatueOff();
