@@ -312,7 +312,7 @@ public class OrderFragment extends BaseFragment {
                         flag = 1;
                         btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
                         btnStartOrder.setText(R.string.or_endorder);
-                        WebSocketHandler.getDefault().reconnect();
+                       // WebSocketHandler.getDefault().reconnect();
                     }else{
                         Toast.makeText(getActivity(),resultDesc,Toast.LENGTH_SHORT).show();
                     }
@@ -348,7 +348,7 @@ public class OrderFragment extends BaseFragment {
                         flag = 0;
                         btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
                         btnStartOrder.setText(R.string.or_begin);
-                        WebSocketHandler.getDefault().disConnect();
+                       // WebSocketHandler.getDefault().disConnect();
                     }else{
                         Toast.makeText(getActivity(),offdesc,Toast.LENGTH_SHORT).show();
                     }
@@ -390,7 +390,7 @@ public class OrderFragment extends BaseFragment {
                 //显示接单注意事项
                 if (flag == 0) {
                     //1、请求文案接口
-                    WebSocketHandler.getDefault().reconnect();
+                    //WebSocketHandler.getDefault().reconnect();
                     getOrderWord();
                 } else if (flag == 1) {
                     PostOrderStatueOff();

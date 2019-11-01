@@ -182,4 +182,5 @@
     <string name="zy_other">기타</string>
     <string name="your_friend">당신의 좋은 친구</string>
     <string name="invited_to_join">가입 요청</string>
+    <string name="country_f">국가를 선택하십시오</string>
 </resources>

@@ -182,4 +182,5 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="zy_other">Other</string>
     <string name="your_friend">Your friend</string>
     <string name="invited_to_join">You are invited to join</string>
+    <string name="country_f">Select Country</string>
 </resources>
