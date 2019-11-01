@@ -66,7 +66,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="41dp"
-            android:text="Chenxi"
+            android:text=""
             android:textColor="#FFFFFF"
             android:textSize="13sp" />
 
@@ -106,7 +106,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="41dp"
-            android:text="chenxi@gmail.com"
+            android:text=""
             android:textColor="#FFFFFF"
             android:textSize="13sp" />
 

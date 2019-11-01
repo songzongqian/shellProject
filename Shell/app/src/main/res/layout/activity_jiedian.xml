@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tv_suanli"
-                android:text="22583"
+                android:text="0"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 
@@ -163,7 +163,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/tv_suanli2"
-                android:text="22583"
+                android:text="0"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 

@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,8 +35,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.OrderEvent;
 import com.shell.Bean.OrePoolRewardBean;
 import com.shell.Bean.VersionBean;
@@ -189,6 +203,7 @@ public class HomeFragment extends BaseFragment {
     };
     private MessagesAdapter adapter;
     private ProgressDialog psdialog;
+    private SmartRefreshLayout home_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -201,6 +216,14 @@ public class HomeFragment extends BaseFragment {
         EventBus.getDefault().register(this);
         ViewFlipper viewFlipper = mRootView.findViewById(R.id.viewFlipper);
         viewFlipper.startFlipping();
+        home_refresh = mRootView.findViewById(R.id.home_refresh);
+        home_refresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initData();
+                refreshLayout.finishRefresh(2000);
+            }
+        });
         recyclerView = mRootView.findViewById(R.id.recyclerView);
         //  handlerPosition = mList.size();
         adapter = new MessagesAdapter(getActivity(), mList);
@@ -270,7 +293,7 @@ public class HomeFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (isLoading){
+            if (isLoading) {
                 if (myWaitDialog == null) {
                     myWaitDialog = new MyWaitDialog(getActivity());
                     myWaitDialog.show();
@@ -413,6 +436,7 @@ public class HomeFragment extends BaseFragment {
                     JiangLiBean jiangLiBean = gson.fromJson(response.get().toString(), JiangLiBean.class);
                     String jiangLiBeanResultCode = jiangLiBean.getResultCode();
                     if (jiangLiBeanResultCode.equals("999999")) {
+                        jiangLiList.clear();
                         jiangLiList.addAll(jiangLiBean.getResultData());
                         //HomeAwardAdapter  homeAwardAdapter=new HomeAwardAdapter(getActivity(),jiangLiList);
                         //listView.setAdapter(homeAwardAdapter);
@@ -453,15 +477,15 @@ public class HomeFragment extends BaseFragment {
                             PackageManager packageManager = getActivity().getPackageManager();
                             PackageInfo packInfo = null;
                             try {
-                                packInfo = packageManager.getPackageInfo(getContext().getPackageName(),0);
+                                packInfo = packageManager.getPackageInfo(getContext().getPackageName(), 0);
                             } catch (PackageManager.NameNotFoundException e) {
                                 e.printStackTrace();
                             }
                             String currentVersion = packInfo.versionName;
-                            String finalCurrent="v"+currentVersion;
-                            if(serverVersion.equals(finalCurrent)){
+                            String finalCurrent = "v" + currentVersion;
+                            if (serverVersion.equals(finalCurrent)) {
 
-                            }else{
+                            } else {
                                 showUpDateInfo(versionData);
                             }
                         }
@@ -484,7 +508,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void onFinish(int what) {
-           // myWaitDialog.cancel();
+            // myWaitDialog.cancel();
         }
     };
 
@@ -520,7 +544,7 @@ public class HomeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli,R.id.rl_GetMore, R.id.ll_map,})
+    @OnClick({R.id.rl_allsuanli, R.id.ll_xinyong, R.id.ll_mysuanli, R.id.rl_GetMore, R.id.ll_map,})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_allsuanli:
@@ -821,13 +845,13 @@ public class HomeFragment extends BaseFragment {
         window.setBackgroundDrawable(new BitmapDrawable());
         window.setOutsideTouchable(false);
         window.setTouchable(true);
-       // window.setFocusable(false);
+        // window.setFocusable(false);
         window.setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !window.isFocusable()) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
 

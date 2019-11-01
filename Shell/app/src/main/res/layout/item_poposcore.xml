@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginLeft="28dp"
-            android:text="200"
+            android:text="0"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="80dp"
-            android:text="5000"
+            android:text="0"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
 

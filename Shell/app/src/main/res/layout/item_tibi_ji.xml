@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="22dp"
-            android:text="+ 1000"
+            android:text="+ 0"
             android:textColor="#FFFFFF"
             android:textSize="13sp" />
 
@@ -42,7 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="22dp"
             android:layout_marginRight="18dp"
-            android:text="2019-09-12 12:00:00"
+            android:text="0"
             android:textColor="#678DA8"
             android:textSize="14sp" />
     </RelativeLayout>

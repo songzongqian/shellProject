@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#04172A">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/home_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            android:gravity="center"
-            android:text="正在刷新。。。"
-            android:textSize="@dimen/dp_12"/>
+            android:layout_height="wrap_content"/>
+
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -22,75 +21,72 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_64"
-                    android:background="#061D34"/>
+                    android:layout_height="@dimen/dp_44"
+                    android:background="#0000" />
 
                 <RelativeLayout
+                    android:id="@+id/ll_map"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/ll_map">
+                    android:layout_marginTop="10dp">
 
                     <!--其他-->
                     <ImageView
                         android:id="@+id/iv_QiTa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/qita"
                         android:layout_marginLeft="31dp"
-                        android:visibility="gone"/>
+                        android:background="@mipmap/qita"
+                        android:visibility="gone" />
 
                     <!--美洲-->
                     <ImageView
                         android:id="@+id/MeiZhou"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/meizhou1"/>
+                        android:background="@mipmap/meizhou1" />
 
                     <!--欧洲-->
                     <ImageView
                         android:id="@+id/OuZhou"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginLeft="147dp"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/ouzhou1"/>
+                        android:layout_marginLeft="147dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@mipmap/ouzhou1" />
 
                     <!--非洲-->
                     <ImageView
                         android:id="@+id/Feizhou"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="77dp"
-                        android:layout_marginLeft="154dp"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/feizhou1"/>
+                        android:layout_marginLeft="154dp"
+                        android:layout_marginTop="77dp"
+                        android:background="@mipmap/feizhou1" />
 
                     <!--亚洲-->
                     <ImageView
                         android:id="@+id/YaZhou"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="54dp"
-                        android:layout_marginLeft="222dp"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/yazhou1"/>
+                        android:layout_marginLeft="222dp"
+                        android:layout_marginTop="54dp"
+                        android:background="@mipmap/yazhou1" />
 
                     <!--大洋洲-->
                     <ImageView
                         android:id="@+id/DaYangZhou"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="127dp"
-                        android:layout_marginLeft="291dp"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/dayang1"/>
+                        android:layout_marginLeft="291dp"
+                        android:layout_marginTop="127dp"
+                        android:background="@mipmap/dayang1" />
                 </RelativeLayout>
-
-
 
 
                 <RelativeLayout
@@ -110,7 +106,6 @@
                         android:text="@string/home_all_suanli"
                         android:textColor="#156097"
                         android:textSize="12sp" />
-
 
 
                     <TextView
@@ -138,8 +133,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginLeft="17dp"
-                    android:layout_marginRight="17dp"
                     android:layout_marginTop="12dp"
+                    android:layout_marginRight="17dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -209,8 +204,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginLeft="17dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="11dp"
+                    android:layout_marginRight="16dp"
                     android:background="@drawable/card_bg"
                     android:orientation="vertical">
 
@@ -235,8 +230,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginRight="17dp"
                             android:layout_marginTop="2dp"
+                            android:layout_marginRight="17dp"
                             android:text="0"
                             android:textColor="#FFFFFF"
                             android:textSize="12sp" />
@@ -247,8 +242,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="17dp"
                         android:layout_marginTop="11dp"
+                        android:layout_marginRight="17dp"
                         android:src="@mipmap/line_ju" />
 
                     <!-- <ListView
@@ -259,7 +254,8 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_90"/>
+                        android:layout_height="@dimen/dp_90" />
+
                     <ViewFlipper
                         android:id="@+id/viewFlipper"
                         android:layout_width="match_parent"
@@ -270,16 +266,15 @@
                         android:outAnimation="@anim/anim_out">
 
                         <LinearLayout
+                            android:id="@+id/ll_gundong"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:id="@+id/ll_gundong">
+                            android:orientation="vertical">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp">
-
 
 
                                 <TextView
@@ -294,14 +289,13 @@
 
                                 <TextView
                                     android:id="@+id/one1"
-                                    android:layout_toRightOf="@id/one2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="4dp"
+                                    android:layout_toRightOf="@id/one2"
                                     android:text="+0.12USDT"
                                     android:textColor="#64E3AE"
                                     android:textSize="12sp" />
-
 
 
                                 <TextView
@@ -321,7 +315,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp">
-
 
 
                                 <TextView
@@ -373,14 +366,13 @@
 
                                 <TextView
                                     android:id="@+id/three1"
-                                    android:layout_toRightOf="@id/three2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="4dp"
+                                    android:layout_toRightOf="@id/three2"
                                     android:text="+0.81USDT"
                                     android:textColor="#64E3AE"
                                     android:textSize="12sp" />
-
 
 
                                 <TextView
@@ -404,8 +396,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginLeft="17dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="11dp"
+                    android:layout_marginRight="16dp"
                     android:background="@drawable/card_bg"
                     android:orientation="vertical">
 
@@ -454,33 +446,31 @@
                     </LinearLayout>
 
                     <com.fang.dashview.DashView
-                        android:layout_marginLeft="26dp"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
-                        app:dashWidth="2dp"
-                        app:lineWidth="4dp"
-                        app:lineColor="#B3BED9"
+                        android:layout_marginLeft="26dp"
                         app:dashOrientation="1"
+                        app:dashWidth="2dp"
+                        app:lineColor="#B3BED9"
                         app:lineHeight="1dp"
-                        />
+                        app:lineWidth="4dp" />
 
 
                     <RelativeLayout
+                        android:id="@+id/rl_GetMore"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/rl_GetMore">
+                        android:layout_height="wrap_content">
+
                         <ImageView
                             android:id="@+id/iv_more"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="20dp"
-                            android:layout_centerInParent="true"
                             android:src="@mipmap/more_bottom" />
 
                     </RelativeLayout>
-
-
 
 
                 </LinearLayout>

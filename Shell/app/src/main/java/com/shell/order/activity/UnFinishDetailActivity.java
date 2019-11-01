@@ -88,7 +88,7 @@ public class UnFinishDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText("订单详情");
+        tvTitle.setText(getString(R.string.or_ordetail));
         tvRightTitle.setVisibility(View.GONE);
     }
 

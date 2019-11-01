@@ -137,7 +137,7 @@
     <string name="jd_allsuanli">すべてのノードの算力</string>
     <string name="qs_xieyi">上記の清算条件を認識し、清算を継続します</string>
     <string name="nick_finish">完了</string>
-    <string name="pop_getorder">注文をつかむ</string>
+    <string name="pop_getorder">去り単</string>
 
 
     <string name="qw_suanlitu">全メッシュ計算図</string>

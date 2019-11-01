@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="+0.12USDT"
+            android:text=""
             android:textColor="#64E3AE"
             android:textSize="12sp" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="17dp"
-            android:text="2019-10-02 19:20:22"
+            android:text=""
             android:textColor="#8D99B2"
             android:textSize="12sp" />
 

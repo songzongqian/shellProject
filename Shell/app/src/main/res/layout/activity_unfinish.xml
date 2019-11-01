@@ -37,7 +37,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="23dp"
-                android:text="20190309225785"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="6dp"
-                android:text="转出"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -89,7 +89,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="7dp"
-                android:text="$1,000"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -141,7 +141,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="11dp"
-                android:text="港币"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -168,7 +168,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="7dp"
-                android:text="1: 7.8393"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -194,7 +194,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
-                android:text="7839.3 HK dollars"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -220,7 +220,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="12dp"
-                android:text="0.01 USDT"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>

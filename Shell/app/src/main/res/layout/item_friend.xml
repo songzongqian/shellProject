@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_one"
-                    android:text=" 234"
+                    android:text=" 0"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp" />
 
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_three"
-                    android:text="80"
+                    android:text="0"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp" />
 
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_five"
-                    android:text=" 10,000"
+                    android:text=" 0"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp" />
 

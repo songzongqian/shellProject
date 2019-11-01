@@ -70,7 +70,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/tv_jinE"
-                    android:text="$ 1000"
+                    android:text="$ 0"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -188,9 +188,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pop_getorder"
+                    android:singleLine="true"
                     android:layout_centerHorizontal="true"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:id="@+id/tv_daojishi"
