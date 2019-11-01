@@ -184,4 +184,6 @@
     <string name="your_friend">あなたの親友</string>
     <string name="invited_to_join">お招きします</string>
     <string name="country_f">国を選択してください</string>
+    <string name="you_have_new_order">新しい注文があります</string>
+    <string name="the_standard_currency">本位貨幣</string>
 </resources>

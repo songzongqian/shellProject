@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -414,7 +415,7 @@ public class OrderFragment extends BaseFragment {
         TextView tvServer = inflate.findViewById(R.id.tv_serverJiangLiValue);
         ImageView ivClose = inflate.findViewById(R.id.iv_close);
         ProgressBar myProgressBar = inflate.findViewById(R.id.order_progress);
-        RelativeLayout btn_Start = inflate.findViewById(R.id.ll_btn_qiangdan);
+        LinearLayout btn_Start = inflate.findViewById(R.id.ll_btn_qiangdan);
         tvSecond = inflate.findViewById(R.id.tv_daojishi);
 
 

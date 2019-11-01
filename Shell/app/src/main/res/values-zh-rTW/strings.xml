@@ -184,4 +184,6 @@
     <string name="your_friend">您的好友</string>
     <string name="invited_to_join">邀請您加入</string>
     <string name="country_f">選擇國家</string>
+    <string name="you_have_new_order">您有新的訂單</string>
+    <string name="the_standard_currency">本位幣種</string>
 </resources>

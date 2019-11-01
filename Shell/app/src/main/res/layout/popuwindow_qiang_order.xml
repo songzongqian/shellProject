@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="34dp"
     android:layout_marginRight="34dp"
+    android:paddingBottom="@dimen/dp_10"
     android:background="@drawable/card_bg"
     android:orientation="vertical">
 
@@ -19,14 +20,14 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="23dp"
             android:layout_marginTop="17dp"
-            android:text="您有新的订单"
+            android:text="@string/you_have_new_order"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
             android:layout_alignParentRight="true"
             android:layout_marginRight="16dp"
             android:layout_marginTop="15dp"
@@ -38,14 +39,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="38dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -56,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="23dp"
-                    android:text="订单金额"
+                    android:text="@string/or_orjine"
                     android:textColor="#8D99B2"
                     android:textSize="12sp" />
 
@@ -83,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="23dp"
-                    android:text="订单类型"
+                    android:text="@string/or_ortype"
                     android:textColor="#8D99B2"
                     android:textSize="12sp" />
 
@@ -109,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="23dp"
-                    android:text="本位币种"
+                    android:text="@string/the_standard_currency"
                     android:textColor="#8D99B2"
                     android:textSize="12sp" />
 
@@ -136,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="23dp"
-                    android:text="服务奖励"
+                    android:text="@string/or_fwjl"
                     android:textColor="#8D99B2"
                     android:textSize="12sp" />
 
@@ -167,28 +170,25 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:indeterminate="false"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="13dp"
+                android:layout_centerInParent="true"
                 android:indeterminateDrawable="@drawable/common_pressbar_bar" />
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/ll_btn_qiangdan"
                 android:layout_width="@dimen/dp_69"
                 android:layout_height="@dimen/dp_69"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="43dp"
-                android:layout_marginTop="30dp"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:background="@drawable/circle_get_order">
 
                 <TextView
                     android:id="@+id/tv_qiangdan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:text="@string/pop_getorder"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
 
@@ -197,14 +197,13 @@
                     android:layout_below="@id/tv_qiangdan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="3dp"
                     android:text="10 S"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
 

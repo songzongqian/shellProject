@@ -183,4 +183,6 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="your_friend">Your friend</string>
     <string name="invited_to_join">You are invited to join</string>
     <string name="country_f">Select Country</string>
+    <string name="you_have_new_order">You have new order</string>
+    <string name="the_standard_currency">The standard currency</string>
 </resources>
