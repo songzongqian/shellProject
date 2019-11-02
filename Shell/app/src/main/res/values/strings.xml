@@ -214,4 +214,14 @@
     <string name="you_have_new_order">您有新的订单</string>
 
     <string name="the_standard_currency">本位币种</string>
+    <string name="tv_jiaoyimima">交易密码</string>
+    <string name="tv_sjymm">请输入交易密码</string>
+    <string name="tb_kcy">可用</string>
+    <string name="tv_bottom_tip">已经全部加载完毕</string>
+    <string name="fff">Address</string>
+    <string name="df">天前</string>
+    <string name="hf">小时前</string>
+    <string name="mf">分钟前</string>
+    <string name="gg">刚刚</string>
+    <string name="dcl">待处理</string>
 </resources>

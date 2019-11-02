@@ -45,10 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="15dp"
         app:dashWidth="2dp"
-        app:lineWidth="4dp"
+        app:lineWidth="3dp"
         app:lineColor="#B3BED9"
         app:dashOrientation="1"
-        app:lineHeight="1dp"
+        app:lineHeight="0.5dp"
         />
 
 

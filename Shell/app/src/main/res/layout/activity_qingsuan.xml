@@ -23,11 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#678DA8"
-            android:text="1您即将清算质押资金.
-当前未完成订单不再计算收益.
-系统将优先匹配您的订单，请持续关注并及时处理.
-所有订单完成后，您所有的质押资金将会扣除3%的服务费返还到 USDT 钱包账户.
-清算后所有信用分将恢复至20分，下次重新质押将不再享受目前所有的信用分权益."/>
+            android:lineSpacingMultiplier="1.3"
+            android:text=""/>
 
     </LinearLayout>
 
@@ -62,7 +59,7 @@
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="清算"
+        android:text="@string/rmb_qingsuan"
         android:textColor="#ffffff"
         android:background="@drawable/button"/>
 

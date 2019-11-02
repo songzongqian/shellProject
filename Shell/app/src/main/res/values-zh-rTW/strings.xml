@@ -186,4 +186,14 @@
     <string name="country_f">選擇國家</string>
     <string name="you_have_new_order">您有新的訂單</string>
     <string name="the_standard_currency">本位幣種</string>
+    <string name="tv_jiaoyimima">交易密碼</string>
+    <string name="tv_sjymm">請輸入交易密碼</string>
+    <string name="tb_kcy">可用</string>
+    <string name="tv_bottom_tip">已經全部加載完畢</string>
+    <string name="fff">地址</string>
+    <string name="df">天前</string>
+    <string name="hf">小時前</string>
+    <string name="mf">分鐘前</string>
+    <string name="gg">剛剛</string>
+    <string name="dcl">待處理</string>
 </resources>

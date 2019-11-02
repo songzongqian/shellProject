@@ -110,7 +110,7 @@ public class MoneyPageAdapter extends BaseAdapter {
                     viewHolder.two.setText(R.string.or_zhiya);
                     viewHolder.four.setText(dataBean.getCreateTime());
                     if(status.equals("10")){
-                        viewHolder.three.setText("待处理");
+                        viewHolder.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         viewHolder.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -124,11 +124,11 @@ public class MoneyPageAdapter extends BaseAdapter {
                     //充值
                 }else if(typeCode.equals("charge")){
                     viewHolder.one.setText("+"+dataBean.getOperateAmount()+"");
-                    viewHolder.two.setText("充值");
+                    viewHolder.two.setText(R.string.rmb_cz);
                     viewHolder.four.setText(dataBean.getCreateTime());
                     viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
                     if(status.equals("10")){
-                        viewHolder.three.setText("待处理");
+                        viewHolder.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         viewHolder.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -142,11 +142,11 @@ public class MoneyPageAdapter extends BaseAdapter {
                     //提币
                 }else if(typeCode.equals("withdraw")){
                     viewHolder.one.setText("+"+dataBean.getOperateAmount()+"");
-                    viewHolder.two.setText("提币");
+                    viewHolder.two.setText(R.string.rmb_tibi);
                     viewHolder.four.setText(dataBean.getCreateTime());
                     viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
                     if(status.equals("10")){
-                        viewHolder.three.setText("待处理");
+                        viewHolder.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         viewHolder.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -160,11 +160,11 @@ public class MoneyPageAdapter extends BaseAdapter {
                     //清算
                 }else if(typeCode.equals("settle")){
                     viewHolder.one.setText("+"+dataBean.getOperateAmount()+"");
-                    viewHolder.two.setText("清算");
+                    viewHolder.two.setText(R.string.rmb_qingsuan);
                     viewHolder.four.setText(dataBean.getCreateTime());
                     viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
                     if(status.equals("10")){
-                        viewHolder.three.setText("待处理");
+                        viewHolder.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         viewHolder.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -180,10 +180,10 @@ public class MoneyPageAdapter extends BaseAdapter {
                 if(typeCode.equals("pledge")){
                     videoHolder1.one.setText("-"+dataBean.getOperateAmount()+"");
                     videoHolder1.one.setTextColor(Color.parseColor("#F4376D"));
-                    videoHolder1.two.setText("质押");
+                    videoHolder1.two.setText(R.string.or_zhiya);
                     videoHolder1.four.setText(dataBean.getCreateTime());
                     if(status.equals("10")){
-                        videoHolder1.three.setText("待处理");
+                        videoHolder1.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         videoHolder1.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -201,7 +201,7 @@ public class MoneyPageAdapter extends BaseAdapter {
                     videoHolder1.four.setText(dataBean.getCreateTime());
                     videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
                     if(status.equals("10")){
-                        videoHolder1.three.setText("待处理");
+                        videoHolder1.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         videoHolder1.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -219,7 +219,7 @@ public class MoneyPageAdapter extends BaseAdapter {
                     videoHolder1.four.setText(dataBean.getCreateTime());
                     videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
                     if(status.equals("10")){
-                        videoHolder1.three.setText("待处理");
+                        videoHolder1.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         videoHolder1.three.setText("处理中");
                     }else if(status.equals("21")){
@@ -237,7 +237,7 @@ public class MoneyPageAdapter extends BaseAdapter {
                     videoHolder1.four.setText(dataBean.getCreateTime());
                     videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
                     if(status.equals("10")){
-                        videoHolder1.three.setText("待处理");
+                        videoHolder1.three.setText(R.string.untreated);
                     }else if(status.equals("20")){
                         videoHolder1.three.setText("处理中");
                     }else if(status.equals("21")){

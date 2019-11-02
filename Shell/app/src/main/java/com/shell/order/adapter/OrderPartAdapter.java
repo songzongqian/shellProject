@@ -1,6 +1,7 @@
 package com.shell.order.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +13,13 @@ import android.widget.TextView;
 
 import com.shell.R;
 import com.shell.order.activity.OrderListActivity;
+import com.shell.order.activity.UnFinishDetailActivity;
 import com.shell.order.bean.OrderListBean;
+import com.shell.utils.GetWillTime;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,14 +46,47 @@ public class OrderPartAdapter extends RecyclerView.Adapter {
         MyViewHolder holder= (MyViewHolder) viewHolder;
         OrderListBean.ResultDataBean dataBean = list.get(position);
         holder.tvOrderName.setText(dataBean.getOrderCurrency()+":"+dataBean.getOrderAmount());
-        holder.tvOrderAddress.setText("地址:"+dataBean.getTargetAddress());
+        holder.tvOrderAddress.setText(dataBean.getTargetAddress());
         String status = dataBean.getStatus();
         if(status.equals("10")){
-            holder.orderStatue.setText("待处理");
+            holder.orderStatue.setText(context.getString(R.string.untreated));
         }else if(status.equals("20")){
-            holder.orderStatue.setText("已处理");
+            holder.orderStatue.setText(context.getString(R.string.Have_to_dealwith));
         }
-       holder.tvClockTime.setText(dataBean.getCreateTime());
+
+        String createTime = dataBean.getCreateTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date strtodate = formatter.parse(createTime);
+            String timeFormatText = GetWillTime.getTimeFormatText(strtodate);
+            String substring = timeFormatText.substring(0, timeFormatText.length() - 1);
+            if(timeFormatText.contains("d")){
+                holder.tvClockTime.setText(substring+context.getString(R.string.df));
+
+            }else if(timeFormatText.contains("h")){
+                holder.tvClockTime.setText(substring+context.getString(R.string.hf));
+
+            }else if(timeFormatText.contains("m")){
+                holder.tvClockTime.setText(substring+context.getString(R.string.mf));
+
+            }else if(timeFormatText.contains("g")){
+                holder.tvClockTime.setText(R.string.gg);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, UnFinishDetailActivity.class);
+                intent.putExtra("orderId",list.get(position).getId());
+                intent.putExtra("orderStatue",list.get(position).getStatus());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

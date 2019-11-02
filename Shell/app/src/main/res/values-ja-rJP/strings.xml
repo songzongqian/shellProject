@@ -186,4 +186,14 @@
     <string name="country_f">国を選択してください</string>
     <string name="you_have_new_order">新しい注文があります</string>
     <string name="the_standard_currency">本位貨幣</string>
+    <string name="tv_jiaoyimima">取引パスワード</string>
+    <string name="tv_sjymm">取引パスワード入力</string>
+    <string name="tb_kcy">利用可</string>
+    <string name="tv_bottom_tip">ロード済み</string>
+    <string name="fff">アドレス</string>
+    <string name="df">日前</string>
+    <string name="hf">時間前</string>
+    <string name="mf">分前</string>
+    <string name="gg">ただ</string>
+    <string name="dcl">処理待ち</string>
 </resources>

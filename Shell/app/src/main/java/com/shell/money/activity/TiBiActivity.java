@@ -162,6 +162,7 @@ public class TiBiActivity extends BaseActivity {
     protected void initData() {
         myBalance = getIntent().getStringExtra("myBalance");
         getTiBiData();
+        tvTiBiCount.setText(myBalance);
     }
 
     private void getTiBiData() {

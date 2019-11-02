@@ -446,14 +446,15 @@
                     </LinearLayout>
 
                     <com.fang.dashview.DashView
+                        android:layout_marginLeft="26dp"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
-                        android:layout_marginLeft="26dp"
-                        app:dashOrientation="1"
                         app:dashWidth="2dp"
+                        app:lineWidth="3dp"
                         app:lineColor="#B3BED9"
-                        app:lineHeight="1dp"
-                        app:lineWidth="4dp" />
+                        app:dashOrientation="1"
+                        app:lineHeight="0.5dp"
+                        />
 
 
                     <RelativeLayout

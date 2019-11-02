@@ -7,6 +7,7 @@ import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class ChongZhiActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
     @BindView(R.id.rl_copy)
     RelativeLayout rlCopy;
+    @BindView(R.id.ll_noData)
+    LinearLayout llNoData;
     private Request<JSONObject> request;
     private int page = 1;
     @BindView(R.id.rl_back)
@@ -148,11 +151,16 @@ public class ChongZhiActivity extends BaseActivity {
                 case 2:
                     Log.i("song", "用户充值记录返回的值" + String.valueOf(response));
                     ChongZhiRecordBean chongZhiRecordBean = gson.fromJson(response.get().toString(), ChongZhiRecordBean.class);
-                    if(chongZhiRecordBean.getResultCode().equals("999999")){
+                    if (chongZhiRecordBean.getResultCode().equals("999999")) {
                         List<ChongZhiRecordBean.ResultDataBean> chongZhiList = chongZhiRecordBean.getResultData();
-                        if(chongZhiList!=null && chongZhiList.size()>0){
-                            ChongZhiRecordAdapter chongZhiRecordAdapter=new ChongZhiRecordAdapter(ChongZhiActivity.this,chongZhiList);
+                        if (chongZhiList != null && chongZhiList.size() > 0) {
+                            smartRefreshLayout.setVisibility(View.VISIBLE);
+                            llNoData.setVisibility(View.GONE);
+                            ChongZhiRecordAdapter chongZhiRecordAdapter = new ChongZhiRecordAdapter(ChongZhiActivity.this, chongZhiList);
                             listView.setAdapter(chongZhiRecordAdapter);
+                        }else{
+                            smartRefreshLayout.setVisibility(View.GONE);
+                            llNoData.setVisibility(View.VISIBLE);
                         }
                     }
                     break;
@@ -180,7 +188,7 @@ public class ChongZhiActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.rl_back, R.id.tv_title,R.id.rl_copy})
+    @OnClick({R.id.rl_back, R.id.tv_title, R.id.rl_copy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:

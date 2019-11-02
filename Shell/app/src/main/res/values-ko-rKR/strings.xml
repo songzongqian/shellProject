@@ -185,4 +185,14 @@
     <string name="country_f">국가를 선택하십시오</string>
     <string name="you_have_new_order">새 주문 있음</string>
     <string name="the_standard_currency">본위 화폐종류</string>
+    <string name="tv_jiaoyimima">지불암호</string>
+    <string name="tv_sjymm">지불암호입력</string>
+    <string name="tb_kcy">쓸수있는</string>
+    <string name="tv_bottom_tip">이미로드</string>
+    <string name="fff">주소</string>
+    <string name="df">일 전</string>
+    <string name="hf">시간 전</string>
+    <string name="mf">분 전</string>
+    <string name="gg">그냥</string>
+    <string name="dcl">미처리</string>
 </resources>

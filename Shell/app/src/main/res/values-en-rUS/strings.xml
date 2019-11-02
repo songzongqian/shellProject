@@ -185,4 +185,14 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="country_f">Select Country</string>
     <string name="you_have_new_order">You have new order</string>
     <string name="the_standard_currency">The standard currency</string>
+    <string name="tv_jiaoyimima">Transaction password</string>
+    <string name="tv_sjymm">Please enter the transaction password</string>
+    <string name="tb_kcy">Available</string>
+    <string name="tv_bottom_tip">Already loaded</string>
+    <string name="fff">Address</string>
+    <string name="df">days ago</string>
+    <string name="hf">hours ago</string>
+    <string name="mf">minutes ago</string>
+    <string name="gg">just</string>
+    <string name="dcl">Pending</string>
 </resources>

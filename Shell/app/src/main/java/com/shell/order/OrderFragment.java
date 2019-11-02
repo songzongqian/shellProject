@@ -17,7 +17,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -26,20 +25,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.shell.Bean.GetServerBean;
-import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.NoticeBean;
 import com.shell.Bean.OrderEvent;
 import com.shell.R;
-import com.shell.activity.LoginActivity;
 import com.shell.base.BaseFragment;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
-import com.shell.mine.activity.MyFriendActivity;
-import com.shell.mine.activity.MyFriendBean;
-import com.shell.mine.adapter.FriendAdapter;
-import com.shell.money.activity.QingSuanActivity;
 import com.shell.order.activity.OrderListActivity;
-import com.shell.order.adapter.OrderListAdapter;
 import com.shell.order.adapter.OrderPartAdapter;
 import com.shell.order.bean.AllNetTopBean;
 import com.shell.order.bean.CurrentOrderStatue;
@@ -47,7 +39,6 @@ import com.shell.order.bean.OFFSuccessBean;
 import com.shell.order.bean.OnSuccessBean;
 import com.shell.order.bean.OrderListBean;
 import com.shell.order.bean.ServerOrderBean;
-import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -55,7 +46,6 @@ import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
-import com.zhangke.websocket.WebSocketHandler;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -128,6 +118,8 @@ public class OrderFragment extends BaseFragment {
     private PopupWindow orderWindow;
     //fragment loading只显示一次  没时间了
     private boolean isLoading = true;
+    private TextView tvNoData;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order;
@@ -142,6 +134,7 @@ public class OrderFragment extends BaseFragment {
         rlback.setVisibility(View.GONE);
         tvTitle.setText(getString(R.string.or_pagetitle));
         tvRight.setVisibility(View.GONE);
+        tvNoData = mRootView.findViewById(R.id.tv_NoData);
         EventBus.getDefault().register(this);
         mTiemTimeCount = new TimeCount(10000, 1000);
     }
@@ -157,8 +150,6 @@ public class OrderFragment extends BaseFragment {
         getMiddleData();
         getOrderData();
     }
-
-
 
 
     private void getTopData() {
@@ -201,7 +192,7 @@ public class OrderFragment extends BaseFragment {
 
     //打开接单按钮
     private void PostOrderStatueOn() {
-        Log.i("song", "进入打开按钮" );
+        Log.i("song", "进入打开按钮");
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.getOrderStatue, RequestMethod.POST);
         request.addHeader("token", token);
@@ -209,10 +200,6 @@ public class OrderFragment extends BaseFragment {
         request.add("status", "on");
         mQueue.add(4, request, responseListener);
     }
-
-
-
-
 
 
     //获取接单文案
@@ -229,7 +216,7 @@ public class OrderFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (isLoading){
+            if (isLoading) {
                 if (myWaitDialog == null) {
                     myWaitDialog = new MyWaitDialog(getActivity());
                     myWaitDialog.show();
@@ -291,10 +278,15 @@ public class OrderFragment extends BaseFragment {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         List<OrderListBean.ResultDataBean> resultData = orderListBean.getResultData();
                         if (resultData != null && resultData.size() >= 2) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            tvNoData.setVisibility(View.GONE);
                             middleList.add(resultData.get(0));
                             middleList.add(resultData.get(1));
                             OrderPartAdapter orderListAdapter = new OrderPartAdapter(middleList, getActivity());
                             recyclerView.setAdapter(orderListAdapter);
+                        }else{
+                            recyclerView.setVisibility(View.GONE);
+                            tvNoData.setVisibility(View.VISIBLE);
                         }
                     } else {
 
@@ -308,14 +300,14 @@ public class OrderFragment extends BaseFragment {
                     OnSuccessBean onSuccessBean = gson.fromJson(response.get().toString(), OnSuccessBean.class);
                     String onSuccessBeanResultCode = onSuccessBean.getResultCode();
                     String resultDesc = onSuccessBean.getResultDesc();
-                    if(onSuccessBeanResultCode.equals("999999")){
+                    if (onSuccessBeanResultCode.equals("999999")) {
                         //修改成功
                         flag = 1;
                         btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
                         btnStartOrder.setText(R.string.or_endorder);
-                       // WebSocketHandler.getDefault().reconnect();
-                    }else{
-                        Toast.makeText(getActivity(),resultDesc,Toast.LENGTH_SHORT).show();
+                        // WebSocketHandler.getDefault().reconnect();
+                    } else {
+                        Toast.makeText(getActivity(), resultDesc, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
@@ -333,7 +325,7 @@ public class OrderFragment extends BaseFragment {
                 case 6:
                     Log.i("song", "获取接单的文案" + String.valueOf(response));
                     NoticeBean noticeBean = gson.fromJson(response.get().toString(), NoticeBean.class);
-                    if(noticeBean.getResultCode().equals("999999")){
+                    if (noticeBean.getResultCode().equals("999999")) {
                         showOrderInfo(noticeBean.getResultData());
                     }
                     break;
@@ -343,15 +335,15 @@ public class OrderFragment extends BaseFragment {
                     OFFSuccessBean offSuccessBean = gson.fromJson(response.get().toString(), OFFSuccessBean.class);
                     String offSuccessBeanResultCode = offSuccessBean.getResultCode();
                     String offdesc = offSuccessBean.getResultDesc();
-                    if(offSuccessBeanResultCode.equals("999999")){
+                    if (offSuccessBeanResultCode.equals("999999")) {
                         //关闭成功
                         //处于停止接单状态
                         flag = 0;
                         btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
                         btnStartOrder.setText(R.string.or_begin);
-                       // WebSocketHandler.getDefault().disConnect();
-                    }else{
-                        Toast.makeText(getActivity(),offdesc,Toast.LENGTH_SHORT).show();
+                        // WebSocketHandler.getDefault().disConnect();
+                    } else {
+                        Toast.makeText(getActivity(), offdesc, Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -440,9 +432,6 @@ public class OrderFragment extends BaseFragment {
         });
 
 
-
-
-
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -506,7 +495,6 @@ public class OrderFragment extends BaseFragment {
     }
 
 
-
     private void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha;
@@ -541,7 +529,7 @@ public class OrderFragment extends BaseFragment {
         @Override
         public void onTick(long millisUntilFinished) {
             tvSecond.setClickable(false);
-            tvSecond.setText(millisUntilFinished / 1000 + "秒");
+            tvSecond.setText(millisUntilFinished / 1000 + "s");
         }
 
         @Override
