@@ -1,5 +1,6 @@
 package com.shell.money.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -26,9 +27,12 @@ import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
 import com.shell.Bean.ZhiYaItemBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
+import com.shell.mine.activity.JiaoYiActivity;
 import com.shell.money.Bean.ZhiYaBean;
 import com.shell.money.Bean.ZhiYaResultBean;
 import com.shell.money.Bean.ZhiYaScoreBean;
@@ -169,6 +173,7 @@ public class ZhiYaActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(ZhiYaActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -265,8 +270,14 @@ public class ZhiYaActivity extends BaseActivity {
                 btnOther.setBackgroundColor(Color.parseColor("#4AB2E7"));
                 break;
             case R.id.btn_zhiya:
-                etAmount.setFocusable(false);
-                showPopuwindow();
+                Boolean aBoolean = PreManager.instance().getBoolean(AppUrl.isSetPayPwd);
+                if (aBoolean){
+                    etAmount.setFocusable(false);
+                    showPopuwindow();
+                }else {
+                    gotosetPayPwd();
+                }
+
                 break;
             case R.id.tv_rightTitle:
                 showPopuScore();
@@ -274,6 +285,33 @@ public class ZhiYaActivity extends BaseActivity {
         }
     }
 
+    private void gotosetPayPwd() {
+        View inflate = LayoutInflater.from(ZhiYaActivity.this).inflate(R.layout.popuwindow_set_pay_pwd, null, false);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView tvTitle = inflate.findViewById(R.id.tv_title);
+        TextView tvContent = inflate.findViewById(R.id.tv_content);
+        TextView tvOk = inflate.findViewById(R.id.tv_OK);
+
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ZhiYaActivity.this, JiaoYiActivity.class);
+                startActivity(intent);
+                window.dismiss();
+            }
+        });
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(ZhiYaActivity.this).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
 
     //显示质押权益列表
     private void showPopuScore() {

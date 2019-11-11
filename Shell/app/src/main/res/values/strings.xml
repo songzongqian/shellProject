@@ -188,8 +188,8 @@
     <string name="home_all_suanli_S">全网算力</string>
     <string name="Net_trade_volume">全网交易量</string>
     <string name="So_the_pledge">全网质押</string>
-    
-    <string name="untreated">未处理</string>
+
+    <string name="untreated">待处理</string>
     <string name="Have_to_dealwith">未处理</string>
 
     <string name="The_pledge_rights">质押权益</string>
@@ -214,4 +214,26 @@
     <string name="you_have_new_order">您有新的订单</string>
 
     <string name="the_standard_currency">本位币种</string>
+    
+    <string name="all_loaded">已经全部加载完毕</string>
+    <string name="available">可用 </string>
+    <string name="please_check_option">请勾选我已知晓选项</string>
+    
+    <string name="processed">待处理</string>
+    <string name="processing">处理中</string>
+    <string name="successful">成功</string>
+    <string name="failure">失败</string>
+    <string name="block_confirmation">区块确认中</string>
+
+    <string name="address">地址</string>
+
+    <string name="has_been_settled">已结算</string>
+    <string name="has_been_cancelled">已取消</string>
+    <string name="reward">奖励</string>
+    <string name="please_set_transaction_password">请设置交易密码</string>
+    <string name="Yesterday">昨天</string>
+    <string name="just">刚刚</string>
+    <string name="Minutes_ago">分钟前</string>
+    <string name="Hours_before">小时前</string>
+    <string name="Days_ago">天前</string>
 </resources>

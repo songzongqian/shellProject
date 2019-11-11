@@ -3,21 +3,35 @@ package com.shell.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -34,8 +48,13 @@ import com.shell.mine.MineFragment;
 import com.shell.money.MoneyFragment;
 import com.shell.order.OrderFragment;
 import com.shell.utils.PreManager;
+import com.vondear.rxtool.RxAppTool;
+import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.download.DownloadListener;
+import com.yanzhenjie.nohttp.download.DownloadQueue;
+import com.yanzhenjie.nohttp.download.DownloadRequest;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
@@ -79,9 +98,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private FragmentManager mFragmentmanager;
     private RadioGroup radioGroup;
     private RadioButton rbtn0, rbtn1, rbtn2, rbtn3, rbtn4;
-    private  HashMap<Integer, Fragment> mTabFragment = new HashMap<Integer, Fragment>();
+    private HashMap<Integer, Fragment> mTabFragment = new HashMap<Integer, Fragment>();
     private int currentIndex = 0;
     private WebSocketClient client;
+    private PopupWindow window;
 
 
 
@@ -223,7 +243,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (!startLoginActiviy(checkedId)){
+                if (!startLoginActiviy(checkedId)) {
                     rbtn0.setChecked(true);
                     return;
                 }
@@ -255,13 +275,14 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      *
      * @param checkedId
      */
+    
     public boolean startLoginActiviy(int checkedId) {
-        String token = PreManager.instance().getString("token");
-        if (TextUtils.isEmpty(token) && R.id.rbtn_kuangchi != checkedId) {
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (!isLogin && R.id.rbtn_kuangchi != checkedId) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -269,9 +290,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initData() {
         Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
-        if (isLogin){
+        if (isLogin) {
             String token = PreManager.instance().getString("token");
-            linkSocket(AppUrl.WebSocket+token);
+            linkSocket(AppUrl.WebSocket + token);
         }
         //WebSocketHandler.getDefault().addListener(socketListener);
         if (Build.VERSION.SDK_INT >= 23) {
@@ -340,6 +361,150 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
     }
 
+    //显示更新版本提示
+    public void showUpDateInfo(VersionBean.ResultDataBean versionData) {
+
+        View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.popuwindow_version_info, null, false);
+        window = new PopupWindow(inflate, 800, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView tvTitle = inflate.findViewById(R.id.tv_title);
+        TextView tvContent = inflate.findViewById(R.id.tv_content);
+        TextView tvOk = inflate.findViewById(R.id.tv_OK);
+        String remark = versionData.getRemark();
+        String replace = remark.replace("\\r\\n", "\n");
+        tvTitle.setText(getString(R.string.version_title));
+        tvContent.setText(replace);
+        final String dataUrl = versionData.getUrl();
+        final String replaceUrl = dataUrl.replaceAll(" ", "");
+
+
+/*        layMenu.setOnKeyListener(newOnKeyListener()
+        {
+            publicboolean onKey(View v, intkeyCode, KeyEvent event)
+            {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK)
+                    pw.dismiss();
+
+                returnfalse;
+            }
+        });*/
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downLoadApk(dataUrl.trim(), true);
+                //  downLoadApk(replaceUrl, true);
+            }
+        });
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setFocusable(false);// 这个很重要
+        window.setOutsideTouchable(false);
+        window.setBackgroundDrawable(new BitmapDrawable());
+        /*window.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !window.isFocusable()) {
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });*/
+        window.showAtLocation(LayoutInflater.from(MainActivity.this).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (window != null && window.isShowing()) {
+            return false;
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    private NotificationManager notificationManager;
+    private ProgressDialog psdialog;
+    NotificationCompat.Builder builder;
+    Notification nf;
+
+    //下载apk文件
+    private void downLoadApk(String uploadPath, final boolean isShow) {
+        notificationManager = (NotificationManager) MainActivity.this.getSystemService(Activity.NOTIFICATION_SERVICE);
+        psdialog = new ProgressDialog(MainActivity.this);
+        String filefoder = null;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            filefoder = Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
+            filefoder = MainActivity.this.getFilesDir().getAbsolutePath();
+        }
+        DownloadQueue downloadQueue = NoHttp.newDownloadQueue();
+        DownloadRequest downloadRequest = NoHttp.createDownloadRequest(uploadPath, RequestMethod.GET, filefoder, "123.apk", true, true);
+        downloadQueue.add(123, downloadRequest, new DownloadListener() {
+            @Override
+            public void onDownloadError(int what, Exception exception) {
+                showToast(exception.toString());
+                if (isShow && psdialog != null) {
+                    psdialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onStart(int what, boolean isResume, long rangeSize, Headers responseHeaders, long allCount) {
+                if (isShow) {
+                    psdialog = new ProgressDialog(MainActivity.this);
+                    psdialog.setTitle("");
+                    psdialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    psdialog.setCancelable(false);
+                    psdialog.setCanceledOnTouchOutside(false);
+                    psdialog.show();
+                    ////
+                    builder = new NotificationCompat.Builder(MyApplication.getAppInstance()).setSmallIcon(R.mipmap.ic_launcher).setContentInfo("").setContentTitle("正在下载");
+                    nf = builder.build();
+//                  //使用默认的声音、振动、闪光
+                    nf.defaults = Notification.DEFAULT_ALL;
+                    notificationManager.notify(0, nf);
+                }
+            }
+
+            @Override
+            public void onProgress(int what, int progress, long fileCount, long speed) {
+                psdialog.setProgress(progress);
+                nf = builder.setProgress(100, progress, false).build();
+                notificationManager.notify(0, nf);
+                if (progress == 100) {    //下载完成后点击安装
+                    notificationManager.cancel(0);
+                }
+            }
+
+            @Override
+            public void onFinish(int what, String filePath) {
+                if (isShow) {
+                    psdialog.dismiss();
+                }
+                //安装apk
+                RxAppTool.installApp(MainActivity.this, filePath);
+            }
+
+            @Override
+            public void onCancel(int what) {
+                Log.e("SplshActivity", "onCancel");
+                if (isShow) {
+                    psdialog.dismiss();
+                }
+            }
+        });
+    }
+
+    private void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
     public static void reStart(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -353,6 +518,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.e("onOpen:", "------连接成功!!!");
                 }
+
                 @Override
                 public void onMessage(String message) {
                     Log.e("onMessage:", message);
@@ -365,19 +531,23 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                         EventBus.getDefault().post(new OrePoolRewardBean(message));
                     }
                 }
+
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     if (null != client && !client.isOpen()) {
                         //LogUtils.showLog("socket onStartConnect");
-                        client.reconnect();
+
+
+                        //client.reconnect();
                     }
                     Log.e("onClose:", "------连接关闭!!!" + reason);
                 }
+
                 @Override
                 public void onError(Exception ex) {
                     if (null != client && !client.isOpen()) {
                         //LogUtils.showLog("socket onStartConnect");
-                        client.reconnect();
+                       // client.reconnect();
                     }
                     Log.e("onError:", ex.toString());
                 }
@@ -416,8 +586,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             e.printStackTrace();
         }
     }
+
     @Override
     public void onBackPressed() {
+
         exitAppByDoubleClick();
     }
 

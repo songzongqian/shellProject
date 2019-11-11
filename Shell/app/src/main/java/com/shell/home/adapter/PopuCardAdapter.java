@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -39,11 +42,26 @@ public class PopuCardAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        MyViewHolder holder= (MyViewHolder) viewHolder;
+        final MyViewHolder holder= (MyViewHolder) viewHolder;
         TopStaticBean.ResultDataBean.AllMilepostBean allMilepostBean = testList.get(position);
         Log.i("song","真的进入adapter了");
+
         holder.tvDate.setText(allMilepostBean.getTime());
         holder.tvContent.setText(allMilepostBean.getDesc());
+
+        holder.mearHeight.post(new Runnable() {
+
+            @Override
+            public void run() {
+                holder.mearHeight.getWidth(); // 获取宽度
+                int height = holder.mearHeight.getHeight();// 获取高度
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.cancemearHeight.getLayoutParams();
+                layoutParams.height = height+30;
+                holder.cancemearHeight.setLayoutParams(layoutParams);
+            }
+        });
+
+
     }
 
     @Override
@@ -56,11 +74,15 @@ public class PopuCardAdapter extends RecyclerView.Adapter {
     class MyViewHolder extends RecyclerView.ViewHolder{
 
 
-        private final TextView tvDate;
-        private final TextView tvContent;
+     TextView tvDate;
+     TextView tvContent;
+     RelativeLayout cancemearHeight;
+     LinearLayout mearHeight;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            cancemearHeight = itemView.findViewById(R.id.cancemearHeight);
+            mearHeight = itemView.findViewById(R.id.mearHeight);
             tvDate = itemView.findViewById(R.id.tv_time);
             tvContent = itemView.findViewById(R.id.tv_content);
         }

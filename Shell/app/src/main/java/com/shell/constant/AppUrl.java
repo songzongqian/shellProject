@@ -6,10 +6,13 @@ public class AppUrl {
 
     public static final String CACAHE_DIRNAME = "/webcache";
 
-    public static final String BASE_URL = "https://api.tritonlab.net";
+    public static final String BASE_URL = "https://api.tritonlab.net";//正式环境
+   // public static final String BASE_URL = "https://t.tritonlab.net";//测试环境
 
 
-    public static final String WebSocket = "wss://api.tritonlab.net/webSocket/";
+
+    public static final String WebSocket = "wss://api.tritonlab.net/webSocket/";//正式环境
+    //public static final String WebSocket = "wss://t.tritonlab.net/webSocket/";//测试环境
 
     /**获取邮箱验证码*/
     public static final String getEmailCode = BASE_URL + "/sendRegisterEmail?";
@@ -38,7 +41,7 @@ public class AppUrl {
     public static final String ResetCode = BASE_URL + "/resetPasswordForget?";
 
     /**我的好友*/
-    public static final String MyFriendUrl = BASE_URL + "/user/queryMyFriends/1?";
+    public static final String MyFriendUrl = BASE_URL + "/user/queryMyFriends/";
 
     /**我的邀请信息*/
     public static final String MyHelpUrl = BASE_URL + "/user/getMyInviteInfo?";
@@ -52,13 +55,13 @@ public class AppUrl {
     public static final String CardDataUrl = BASE_URL + "/wallet/readWalletInfo?";
 
     /**钱包下方数据*/
-    public static final String CardUnderUrl = BASE_URL + "/wallet/queryWalletDetail/1?";
+    public static final String CardUnderUrl = BASE_URL + "/wallet/queryWalletDetail/";
 
     /**质押页面数据*/
     public static final String ZhiYaUrl = BASE_URL + "/wallet/getPledgePreInfo?";
 
     /**获取用户消息数量*/
-    public static final String WebLrtterCount = BASE_URL + "/message/queryMsgList/1?";
+    public static final String WebLrtterCount = BASE_URL + "/message/queryMsgList/";
 
     /**上传消息已读标识*/
     public static final String PostLetterID = BASE_URL + "/message/readMsg?";
@@ -109,7 +112,7 @@ public class AppUrl {
     public static final String getTodayShouYi= BASE_URL + "/wallet/getTodayProfit?";
 
     /**获取用户历史收益*/
-    public static final String getHistoryShouYi= BASE_URL + "/wallet/queryUserProfit/1?";
+    public static final String getHistoryShouYi= BASE_URL + "/wallet/queryUserProfit/";
 
     /**获取全网算力xy*/
     public static final String getAllInternet= BASE_URL + "/hashRate/queryNetworkHashRateList?";
@@ -121,7 +124,7 @@ public class AppUrl {
     public static final String getQingSuanTitle= BASE_URL + "/wallet/getClearTextDesc?";
 
     /**开始清算*/
-    public static final String QingSuanURL= BASE_URL + "/order/clear?";
+    public static final String QingSuanURL= BASE_URL + "/wallet/clear";
 
     /**根据id获取订单详情*/
     public static final String unorderDetail= BASE_URL + "/order/readOrderInfo/";
@@ -150,8 +153,10 @@ public class AppUrl {
     public static final String ZhuanChu_Ordert = BASE_URL + "/order/process";
 
 
+    /**
+     * 常用变量
+     */
 
-
-
+    public static String isSetPayPwd = "isSetPayPwd";
 
 }

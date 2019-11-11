@@ -16,7 +16,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.activity.MyFriendActivity;
@@ -130,6 +132,9 @@ public class OrderListActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            String s = response.get().toString();
+            System.out.println("---------" +s);
+            LogonFailureUtil.gotoLoginActiviy(OrderListActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:

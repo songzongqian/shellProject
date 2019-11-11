@@ -71,14 +71,14 @@ public class OrderDetailtBean implements Serializable {
         private String code;
         private String type;
         private String orderCurrency;
-        private int orderAmount;
+        private String orderAmount;
         private Object targetUserId;
         private Object targetEmail;
         private String targetAddress;
         private String standardCurrency;
-        private int exchangeRate;
-        private int standardAmount;
-        private double awardUsdt;
+        private String exchangeRate;
+        private String standardAmount;
+        private String awardUsdt;
         private Object awardScore;
         private String status;
         private Object transTime;
@@ -142,11 +142,11 @@ public class OrderDetailtBean implements Serializable {
             this.orderCurrency = orderCurrency;
         }
 
-        public int getOrderAmount() {
+        public String getOrderAmount() {
             return orderAmount;
         }
 
-        public void setOrderAmount(int orderAmount) {
+        public void setOrderAmount(String orderAmount) {
             this.orderAmount = orderAmount;
         }
 
@@ -182,27 +182,27 @@ public class OrderDetailtBean implements Serializable {
             this.standardCurrency = standardCurrency;
         }
 
-        public int getExchangeRate() {
+        public String getExchangeRate() {
             return exchangeRate;
         }
 
-        public void setExchangeRate(int exchangeRate) {
+        public void setExchangeRate(String exchangeRate) {
             this.exchangeRate = exchangeRate;
         }
 
-        public int getStandardAmount() {
+        public String getStandardAmount() {
             return standardAmount;
         }
 
-        public void setStandardAmount(int standardAmount) {
+        public void setStandardAmount(String standardAmount) {
             this.standardAmount = standardAmount;
         }
 
-        public double getAwardUsdt() {
+        public String getAwardUsdt() {
             return awardUsdt;
         }
 
-        public void setAwardUsdt(double awardUsdt) {
+        public void setAwardUsdt(String awardUsdt) {
             this.awardUsdt = awardUsdt;
         }
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/look_detail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#08233F"
@@ -10,12 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
+            app:riv_oval="true"
             android:id="@+id/iv_money_Name"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_centerVertical="true"
             android:layout_marginLeft="21dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/money_name" />
 
 
@@ -67,8 +71,13 @@
                     android:id="@+id/tv_orderStatue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingBottom="@dimen/dp_3"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:background="@drawable/red_bg_line"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="@dimen/dp_25"
                     android:layout_marginTop="23dp"
                     android:text="待处理"
                     android:textColor="#F4376D"
@@ -98,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="1dp"
+                    android:layout_marginLeft="@dimen/dp_5"
                     android:text="15:30"
                     android:textColor="#4AB2E7"
                     android:textSize="12sp"
@@ -112,6 +121,7 @@
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

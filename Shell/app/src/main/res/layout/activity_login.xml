@@ -72,6 +72,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/profile_image"
         android:layout_width="80dp"
@@ -80,8 +81,7 @@
         android:layout_marginTop="54dp"
         android:scaleType="fitXY"
         android:src="@mipmap/logo_top"
-        app:riv_corner_radius="@dimen/dp_5"/>
-
+        app:riv_corner_radius="@dimen/dp_5" />
 
     <ImageView
         android:layout_width="wrap_content"

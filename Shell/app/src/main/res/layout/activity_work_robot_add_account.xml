@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#061D34"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".newactivity.ui.WorkRobotLicenseActivity">
+
+    <include layout="@layout/layout_top" />
+
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/input_login"
+        android:hint="E-mail"
+        android:paddingLeft="@dimen/dp_16"
+        android:textColor="#678DA8"
+        android:textColorHint="#678DA8"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/et_account_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/input_login"
+        android:hint="Password"
+        android:paddingLeft="@dimen/dp_16"
+        android:textColor="#678DA8"
+        android:textColorHint="#678DA8"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/et_account_password_again"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/input_login"
+        android:hint="Transaction Password"
+        android:paddingLeft="@dimen/dp_16"
+        android:textColor="#678DA8"
+        android:textColorHint="#678DA8"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/button"
+        android:text="Save"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

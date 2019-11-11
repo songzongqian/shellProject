@@ -185,4 +185,25 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="country_f">Select Country</string>
     <string name="you_have_new_order">You have new order</string>
     <string name="the_standard_currency">The standard currency</string>
+    <string name="all_loaded">All loaded</string>
+    <string name="available">available </string>
+    <string name="please_check_option">Please check the I know option</string>
+
+    <string name="processed">To be processed</string>
+    <string name="processing">In the processing</string>
+    <string name="successful">successful</string>
+    <string name="failure">failure</string>
+    <string name="block_confirmation">Block confirmation</string>
+    <string name="address">address</string>
+    <string name="has_been_settled">Has been settled</string>
+    <string name="has_been_cancelled">cancelled</string>
+    <string name="reward">reward</string>
+    <string name="please_set_transaction_password">Please set the transaction password</string>
+    <string name="Yesterday">Yesterday,</string>
+    <string name="just">just</string>
+    <string name="Minutes_ago">Minutes ago</string>
+    <string name="Hours_before">Hours before</string>
+    <string name="Days_ago">Days ago</string>
+
+
 </resources>

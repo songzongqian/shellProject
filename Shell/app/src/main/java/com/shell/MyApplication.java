@@ -156,39 +156,39 @@ public class MyApplication extends Application {
         WebSocketHandler.registerNetworkChangedReceiver(this);
     }
 
-    private void ManageActivity() {
-        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle bundle) {
-                activityList.add(activity);
-            }
+        private void ManageActivity() {
+            registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+                @Override
+                public void onActivityCreated(Activity activity, Bundle bundle) {
+                    activityList.add(activity);
+                }
 
-            @Override
-            public void onActivityStarted(Activity activity) {
-            }
+                @Override
+                public void onActivityStarted(Activity activity) {
+                }
 
-            @Override
-            public void onActivityResumed(Activity activity) {
-                //处于栈顶的Activity
-                topactivity = activity;
-            }
+                @Override
+                public void onActivityResumed(Activity activity) {
+                    //处于栈顶的Activity
+                    topactivity = activity;
+                }
 
-            @Override
-            public void onActivityPaused(Activity activity) {
-            }
+                @Override
+                public void onActivityPaused(Activity activity) {
+                }
 
-            @Override
-            public void onActivityStopped(Activity activity) {
-            }
+                @Override
+                public void onActivityStopped(Activity activity) {
+                }
 
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-            }
+                @Override
+                public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+                }
 
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                activityList.remove(activity);
-            }
-        });
-    }
+                @Override
+                public void onActivityDestroyed(Activity activity) {
+                    activityList.remove(activity);
+                }
+            });
+        }
 }

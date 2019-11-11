@@ -17,6 +17,7 @@ import com.shell.Bean.EmailCodeBean;
 import com.shell.Bean.RegisterBean;
 import com.shell.R;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -157,6 +158,7 @@ public class ForgetActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(ForgetActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:

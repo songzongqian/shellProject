@@ -18,12 +18,15 @@ import android.widget.Toast;
 import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.order.adapter.OrderListAdapter;
 import com.shell.order.bean.OrderDetailtBean;
 import com.shell.order.bean.OrderListBean;
+import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -125,6 +128,9 @@ public class UnFinishDetailActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            String s1 = response.get().toString();
+            System.out.println("[[[[---"+s1);
+            LogonFailureUtil.gotoLoginActiviy(UnFinishDetailActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -171,12 +177,12 @@ public class UnFinishDetailActivity extends BaseActivity {
         }else {
             tvOrderType.setText("转出");
         }
-        tvOrderPrice.setText(String.valueOf(resultData.getOrderAmount()));
-        //tvOrderAddress.setText(resultData.getUserAddress().toString());
+        tvOrderPrice.setText(GetTwoLetter.getTwo(resultData.getOrderAmount()));
+        tvOrderAddress.setText(resultData.getTargetAddress());
         tvBenweihuobi.setText(resultData.getStandardCurrency());
-        tvHuilv.setText(String.valueOf(resultData.getExchangeRate()));
-        tvJine.setText(String.valueOf(resultData.getStandardAmount()));
-        tvFuwujiangli.setText(String.valueOf(resultData.getAwardUsdt()));
+        tvHuilv.setText(GetTwoLetter.getTwo(resultData.getExchangeRate()));
+        tvJine.setText(GetTwoLetter.getTwo(resultData.getStandardAmount()));
+        tvFuwujiangli.setText(GetTwoLetter.getTwo(resultData.getAwardUsdt()));
 
         if ("10".equals(resultData.getStatus())){
             btnSend.setVisibility(View.VISIBLE);

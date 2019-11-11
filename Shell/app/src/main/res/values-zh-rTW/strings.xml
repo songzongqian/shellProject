@@ -186,4 +186,23 @@
     <string name="country_f">選擇國家</string>
     <string name="you_have_new_order">您有新的訂單</string>
     <string name="the_standard_currency">本位幣種</string>
+    <string name="all_loaded">已經全部加載完畢</string>
+    <string name="available">可用 </string>
+    <string name="please_check_option">請勾選我已知曉選項</string>
+    <string name="processed">待處理</string>
+    <string name="processing">處理中</string>
+    <string name="successful">成功</string>
+    <string name="failure">失敗</string>
+    <string name="block_confirmation">區塊確認中</string>
+    <string name="address">地址</string>
+    <string name="has_been_settled">已結算</string>
+    <string name="has_been_cancelled">已取消</string>
+    <string name="reward">獎勵</string>
+    <string name="please_set_transaction_password">請設置交易密碼</string>
+    <string name="Yesterday">昨天</string>
+    <string name="just">剛剛</string>
+    <string name="Minutes_ago">分鐘前</string>
+    <string name="Hours_before">小時前</string>
+    <string name="Days_ago">天前</string>
+
 </resources>

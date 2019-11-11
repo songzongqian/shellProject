@@ -24,14 +24,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.google.gson.Gson;
 import com.shell.Bean.GetServerBean;
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.NoticeBean;
 import com.shell.Bean.OrderEvent;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.activity.LoginActivity;
 import com.shell.base.BaseFragment;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.activity.MyFriendActivity;
@@ -128,6 +131,7 @@ public class OrderFragment extends BaseFragment {
     private PopupWindow orderWindow;
     //fragment loading只显示一次  没时间了
     private boolean isLoading = true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order;
@@ -153,12 +157,14 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        getTopData();
-        getMiddleData();
-        getOrderData();
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (isLogin) {
+            getTopData();
+            getMiddleData();
+            getOrderData();
+        }
+
     }
-
-
 
 
     private void getTopData() {
@@ -185,6 +191,7 @@ public class OrderFragment extends BaseFragment {
         request.addHeader("token", token);
         request.add("token", token);
         request.add("pageNum", page);
+        request.add("status", "10");
         mQueue.add(3, request, responseListener);
     }
 
@@ -201,7 +208,7 @@ public class OrderFragment extends BaseFragment {
 
     //打开接单按钮
     private void PostOrderStatueOn() {
-        Log.i("song", "进入打开按钮" );
+        Log.i("song", "进入打开按钮");
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.getOrderStatue, RequestMethod.POST);
         request.addHeader("token", token);
@@ -209,10 +216,6 @@ public class OrderFragment extends BaseFragment {
         request.add("status", "on");
         mQueue.add(4, request, responseListener);
     }
-
-
-
-
 
 
     //获取接单文案
@@ -229,7 +232,7 @@ public class OrderFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (isLoading){
+            if (isLoading) {
                 if (myWaitDialog == null) {
                     myWaitDialog = new MyWaitDialog(getActivity());
                     myWaitDialog.show();
@@ -243,6 +246,7 @@ public class OrderFragment extends BaseFragment {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(getActivity(), response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -258,8 +262,34 @@ public class OrderFragment extends BaseFragment {
                         tvOrderFirst.setText(resultData.getOrderAll());
                         tvAmountFirst.setText(resultData.getOrderAllAmount() + " " + "USDT");
                         tvOrderSecond.setText(resultData.getOrderToday());
+                        tvAmountSecond.setText(resultData.getOrderTodayAmount() + " " + "USDT");
                         tvSystemRun.setText(resultData.getHours() + " " + getString(R.string.house));
                         tvOnlinePerson.setText(resultData.getOnlineUser());
+
+                        String profit = PreManager.instance().getString("profit");
+                        if (!TextUtils.isEmpty(profit) && !"0".equals(profit) && !"0.0".equals(profit)) {
+                            tvShouyiCount.setText(GetTwoLetter.getTwo(profit));
+                        } else {
+                            tvShouyiCount.setText("0");
+                        }
+
+
+                        String quota = PreManager.instance().getString("quota");
+                        if (!TextUtils.isEmpty(quota) && !"0".equals(quota)&& !"0.0".equals(quota)) {
+                            tvMoneyED.setText(GetTwoLetter.getTwo(quota));
+                        } else {
+                            tvMoneyED.setText("0");
+                        }
+
+
+                        String currencyType = PreManager.instance().getString("currencyBlance");
+                        if (!TextUtils.isEmpty(currencyType) && !"0".equals(currencyType)&& !"0.0".equals(currencyType)) {
+                            tvMoneyAmount.setText(GetTwoLetter.getTwo(currencyType));
+                        } else {
+                            tvMoneyAmount.setText("0");
+                        }
+
+
                     } else {
 
                     }
@@ -272,10 +302,11 @@ public class OrderFragment extends BaseFragment {
                     if (resultCode.equals("999999")) {
                         currentOrder = currentOrderStatue.getResultData();
                         if (currentOrder.equals("off")) {
-                            btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
+                            btnStartOrder.setBackgroundResource(R.drawable.start_order_button);
                             btnStartOrder.setText(R.string.or_begin);
                         } else if (currentOrder.equals("on")) {
-                            btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
+                            flag = 1;
+                            btnStartOrder.setBackgroundResource(R.drawable.stop_order_button);
                             btnStartOrder.setText(R.string.or_endorder);
                         }
                     }
@@ -288,14 +319,20 @@ public class OrderFragment extends BaseFragment {
                     }
                     OrderListBean orderListBean = gson.fromJson(response.get().toString(), OrderListBean.class);
                     if (orderListBean.getResultCode().equals("999999")) {
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                        LinearLayoutManager manager = new LinearLayoutManager(getActivity()) {
+                            @Override
+                            public boolean canScrollVertically() {
+                                return false;
+                            }
+                        };
+
+                        recyclerView.setLayoutManager(manager);
                         List<OrderListBean.ResultDataBean> resultData = orderListBean.getResultData();
-                        if (resultData != null && resultData.size() >= 2) {
-                            middleList.add(resultData.get(0));
-                            middleList.add(resultData.get(1));
-                            OrderPartAdapter orderListAdapter = new OrderPartAdapter(middleList, getActivity());
-                            recyclerView.setAdapter(orderListAdapter);
-                        }
+                        middleList.addAll(resultData);
+                        OrderPartAdapter orderListAdapter = new OrderPartAdapter(middleList, getActivity());
+                        recyclerView.setAdapter(orderListAdapter);
+
                     } else {
 
                     }
@@ -308,14 +345,14 @@ public class OrderFragment extends BaseFragment {
                     OnSuccessBean onSuccessBean = gson.fromJson(response.get().toString(), OnSuccessBean.class);
                     String onSuccessBeanResultCode = onSuccessBean.getResultCode();
                     String resultDesc = onSuccessBean.getResultDesc();
-                    if(onSuccessBeanResultCode.equals("999999")){
+                    if (onSuccessBeanResultCode.equals("999999")) {
                         //修改成功
                         flag = 1;
-                        btnStartOrder.setBackgroundColor(Color.parseColor("#F4376D"));
+                        btnStartOrder.setBackgroundResource(R.drawable.stop_order_button);
                         btnStartOrder.setText(R.string.or_endorder);
-                       // WebSocketHandler.getDefault().reconnect();
-                    }else{
-                        Toast.makeText(getActivity(),resultDesc,Toast.LENGTH_SHORT).show();
+                        // WebSocketHandler.getDefault().reconnect();
+                    } else {
+                        Toast.makeText(getActivity(), resultDesc, Toast.LENGTH_SHORT).show();
                     }
                     break;
 
@@ -325,6 +362,7 @@ public class OrderFragment extends BaseFragment {
                     String code = getServerBean.getResultCode();
                     if (code.equals("999999")) {
                         Toast.makeText(getActivity(), getServerBean.getResultDesc(), Toast.LENGTH_SHORT).show();
+                        orderWindow.dismiss();
                     } else {
                         Toast.makeText(getActivity(), getServerBean.getResultDesc(), Toast.LENGTH_SHORT).show();
                     }
@@ -333,7 +371,7 @@ public class OrderFragment extends BaseFragment {
                 case 6:
                     Log.i("song", "获取接单的文案" + String.valueOf(response));
                     NoticeBean noticeBean = gson.fromJson(response.get().toString(), NoticeBean.class);
-                    if(noticeBean.getResultCode().equals("999999")){
+                    if (noticeBean.getResultCode().equals("999999")) {
                         showOrderInfo(noticeBean.getResultData());
                     }
                     break;
@@ -343,15 +381,15 @@ public class OrderFragment extends BaseFragment {
                     OFFSuccessBean offSuccessBean = gson.fromJson(response.get().toString(), OFFSuccessBean.class);
                     String offSuccessBeanResultCode = offSuccessBean.getResultCode();
                     String offdesc = offSuccessBean.getResultDesc();
-                    if(offSuccessBeanResultCode.equals("999999")){
+                    if (offSuccessBeanResultCode.equals("999999")) {
                         //关闭成功
                         //处于停止接单状态
                         flag = 0;
-                        btnStartOrder.setBackgroundColor(Color.parseColor("#22C6FE"));
+                        btnStartOrder.setBackgroundResource(R.drawable.start_order_button);
                         btnStartOrder.setText(R.string.or_begin);
-                       // WebSocketHandler.getDefault().disConnect();
-                    }else{
-                        Toast.makeText(getActivity(),offdesc,Toast.LENGTH_SHORT).show();
+                        // WebSocketHandler.getDefault().disConnect();
+                    } else {
+                        Toast.makeText(getActivity(), offdesc, Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -440,9 +478,6 @@ public class OrderFragment extends BaseFragment {
         });
 
 
-
-
-
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -480,7 +515,7 @@ public class OrderFragment extends BaseFragment {
             public void onClick(View v) {
                 //修改接单状态
                 PostOrderStatueOn();
-
+                window.dismiss();
             }
         });
 
@@ -504,7 +539,6 @@ public class OrderFragment extends BaseFragment {
         window.setTouchable(true);
         window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
     }
-
 
 
     private void backgroundAlpha(float bgAlpha) {
@@ -550,6 +584,35 @@ public class OrderFragment extends BaseFragment {
             tvSecond.setClickable(true);
             orderWindow.dismiss();
 
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            //可见
+            Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+            if (isLogin) {
+                getTopData();
+                getMiddleData();
+                getOrderData();
+            }
+
+        } else {
+            //不可见
+            Log.i("song", "MineFragment不可见");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (isLogin) {
+            getTopData();
+            getMiddleData();
+            getOrderData();
         }
     }
 }

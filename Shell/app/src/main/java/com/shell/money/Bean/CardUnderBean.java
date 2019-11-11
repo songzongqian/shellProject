@@ -112,13 +112,13 @@ public class CardUnderBean {
         private String coinCode;
         private String coinName;
         private Object address;
-        private int operateAmount;
-        private int beforeBalance;
-        private int afterBalance;
-        private int beforeFreeze;
-        private int afterFreeze;
-        private int beforeUseable;
-        private int afterUseable;
+        private String operateAmount;
+        private String beforeBalance;
+        private String afterBalance;
+        private String beforeFreeze;
+        private String afterFreeze;
+        private String beforeUseable;
+        private String afterUseable;
         private String status;
         private Object remark;
         private int version;
@@ -184,59 +184,59 @@ public class CardUnderBean {
             this.address = address;
         }
 
-        public int getOperateAmount() {
+        public String getOperateAmount() {
             return operateAmount;
         }
 
-        public void setOperateAmount(int operateAmount) {
+        public void setOperateAmount(String operateAmount) {
             this.operateAmount = operateAmount;
         }
 
-        public int getBeforeBalance() {
+        public String getBeforeBalance() {
             return beforeBalance;
         }
 
-        public void setBeforeBalance(int beforeBalance) {
+        public void setBeforeBalance(String beforeBalance) {
             this.beforeBalance = beforeBalance;
         }
 
-        public int getAfterBalance() {
+        public String getAfterBalance() {
             return afterBalance;
         }
 
-        public void setAfterBalance(int afterBalance) {
+        public void setAfterBalance(String afterBalance) {
             this.afterBalance = afterBalance;
         }
 
-        public int getBeforeFreeze() {
+        public String getBeforeFreeze() {
             return beforeFreeze;
         }
 
-        public void setBeforeFreeze(int beforeFreeze) {
+        public void setBeforeFreeze(String beforeFreeze) {
             this.beforeFreeze = beforeFreeze;
         }
 
-        public int getAfterFreeze() {
+        public String getAfterFreeze() {
             return afterFreeze;
         }
 
-        public void setAfterFreeze(int afterFreeze) {
+        public void setAfterFreeze(String afterFreeze) {
             this.afterFreeze = afterFreeze;
         }
 
-        public int getBeforeUseable() {
+        public String getBeforeUseable() {
             return beforeUseable;
         }
 
-        public void setBeforeUseable(int beforeUseable) {
+        public void setBeforeUseable(String beforeUseable) {
             this.beforeUseable = beforeUseable;
         }
 
-        public int getAfterUseable() {
+        public String getAfterUseable() {
             return afterUseable;
         }
 
-        public void setAfterUseable(int afterUseable) {
+        public void setAfterUseable(String afterUseable) {
             this.afterUseable = afterUseable;
         }
 

@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="交易密码"
+        android:text="@string/tibi_jiaoyi"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
         android:layout_gravity="center_horizontal"
@@ -24,7 +24,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请输入交易密码"
+        android:text="@string/tb_againpwd"
         android:textColor="#FFFFFF"
         android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_other"
             android:layout_marginLeft="44dp"
-            android:text="取消"/>
+            android:text="@string/tb_cancle"/>
 
         <Button
             android:id="@+id/btn_ok"
@@ -73,7 +73,7 @@
             android:background="@drawable/btn_other"
             android:layout_marginRight="44dp"
             android:layout_marginLeft="7dp"
-            android:text="确定"/>
+            android:text="@string/tb_ok"/>
 
     </LinearLayout>
 

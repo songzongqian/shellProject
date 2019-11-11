@@ -32,7 +32,6 @@ public class MyMarkerView extends MarkerView {
     private List<String> dataText;
     private final TextView pop_text_1;
     private final TextView pop_text_2;
-    private final TextView pop_text_3;
 
     public MyMarkerView(Context context, int layoutResource, ArrayList<String> dataText, List<SuanAllBean.ResultDataBean.DataBean> data) {
         super(context, layoutResource);
@@ -42,7 +41,7 @@ public class MyMarkerView extends MarkerView {
         tvContent = findViewById(R.id.pop_time);
         pop_text_1 = findViewById(R.id.pop_text_1);
         pop_text_2 = findViewById(R.id.pop_text_2);
-        pop_text_3 = findViewById(R.id.pop_text_3);
+     //   pop_text_3 = findViewById(R.id.pop_text_3);
 
     }
 
@@ -72,7 +71,7 @@ public class MyMarkerView extends MarkerView {
             float y = e.getY();
             pop_text_1.setText(context.getString(R.string.home_all_suanli_S)+": " + data.get(index).getHashRate());
             pop_text_2.setText(context.getString(R.string.Net_trade_volume)+": " + data.get(index).getTradingAmount());
-            pop_text_3.setText(context.getString(R.string.So_the_pledge)+"USDT: " + data.get(index).getPledgeAmount());
+         //   pop_text_3.setText(context.getString(R.string.So_the_pledge)+"USDT: " + data.get(index).getPledgeAmount());
         }
 
 

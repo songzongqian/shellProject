@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -23,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,7 +55,9 @@ import com.shell.Bean.OrePoolRewardBean;
 import com.shell.Bean.VersionBean;
 import com.shell.MyApplication;
 import com.shell.R;
+import com.shell.activity.MainActivity;
 import com.shell.base.BaseFragment;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.home.Bean.HomeUserBean;
@@ -66,6 +70,8 @@ import com.shell.order.bean.ServerOrderBean;
 import com.shell.utils.DividerListItemDecoration;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
+import com.shell.utils.SPUtil;
+import com.shell.utils.StringUtils;
 import com.vondear.rxtool.RxAppTool;
 import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -84,6 +90,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -170,9 +177,8 @@ public class HomeFragment extends BaseFragment {
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
     //fragment loading只显示一次  没时间了
     private boolean isLoading = true;
-    NotificationCompat.Builder builder;
-    Notification nf;
-    private NotificationManager notificationManager;
+
+
     //private int handlerPosition = 0;
     @SuppressLint("HandlerLeak")
     private Handler doActionHandler = new Handler() {
@@ -202,7 +208,7 @@ public class HomeFragment extends BaseFragment {
         }
     };
     private MessagesAdapter adapter;
-    private ProgressDialog psdialog;
+
     private SmartRefreshLayout home_refresh;
 
     @Override
@@ -262,23 +268,29 @@ public class HomeFragment extends BaseFragment {
     //获取用户账户数据需要登录
     private void getUserInfo() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.HomeUserData, RequestMethod.GET);
-        String language = PreManager.instance().getString("language");
-        //  request.addHeader("lang", language);
-        request.addHeader("token", token);
-        request.add("token", token);
-        mQueue.add(2, request, responseListener);
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (isLogin) {
+            request = NoHttp.createJsonObjectRequest(AppUrl.HomeUserData, RequestMethod.GET);
+            String language = PreManager.instance().getString("language");
+            //  request.addHeader("lang", language);
+            request.addHeader("token", token);
+            request.add("token", token);
+            mQueue.add(2, request, responseListener);
+        }
     }
 
     //矿池奖励需要用户登录
     private void getJiangLi() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.KuangChiJiangLi, RequestMethod.GET);
-        String language = PreManager.instance().getString("language");
-        // request.addHeader("lang", language);
-        request.addHeader("token", token);
-        request.add("token", token);
-        mQueue.add(3, request, responseListener);
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (isLogin) {
+            request = NoHttp.createJsonObjectRequest(AppUrl.KuangChiJiangLi, RequestMethod.GET);
+            String language = PreManager.instance().getString("language");
+            // request.addHeader("lang", language);
+            request.addHeader("token", token);
+            request.add("token", token);
+            mQueue.add(3, request, responseListener);
+        }
     }
 
     //检查版本是否升级
@@ -308,6 +320,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            // LogonFailureUtil.gotoLoginActiviy(getActivity(),response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -426,11 +439,16 @@ public class HomeFragment extends BaseFragment {
                         tvScore.setText(creditScore + "");
                         tvSuanLi.setText(hashRate + "");
                         tvAmount.setText(GetTwoLetter.getTwo(miningAward));
+                        String profit = homeUserBean.getResultData().getProfit();
+                        double quota = homeUserBean.getResultData().getQuota();
+                        double currencyBalance = homeUserBean.getResultData().getCurrencyBalance();
+                        PreManager.instance().putString("profit", profit);
+                        PreManager.instance().putString("quota", String.valueOf(quota));
+                        PreManager.instance().putString("currencyBlance", String.valueOf(currencyBalance));
                     } else {
 
                     }
                     break;
-
                 case 3:
                     Log.i("song", "首页矿池奖励的返回值" + String.valueOf(response));
                     JiangLiBean jiangLiBean = gson.fromJson(response.get().toString(), JiangLiBean.class);
@@ -438,9 +456,7 @@ public class HomeFragment extends BaseFragment {
                     if (jiangLiBeanResultCode.equals("999999")) {
                         jiangLiList.clear();
                         jiangLiList.addAll(jiangLiBean.getResultData());
-                        //HomeAwardAdapter  homeAwardAdapter=new HomeAwardAdapter(getActivity(),jiangLiList);
-                        //listView.setAdapter(homeAwardAdapter);
-                        // new Timer().schedule(new TimeTaskScroll(getActivity(), listView,jiangLiList), 20, 20);
+                        Collections.reverse(jiangLiList);
                         mTimer.schedule(new TimerTask() {
                             @Override
                             public void run() {
@@ -449,23 +465,11 @@ public class HomeFragment extends BaseFragment {
                                 doActionHandler.sendMessage(message);
                             }
                         }, 1000, 2000 /*表示1000毫秒之後，每隔1000毫秒執行一次 */);
-                  /*      if (jiangLiList != null && jiangLiList.size() >= 3) {
-                            llGundong.setVisibility(View.VISIBLE);
-                            JiangLiBean.ResultDataBean resultDataBean = jiangLiList.get(0);
-                            JiangLiBean.ResultDataBean resultDataBean1 = jiangLiList.get(1);
-                            JiangLiBean.ResultDataBean resultDataBean2 = jiangLiList.get(2);
-                            one1.setText(GetTwoLetter.getTwo(resultDataBean.getAmount()));
-                            one3.setText(resultDataBean.getCreateTime());
-                            two1.setText(GetTwoLetter.getTwo(resultDataBean1.getAmount()));
-                            two3.setText(resultDataBean.getCreateTime());
-                            three1.setText(GetTwoLetter.getTwo(resultDataBean2.getAmount()));
-                            three3.setText(resultDataBean2.getCreateTime());
-                        }*/
+
                     } else {
                         llGundong.setVisibility(View.INVISIBLE);
                     }
                     break;
-
                 case 4:
                     Log.i("song", "首页检查版本更新的返回值" + String.valueOf(response));
                     VersionBean versionBean = gson.fromJson(response.get().toString(), VersionBean.class);
@@ -474,19 +478,10 @@ public class HomeFragment extends BaseFragment {
                         VersionBean.ResultDataBean versionData = versionBean.getResultData();
                         if (versionData != null) {
                             String serverVersion = versionData.getVersion();
-                            PackageManager packageManager = getActivity().getPackageManager();
-                            PackageInfo packInfo = null;
-                            try {
-                                packInfo = packageManager.getPackageInfo(getContext().getPackageName(), 0);
-                            } catch (PackageManager.NameNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                            String currentVersion = packInfo.versionName;
-                            String finalCurrent = "v" + currentVersion;
-                            if (serverVersion.equals(finalCurrent)) {
-
-                            } else {
-                                showUpDateInfo(versionData);
+                            String substring = serverVersion.substring(1, serverVersion.length());
+                            boolean b = StringUtils.updateApp(getActivity(), substring);
+                            if (b) {
+                                ((MainActivity) getActivity()).showUpDateInfo(versionData);
                             }
                         }
                     }
@@ -813,61 +808,12 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    //显示更新版本提示
-    private void showUpDateInfo(VersionBean.ResultDataBean versionData) {
-        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_version_info, null, false);
-        final PopupWindow window = new PopupWindow(inflate, 800, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        TextView tvTitle = inflate.findViewById(R.id.tv_title);
-        TextView tvContent = inflate.findViewById(R.id.tv_content);
-        TextView tvOk = inflate.findViewById(R.id.tv_OK);
-        String remark = versionData.getRemark();
-        String replace = remark.replace("\\r\\n", "\n");
-        tvTitle.setText(getString(R.string.version_title));
-        tvContent.setText(replace);
-        final String dataUrl = versionData.getUrl();
-        final String replaceUrl = dataUrl.replaceAll(" ", "");
-
-
-        tvOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                downLoadApk(dataUrl, true);
-                downLoadApk(replaceUrl, true);
-            }
-        });
-        backgroundAlpha(0.5f);
-        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                backgroundAlpha(1.0f);
-            }
-        });
-        window.setBackgroundDrawable(new BitmapDrawable());
-        window.setOutsideTouchable(false);
-        window.setTouchable(true);
-        // window.setFocusable(false);
-        window.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !window.isFocusable()) {
-                    return true;
-                } else {
-                    return false;
-                }
-
-            }
-        });
-        window.showAtLocation(LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
-    }
-
-
     private void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha;
         getActivity().getWindow().setAttributes(lp);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
     }
-
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -884,73 +830,15 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-
-    //下载apk文件
-    private void downLoadApk(String uploadPath, final boolean isShow) {
-        notificationManager = (NotificationManager) getActivity().getSystemService(Activity.NOTIFICATION_SERVICE);
-        psdialog = new ProgressDialog(getActivity());
-        String filefoder = null;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            filefoder = Environment.getExternalStorageDirectory().getAbsolutePath();
-        } else {
-            filefoder = getActivity().getFilesDir().getAbsolutePath();
+    @Override
+    public void onResume() {
+        super.onResume();
+        Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+        if (isLogin) {
+            getStaticData();
+            getUserInfo();
+            getJiangLi();
         }
-        DownloadQueue downloadQueue = NoHttp.newDownloadQueue();
-        DownloadRequest downloadRequest = NoHttp.createDownloadRequest(uploadPath, RequestMethod.GET, filefoder, "123.apk", true, true);
-        downloadQueue.add(123, downloadRequest, new DownloadListener() {
-            @Override
-            public void onDownloadError(int what, Exception exception) {
-                showToast(exception.toString());
-                if (isShow && psdialog != null) {
-                    psdialog.dismiss();
-                }
-            }
-
-            @Override
-            public void onStart(int what, boolean isResume, long rangeSize, Headers responseHeaders, long allCount) {
-                if (isShow) {
-                    psdialog = new ProgressDialog(getActivity());
-                    psdialog.setTitle("");
-                    psdialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    psdialog.setCancelable(false);
-                    psdialog.setCanceledOnTouchOutside(false);
-                    psdialog.show();
-                    ////
-                    builder = new NotificationCompat.Builder(MyApplication.getAppInstance()).setSmallIcon(R.mipmap.ic_launcher).setContentInfo("").setContentTitle("正在下载");
-                    nf = builder.build();
-//                  //使用默认的声音、振动、闪光
-                    nf.defaults = Notification.DEFAULT_ALL;
-                    notificationManager.notify(0, nf);
-                }
-            }
-
-            @Override
-            public void onProgress(int what, int progress, long fileCount, long speed) {
-                psdialog.setProgress(progress);
-                nf = builder.setProgress(100, progress, false).build();
-                notificationManager.notify(0, nf);
-                if (progress == 100) {    //下载完成后点击安装
-                    notificationManager.cancel(0);
-                }
-            }
-
-            @Override
-            public void onFinish(int what, String filePath) {
-                if (isShow) {
-                    psdialog.dismiss();
-                }
-                //安装apk
-                RxAppTool.installApp(getActivity(), filePath);
-            }
-
-            @Override
-            public void onCancel(int what) {
-                Log.e("SplshActivity", "onCancel");
-                if (isShow) {
-                    psdialog.dismiss();
-                }
-            }
-        });
     }
 
 }

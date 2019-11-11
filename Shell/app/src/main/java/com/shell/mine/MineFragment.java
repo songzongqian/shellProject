@@ -24,10 +24,11 @@ import com.shell.Bean.MessageEvent;
 import com.shell.Bean.MyInfoBean;
 import com.shell.MyApplication;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.activity.JiaDianActivity;
 import com.shell.activity.LoginActivity;
-import com.shell.activity.MainActivity;
 import com.shell.base.BaseFragment;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.activity.AboutUsActivity;
@@ -165,9 +166,12 @@ public class MineFragment extends BaseFragment {
             String currentVersion = packInfo.versionName;
             String finalCurrent="V"+currentVersion;
             tvVersion.setText(finalCurrent);
-            getMyData();
-            getMessageCount();
-            getMyLevel();
+            Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+            if (isLogin) {
+                getMyData();
+                getMessageCount();
+                getMyLevel();
+            }
         }
 
     }
@@ -257,6 +261,7 @@ public class MineFragment extends BaseFragment {
                 //清除token
                 PreManager.instance().putBoolean("ISLogin", false);
                 PreManager.instance().putString("token", "");
+                PreManager.instance().putBoolean(AppUrl.isSetPayPwd,false);
                 //关闭其他Activity
                 List<Activity> activityList = MyApplication.activityList;
                 for (int i = 0; i < activityList.size(); i++) {
@@ -306,6 +311,7 @@ public class MineFragment extends BaseFragment {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(getActivity(),response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -313,6 +319,8 @@ public class MineFragment extends BaseFragment {
                     MyInfoBean myInfoBean = gson.fromJson(response.get().toString(), MyInfoBean.class);
                     String resultCode = myInfoBean.getResultCode();
                     if (resultCode.equals("999999")) {
+                        boolean payPasswordFlag = myInfoBean.getResultData().isPayPasswordFlag();
+                        PreManager.instance().putBoolean(AppUrl.isSetPayPwd, payPasswordFlag);
                         nickName = myInfoBean.getResultData().getName();
                         myEmail = myInfoBean.getResultData().getEmail();
                         PreManager.instance().putString("myEmail", myEmail);
@@ -354,7 +362,7 @@ public class MineFragment extends BaseFragment {
                     JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
                     if(jieDianBean.getResultCode().equals("999999")) {
                         JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
-                        tvVip.setText("Blv"+dataBean.getLevel());
+                        tvVip.setText("B lv"+dataBean.getLevel());
                     }
                     break;
 
@@ -379,12 +387,17 @@ public class MineFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             //可见
-            Log.i("song", "MineFragment可见");
-            getMyData();
-            getMessageCount();
+            Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+            if (isLogin) {
+                Log.i("song", "MineFragment可见");
+                getMyData();
+                getMessageCount();
+            }
+
         } else {
             //不可见
             Log.i("song", "MineFragment不可见");
         }
     }
+
 }

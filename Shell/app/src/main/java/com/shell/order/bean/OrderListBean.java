@@ -62,7 +62,7 @@ public class OrderListBean {
         private String awardUsdt;
         private String code;
         private String createTime;
-        private int exchangeRate;
+        private String exchangeRate;
         private long id;
         private String orderAmount;
         private String orderCurrency;
@@ -100,11 +100,11 @@ public class OrderListBean {
             this.createTime = createTime;
         }
 
-        public int getExchangeRate() {
+        public String getExchangeRate() {
             return exchangeRate;
         }
 
-        public void setExchangeRate(int exchangeRate) {
+        public void setExchangeRate(String exchangeRate) {
             this.exchangeRate = exchangeRate;
         }
 

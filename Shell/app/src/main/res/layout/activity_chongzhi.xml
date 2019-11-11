@@ -57,11 +57,11 @@
                 android:orientation="vertical">
 
                 <TextView
-
                     android:id="@+id/tv_qrContent"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1QAT20DKAFJK2JFDAJF3EJF0PJFJ"
+                    android:gravity="center"
+                    android:text=""
                     android:textSize="12sp"
                     android:layout_marginLeft="14dp"
                    android:layout_centerVertical="true"/>
@@ -148,6 +148,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:id="@+id/tv_more"
+                android:layout_below="@+id/listView"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/all_loaded"
+                android:textColor="#156097"
+                android:layout_gravity="center_horizontal"/>
         </RelativeLayout>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter

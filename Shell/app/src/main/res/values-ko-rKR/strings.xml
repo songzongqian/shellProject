@@ -185,4 +185,23 @@
     <string name="country_f">국가를 선택하십시오</string>
     <string name="you_have_new_order">새 주문 있음</string>
     <string name="the_standard_currency">본위 화폐종류</string>
+    <string name="all_loaded">모두 불러오기</string>
+    <string name="available">사용 가능 한 </string>
+    <string name="please_check_option">내가 알고 있는 옵션을 선택하십시오</string>
+    <string name="processed">처리를 기다리다</string>
+    <string name="processing">처리 중</string>
+    <string name="successful">성공</string>
+    <string name="failure">실패</string>
+    <string name="block_confirmation">블록 확인 중</string>
+    <string name="address">주소</string>
+    <string name="has_been_settled">결제가 완료되다</string>
+    <string name="has_been_cancelled">취소됨</string>
+    <string name="reward">장려</string>
+    <string name="please_set_transaction_password">거래 비밀번호를 설정하십시</string>
+    <string name="Yesterday">어제</string>
+    <string name="just">방금</string>
+    <string name="Minutes_ago">분 전</string>
+    <string name="Hours_before">시간 전</string>
+    <string name="Days_ago">일 전</string>
+
 </resources>

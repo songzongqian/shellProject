@@ -4,7 +4,7 @@
     <!--默认背景-->
     <item>
         <shape>
-            <solid android:color="#08233F" />
+            <solid android:color="#061D34" />
             <corners android:radius="6dp" />
         </shape>
     </item>

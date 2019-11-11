@@ -186,4 +186,24 @@
     <string name="country_f">国を選択してください</string>
     <string name="you_have_new_order">新しい注文があります</string>
     <string name="the_standard_currency">本位貨幣</string>
+    <string name="all_loaded">すべてロード済みです</string>
+    <string name="available">可用 </string>
+    <string name="please_check_option">私の知っている選択肢を選んでください</string>
+    <string name="processed">処理待ち</string>
+    <string name="processing">処理中</string>
+    <string name="successful">成功</string>
+    <string name="failure">失敗</string>
+    <string name="block_confirmation">ブロック確認中</string>
+    <string name="address">アドレス</string>
+    <string name="has_been_settled">決済済み</string>
+    <string name="has_been_cancelled">は廃止</string>
+    <string name="reward">インセンティブを与える</string>
+    <string name="please_set_transaction_password">取引パスワードを設定してください</string>
+    <string name="Yesterday">昨日、</string>
+    <string name="just">ばかり</string>
+    <string name="Minutes_ago">分前</string>
+    <string name="Hours_before">小時前</string>
+    <string name="Days_ago">天前</string>
+
+
 </resources>
