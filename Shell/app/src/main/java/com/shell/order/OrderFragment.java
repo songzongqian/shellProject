@@ -131,7 +131,9 @@ public class OrderFragment extends BaseFragment {
     private PopupWindow orderWindow;
     //fragment loading只显示一次  没时间了
     private boolean isLoading = true;
-
+    private int AllPager = 0;
+    private int CurrentPager = 1;
+    private List<OrderListBean.ResultDataBean> firstList = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order;
@@ -187,7 +189,7 @@ public class OrderFragment extends BaseFragment {
     //获取未完成订单
     private void getOrderData() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.GetToDoOrder, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.GetToDoOrder+CurrentPager, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("token", token);
         request.add("pageNum", page);

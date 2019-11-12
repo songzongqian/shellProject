@@ -10,9 +10,45 @@ public class OrderListBean {
      * resultData : [{"awardUsdt":0.08,"code":"e0a1dc7f-45f8-4fb4-b457-fc4337b5e3f2","createTime":"2019-10-26 11:39:02","exchangeRate":7,"id":25345,"orderAmount":100,"orderCurrency":"USD","remainingSeconds":447,"standardAmount":700,"standardCurrency":"HKD","status":"10","targetAddress":"OyMzqpgt8pA5khT3","type":"in","userEmail":"347303844@qq.com","userId":2},{"awardUsdt":0.08,"code":"56c5ae87-754a-4994-a46d-a0b1447b3e8d","createTime":"2019-10-25 22:13:02","exchangeRate":7,"id":25344,"orderAmount":100,"orderCurrency":"USD","remainingSeconds":0,"standardAmount":700,"standardCurrency":"HKD","status":"20","targetAddress":"sf8cIuQ9m0FDUvzm","transTime":"2019-10-25 22:15:53","type":"in","userEmail":"347303844@qq.com","userId":2},{"awardUsdt":0.08,"code":"7452f270-fcea-48d6-b335-38d70e45177a","createTime":"2019-10-25 22:11:02","exchangeRate":7,"id":25343,"orderAmount":100,"orderCurrency":"USD","remainingSeconds":0,"standardAmount":700,"standardCurrency":"HKD","status":"20","targetAddress":"dEabYdTYS1zDBmEl","transTime":"2019-10-25 22:12:48","type":"in","userEmail":"347303844@qq.com","userId":2},{"awardUsdt":0.08,"code":"42162492-bfa3-43b6-8375-d9bceece9297","createTime":"2019-10-25 21:18:05","exchangeRate":7,"id":25342,"orderAmount":100,"orderCurrency":"USD","remainingSeconds":0,"standardAmount":700,"standardCurrency":"HKD","status":"20","targetAddress":"V7GVXGnhnxxBtHLd","transTime":"2019-10-25 21:28:11","type":"in","userEmail":"347303844@qq.com","userId":2},{"awardUsdt":0.08,"code":"d74333e4-949b-43a9-a795-634e1fc25fa0","createTime":"2019-10-25 21:06:03","exchangeRate":7,"id":25341,"orderAmount":100,"orderCurrency":"USD","remainingSeconds":0,"standardAmount":700,"standardCurrency":"HKD","status":"20","targetAddress":"FjvAzAmyyGTDyVxa","transTime":"2019-10-25 21:06:43","type":"in","userEmail":"347303844@qq.com","userId":2},{"awardUsdt":0.08,"code":"c3e5b6f5-c845-430a-8378-03de6392dbe0","createTime":"2019-10-25 20:49:09","exchangeRate":7,"id":25340,"orderAmount":100,"orderCurrency":"USD","remainingSeconds":0,"standardAmount":700,"standardCurrency":"HKD","status":"20","targetAddress":"9c19XRqFN7OE2ZN0","transTime":"2019-10-25 21:05:53","type":"in","userEmail":"347303844@qq.com","userId":2}]
      * resultDesc : Success
      */
-
+    private int pageNum;
+    private int pageSize;
+    private int pages;
+    private int total;
     private String resultCode;
     private String resultDesc;
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     private List<ResultDataBean> resultData;
 
     public String getResultCode() {

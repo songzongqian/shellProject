@@ -275,7 +275,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      *
      * @param checkedId
      */
-    
+
     public boolean startLoginActiviy(int checkedId) {
         Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
         if (!isLogin && R.id.rbtn_kuangchi != checkedId) {

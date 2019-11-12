@@ -76,7 +76,7 @@ public class AppUrl {
     public static final String GetOrderState= BASE_URL + "/order/getStatus?";
 
     /**抢单页面的未完成订单*/
-    public static final String GetToDoOrder= BASE_URL + "/order/queryOrderList/1?";
+    public static final String GetToDoOrder= BASE_URL + "/order/queryOrderList/";
 
     /**提币接口*/
     public static final String TIBIURL= BASE_URL + "/wallet/withdraw?";

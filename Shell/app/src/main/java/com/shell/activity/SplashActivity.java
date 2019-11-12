@@ -149,13 +149,17 @@ public class SplashActivity extends BaseActivity {
                     String country = outNetIpBean.getResult().getCountry();
                     if (country.contains("中国")) {
                         flag = 1;
+                        Toast.makeText(SplashActivity.this,"中国",Toast.LENGTH_SHORT).show();
                     } else if (country.contains("日本")) {
                         flag = 4;
+                        Toast.makeText(SplashActivity.this,"日本",Toast.LENGTH_SHORT).show();
                     } else if (country.contains("韩国")) {
                         //其他全部为英文
                         flag = 3;
+                        Toast.makeText(SplashActivity.this,"韩国",Toast.LENGTH_SHORT).show();
                     } else {
                         flag = 2;
+                        Toast.makeText(SplashActivity.this,"英文",Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     //其他全部为英文
