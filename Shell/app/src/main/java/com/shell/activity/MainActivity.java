@@ -365,7 +365,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public void showUpDateInfo(VersionBean.ResultDataBean versionData) {
 
         View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.popuwindow_version_info, null, false);
-        window = new PopupWindow(inflate, 800, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextView tvTitle = inflate.findViewById(R.id.tv_title);
         TextView tvContent = inflate.findViewById(R.id.tv_content);
         TextView tvOk = inflate.findViewById(R.id.tv_OK);
