@@ -59,6 +59,7 @@ import com.shell.activity.MainActivity;
 import com.shell.base.BaseFragment;
 import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
+import com.shell.dialog.MilestoneDialogFragment;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.home.Bean.HomeUserBean;
 import com.shell.home.Bean.JiangLiBean;
@@ -67,12 +68,13 @@ import com.shell.home.activity.SuanChartActivity;
 import com.shell.home.adapter.MessagesAdapter;
 import com.shell.home.adapter.PopuCardAdapter;
 import com.shell.order.bean.ServerOrderBean;
+import com.shell.updatedemo.utils.AppUtils;
 import com.shell.utils.DividerListItemDecoration;
 import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
 import com.shell.utils.SPUtil;
 import com.shell.utils.StringUtils;
-import com.vondear.rxtool.RxAppTool;
+
 import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -92,6 +94,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -99,6 +102,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 public class HomeFragment extends BaseFragment {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
@@ -173,7 +178,7 @@ public class HomeFragment extends BaseFragment {
     private String creditScoreDesc;
     private String hashRateDesc;
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryList;
-    private List<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
+    private ArrayList<TopStaticBean.ResultDataBean.AllMilepostBean> bottomList;
     private List<TopStaticBean.ResultDataBean.CountryDataBean> countryDataList;
     //fragment loading只显示一次  没时间了
     private boolean isLoading = true;
@@ -328,7 +333,7 @@ public class HomeFragment extends BaseFragment {
                     TopStaticBean topStaticBean = gson.fromJson(response.get().toString(), TopStaticBean.class);
                     String resultCode = topStaticBean.getResultCode();
                     if (resultCode.equals("999999")) {
-                        bottomList = topStaticBean.getResultData().getAllMilepost();
+                        bottomList = (ArrayList<TopStaticBean.ResultDataBean.AllMilepostBean>) topStaticBean.getResultData().getAllMilepost();
                         countryList = topStaticBean.getResultData().getCountryData();
                         creditScoreDesc = topStaticBean.getResultData().getCreditScoreDesc();
                         hashRateDesc = topStaticBean.getResultData().getHashRateDesc();
@@ -443,8 +448,12 @@ public class HomeFragment extends BaseFragment {
                         double quota = homeUserBean.getResultData().getQuota();
                         double currencyBalance = homeUserBean.getResultData().getCurrencyBalance();
                         PreManager.instance().putString("profit", profit);
+                        PreManager.instance().putString("userId", String.valueOf(homeUserBean.getResultData().getUserId()));
                         PreManager.instance().putString("quota", String.valueOf(quota));
                         PreManager.instance().putString("currencyBlance", String.valueOf(currencyBalance));
+                        PreManager.instance().putString("currencyType", homeUserBean.getResultData().getCurrencyType());
+
+                        setJpushAlish(homeUserBean.getResultData().getUserId());
                     } else {
 
                     }
@@ -507,6 +516,16 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
+    private void setJpushAlish(final int userId) {
+        //极光推送，设置别名
+        JPushInterface.setAlias(getActivity(), String.valueOf(userId), new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                System.out.println("-----------" + String.valueOf(userId));
+            }
+        });
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OrePoolRewardBean event) {
@@ -556,6 +575,11 @@ public class HomeFragment extends BaseFragment {
             case R.id.rl_GetMore:
                 //里程碑更多
                 showCenter();
+/*                MilestoneDialogFragment fragment = new MilestoneDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", bottomList);
+                fragment.setArguments(bundle);*/
+               // fragment.show(getFragmentManager(),"");
                 break;
             case R.id.ll_map:
                 showTopFirstWindow(countryDataList);
@@ -590,7 +614,7 @@ public class HomeFragment extends BaseFragment {
             tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
             tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
             tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
-            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getSuperNodeCount());
         } else if (countryCode == 2) {
             //韩国
             TopStaticBean.ResultDataBean.CountryDataBean countryDataBean = countryList.get(2);
@@ -598,7 +622,7 @@ public class HomeFragment extends BaseFragment {
             tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
             tvOrderCount.setText(getString(R.string.home_ljoc) + countryDataBean.getOrderCount());
             tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
-            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getSuperNodeCount());
 
         } else if (countryCode == 3) {
             //日本
@@ -607,7 +631,7 @@ public class HomeFragment extends BaseFragment {
             tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
             tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
             tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
-            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getSuperNodeCount());
 
         } else if (countryCode == 0) {
             //欧洲
@@ -616,7 +640,7 @@ public class HomeFragment extends BaseFragment {
             tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
             tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
             tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
-            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getSuperNodeCount());
 
         } else if (countryCode == 1) {
             //美国
@@ -625,7 +649,7 @@ public class HomeFragment extends BaseFragment {
             tvRegisterCount.setText(getString(R.string.home_poprecount) + "  " + countryDataBean.getUserCount());
             tvOrderCount.setText(getString(R.string.home_ljoc) + "  " + countryDataBean.getOrderCount());
             tvOrderMoney.setText(getString(R.string.home_ljje) + "  " + countryDataBean.getOrderAmount());
-            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getUserCount());
+            tvOrderJieDian.setText(getString(R.string.home_sjjd) + "  " + countryDataBean.getSuperNodeCount());
         }
 
 

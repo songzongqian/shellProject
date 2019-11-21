@@ -94,6 +94,15 @@ public class MyFriendBean {
         private int invitedCount;
         private String name;
         private int userId;
+        private String portrait;
+
+        public String getPortrait() {
+            return portrait;
+        }
+
+        public void setPortrait(String portrait) {
+            this.portrait = portrait;
+        }
 
         public int getCreditScore() {
             return creditScore;

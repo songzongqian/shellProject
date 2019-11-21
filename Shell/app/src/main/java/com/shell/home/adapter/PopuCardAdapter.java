@@ -45,7 +45,6 @@ public class PopuCardAdapter extends RecyclerView.Adapter {
         final MyViewHolder holder= (MyViewHolder) viewHolder;
         TopStaticBean.ResultDataBean.AllMilepostBean allMilepostBean = testList.get(position);
         Log.i("song","真的进入adapter了");
-
         holder.tvDate.setText(allMilepostBean.getTime());
         holder.tvContent.setText(allMilepostBean.getDesc());
 

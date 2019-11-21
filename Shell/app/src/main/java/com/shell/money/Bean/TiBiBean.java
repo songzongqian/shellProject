@@ -1,26 +1,44 @@
 package com.shell.money.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TiBiBean {
+public class TiBiBean implements Serializable {
+
 
     /**
+     * resultCode : 999999
+     * resultDesc : Success
+     * resultData : [{"id":6102,"userId":1,"walletId":1,"busiCode":"withdraw","coinCode":"USDT","coinName":"Tether","address":"1QAT14WTUd2TUSMn98w5GvjeFfn6APNh9g","operateAmount":10,"beforeBalance":278.80413404,"afterBalance":278.80413404,"beforeFreeze":0,"afterFreeze":10,"beforeUseable":278.80413404,"afterUseable":268.80413404,"status":"10","remark":null,"version":7,"isDeleted":"N","createBy":1,"createTime":"2019-11-19 19:16:27","modifyBy":null,"modifyTime":null}]
      * pageNum : 1
      * pageSize : 10
      * pages : 1
-     * resultCode : 999999
-     * resultData : [{"address":"19jCdkA2QcazwbRnSTNrYcBmoBSE8S39DU","afterBalance":9980,"afterFreeze":110,"afterUseable":9870,"beforeBalance":9980,"beforeFreeze":10,"beforeUseable":9970,"busiCode":"withdraw","coinCode":"USDT","coinName":"Tether","createBy":2,"createTime":"2019-10-11 22:51:10","id":4,"isDeleted":"N","operateAmount":100,"status":"10","userId":2,"version":4,"walletId":2},{"address":"19jCdkA2QcazwbRnSTNrYcBmoBSE8S39DU","afterBalance":9980,"afterFreeze":10,"afterUseable":9970,"beforeBalance":9980,"beforeFreeze":0,"beforeUseable":9980,"busiCode":"withdraw","coinCode":"USDT","coinName":"Tether","createBy":2,"createTime":"2019-10-11 22:40:07","id":3,"isDeleted":"N","operateAmount":10,"status":"10","userId":2,"version":3,"walletId":2}]
-     * resultDesc : 成功！
-     * total : 2
+     * total : 1
      */
 
+    private String resultCode;
+    private String resultDesc;
     private int pageNum;
     private int pageSize;
     private int pages;
-    private String resultCode;
-    private String resultDesc;
     private int total;
     private List<ResultDataBean> resultData;
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultDesc() {
+        return resultDesc;
+    }
+
+    public void setResultDesc(String resultDesc) {
+        this.resultDesc = resultDesc;
+    }
 
     public int getPageNum() {
         return pageNum;
@@ -46,22 +64,6 @@ public class TiBiBean {
         this.pages = pages;
     }
 
-    public String getResultCode() {
-        return resultCode;
-    }
-
-    public void setResultCode(String resultCode) {
-        this.resultCode = resultCode;
-    }
-
-    public String getResultDesc() {
-        return resultDesc;
-    }
-
-    public void setResultDesc(String resultDesc) {
-        this.resultDesc = resultDesc;
-    }
-
     public int getTotal() {
         return total;
     }
@@ -80,101 +82,75 @@ public class TiBiBean {
 
     public static class ResultDataBean {
         /**
-         * address : 19jCdkA2QcazwbRnSTNrYcBmoBSE8S39DU
-         * afterBalance : 9980
-         * afterFreeze : 110
-         * afterUseable : 9870
-         * beforeBalance : 9980
-         * beforeFreeze : 10
-         * beforeUseable : 9970
+         * id : 6102
+         * userId : 1
+         * walletId : 1
          * busiCode : withdraw
          * coinCode : USDT
          * coinName : Tether
-         * createBy : 2
-         * createTime : 2019-10-11 22:51:10
-         * id : 4
-         * isDeleted : N
-         * operateAmount : 100
+         * address : 1QAT14WTUd2TUSMn98w5GvjeFfn6APNh9g
+         * operateAmount : 10
+         * beforeBalance : 278.80413404
+         * afterBalance : 278.80413404
+         * beforeFreeze : 0
+         * afterFreeze : 10
+         * beforeUseable : 278.80413404
+         * afterUseable : 268.80413404
          * status : 10
-         * userId : 2
-         * version : 4
-         * walletId : 2
+         * remark : null
+         * version : 7
+         * isDeleted : N
+         * createBy : 1
+         * createTime : 2019-11-19 19:16:27
+         * modifyBy : null
+         * modifyTime : null
          */
 
-        private String address;
-        private int afterBalance;
-        private int afterFreeze;
-        private int afterUseable;
-        private int beforeBalance;
-        private int beforeFreeze;
-        private int beforeUseable;
+        private int id;
+        private int userId;
+        private int walletId;
         private String busiCode;
         private String coinCode;
         private String coinName;
-        private int createBy;
-        private String createTime;
-        private int id;
-        private String isDeleted;
-        private int operateAmount;
+        private String address;
+        private String operateAmount;
+        private double beforeBalance;
+        private double afterBalance;
+        private int beforeFreeze;
+        private int afterFreeze;
+        private double beforeUseable;
+        private double afterUseable;
         private String status;
-        private int userId;
-        private int version;
-        private int walletId;
+        private Object remark;
+        private String version;
+        private String isDeleted;
+        private String createBy;
+        private String createTime;
+        private Object modifyBy;
+        private Object modifyTime;
 
-        public String getAddress() {
-            return address;
+        public int getId() {
+            return id;
         }
 
-        public void setAddress(String address) {
-            this.address = address;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public int getAfterBalance() {
-            return afterBalance;
+        public int getUserId() {
+            return userId;
         }
 
-        public void setAfterBalance(int afterBalance) {
-            this.afterBalance = afterBalance;
+        public void setUserId(int userId) {
+            this.userId = userId;
         }
 
-        public int getAfterFreeze() {
-            return afterFreeze;
+        public int getWalletId() {
+            return walletId;
         }
 
-        public void setAfterFreeze(int afterFreeze) {
-            this.afterFreeze = afterFreeze;
-        }
-
-        public int getAfterUseable() {
-            return afterUseable;
-        }
-
-        public void setAfterUseable(int afterUseable) {
-            this.afterUseable = afterUseable;
-        }
-
-        public int getBeforeBalance() {
-            return beforeBalance;
-        }
-
-        public void setBeforeBalance(int beforeBalance) {
-            this.beforeBalance = beforeBalance;
-        }
-
-        public int getBeforeFreeze() {
-            return beforeFreeze;
-        }
-
-        public void setBeforeFreeze(int beforeFreeze) {
-            this.beforeFreeze = beforeFreeze;
-        }
-
-        public int getBeforeUseable() {
-            return beforeUseable;
-        }
-
-        public void setBeforeUseable(int beforeUseable) {
-            this.beforeUseable = beforeUseable;
+        public void setWalletId(int walletId) {
+            this.walletId = walletId;
         }
 
         public String getBusiCode() {
@@ -201,11 +177,107 @@ public class TiBiBean {
             this.coinName = coinName;
         }
 
-        public int getCreateBy() {
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getOperateAmount() {
+            return operateAmount;
+        }
+
+        public void setOperateAmount(String operateAmount) {
+            this.operateAmount = operateAmount;
+        }
+
+        public double getBeforeBalance() {
+            return beforeBalance;
+        }
+
+        public void setBeforeBalance(double beforeBalance) {
+            this.beforeBalance = beforeBalance;
+        }
+
+        public double getAfterBalance() {
+            return afterBalance;
+        }
+
+        public void setAfterBalance(double afterBalance) {
+            this.afterBalance = afterBalance;
+        }
+
+        public int getBeforeFreeze() {
+            return beforeFreeze;
+        }
+
+        public void setBeforeFreeze(int beforeFreeze) {
+            this.beforeFreeze = beforeFreeze;
+        }
+
+        public int getAfterFreeze() {
+            return afterFreeze;
+        }
+
+        public void setAfterFreeze(int afterFreeze) {
+            this.afterFreeze = afterFreeze;
+        }
+
+        public double getBeforeUseable() {
+            return beforeUseable;
+        }
+
+        public void setBeforeUseable(double beforeUseable) {
+            this.beforeUseable = beforeUseable;
+        }
+
+        public double getAfterUseable() {
+            return afterUseable;
+        }
+
+        public void setAfterUseable(double afterUseable) {
+            this.afterUseable = afterUseable;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public Object getRemark() {
+            return remark;
+        }
+
+        public void setRemark(Object remark) {
+            this.remark = remark;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
+        public String getIsDeleted() {
+            return isDeleted;
+        }
+
+        public void setIsDeleted(String isDeleted) {
+            this.isDeleted = isDeleted;
+        }
+
+        public String getCreateBy() {
             return createBy;
         }
 
-        public void setCreateBy(int createBy) {
+        public void setCreateBy(String createBy) {
             this.createBy = createBy;
         }
 
@@ -217,60 +289,20 @@ public class TiBiBean {
             this.createTime = createTime;
         }
 
-        public int getId() {
-            return id;
+        public Object getModifyBy() {
+            return modifyBy;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setModifyBy(Object modifyBy) {
+            this.modifyBy = modifyBy;
         }
 
-        public String getIsDeleted() {
-            return isDeleted;
+        public Object getModifyTime() {
+            return modifyTime;
         }
 
-        public void setIsDeleted(String isDeleted) {
-            this.isDeleted = isDeleted;
-        }
-
-        public int getOperateAmount() {
-            return operateAmount;
-        }
-
-        public void setOperateAmount(int operateAmount) {
-            this.operateAmount = operateAmount;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public int getUserId() {
-            return userId;
-        }
-
-        public void setUserId(int userId) {
-            this.userId = userId;
-        }
-
-        public int getVersion() {
-            return version;
-        }
-
-        public void setVersion(int version) {
-            this.version = version;
-        }
-
-        public int getWalletId() {
-            return walletId;
-        }
-
-        public void setWalletId(int walletId) {
-            this.walletId = walletId;
+        public void setModifyTime(Object modifyTime) {
+            this.modifyTime = modifyTime;
         }
     }
 }

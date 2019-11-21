@@ -74,7 +74,7 @@
                         android:id="@+id/YaZhou"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="222dp"
+                        android:layout_marginLeft="218dp"
                         android:layout_marginTop="54dp"
                         android:background="@mipmap/yazhou1" />
 

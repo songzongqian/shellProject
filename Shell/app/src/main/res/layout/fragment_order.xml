@@ -12,412 +12,422 @@
         <include layout="@layout/layout_top" />
 
 
-        <android.support.v4.widget.NestedScrollView
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/order_fragment_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="19dp"
-                    android:text="@string/or_allshuju"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="222dp"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/card_bg"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="16dp"
-                            android:text="@string/or_allorder"
-                            android:textColor="#156097"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_orderFirst"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="14dp"
-                            android:layout_marginRight="20dp"
-                            android:text="0"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="9dp"
-                            android:text="@string/or_allliushui"
-                            android:textColor="#156097"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_amountFirst"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginRight="20dp"
-                            android:text="0  USDT"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="17dp"
-                        android:src="@mipmap/line_ju" />
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="14dp"
-                            android:text="@string/or_today_order"
-                            android:textColor="#156097"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_orderSecond"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginRight="20dp"
-                            android:text="0"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="9dp"
-                            android:text="@string/or_today_liushui"
-                            android:textColor="#156097"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_amountSecond"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginRight="20dp"
-                            android:text="0  USDT"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="17dp"
-                        android:src="@mipmap/line_ju" />
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="9dp"
-                            android:text="@string/or_mainwork"
-                            android:textColor="#156097"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_systemRun"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginRight="20dp"
-                            android:text="0 小时"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="9dp"
-                            android:text="@string/or_online"
-                            android:textColor="#156097"
-                            android:textSize="12sp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_onlinePerson"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginRight="20dp"
-                            android:text="0"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="19dp"
-                    android:text="@string/or_account"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/card_bg">
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="19dp"
+                        android:text="@string/or_allshuju"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="222dp"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/card_bg"
                         android:orientation="vertical">
 
                         <RelativeLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/tv_moneyName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="16dp"
-                                android:text="HKD："
-                                android:textColor="#8D99B2"
+                                android:text="@string/or_allorder"
+                                android:textColor="#156097"
                                 android:textSize="12sp" />
 
+
                             <TextView
-                                android:id="@+id/tv_moneyAmount"
+                                android:id="@+id/tv_orderFirst"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="14dp"
-                                android:layout_toRightOf="@id/tv_moneyName"
+                                android:layout_marginRight="20dp"
                                 android:text="0"
                                 android:textColor="#FFFFFF"
                                 android:textSize="14sp" />
+
                         </RelativeLayout>
 
 
                         <RelativeLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/tv_moneyEDU"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/or_edu"
-                                android:textColor="#8D99B2"
+                                android:layout_marginTop="9dp"
+                                android:text="@string/or_allliushui"
+                                android:textColor="#156097"
                                 android:textSize="12sp" />
 
+
                             <TextView
-                                android:id="@+id/tv_moneyED"
+                                android:id="@+id/tv_amountFirst"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="6dp"
-                                android:layout_toRightOf="@id/tv_moneyEDU"
+                                android:layout_marginRight="20dp"
+                                android:text="0  USDT"
+                                android:textColor="#FFFFFF"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="17dp"
+                            android:src="@mipmap/line_ju" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="14dp"
+                                android:text="@string/or_today_order"
+                                android:textColor="#156097"
+                                android:textSize="12sp" />
+
+
+                            <TextView
+                                android:id="@+id/tv_orderSecond"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginRight="20dp"
                                 android:text="0"
                                 android:textColor="#FFFFFF"
                                 android:textSize="14sp" />
+
                         </RelativeLayout>
 
 
                         <RelativeLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/tv_shouyi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/or_shouyi"
-                                android:textColor="#8D99B2"
+                                android:layout_marginTop="9dp"
+                                android:text="@string/or_today_liushui"
+                                android:textColor="#156097"
                                 android:textSize="12sp" />
 
+
                             <TextView
-                                android:id="@+id/tv_shouyiCount"
+                                android:id="@+id/tv_amountSecond"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="6dp"
-                                android:layout_toRightOf="@id/tv_shouyi"
+                                android:layout_marginRight="20dp"
+                                android:text="0  USDT"
+                                android:textColor="#FFFFFF"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="17dp"
+                            android:src="@mipmap/line_ju" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="9dp"
+                                android:text="@string/or_mainwork"
+                                android:textColor="#156097"
+                                android:textSize="12sp" />
+
+
+                            <TextView
+                                android:id="@+id/tv_systemRun"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="20dp"
+                                android:text="0 小时"
+                                android:textColor="#FFFFFF"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="9dp"
+                                android:text="@string/or_online"
+                                android:textColor="#156097"
+                                android:textSize="12sp" />
+
+
+                            <TextView
+                                android:id="@+id/tv_onlinePerson"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="20dp"
                                 android:text="0"
                                 android:textColor="#FFFFFF"
                                 android:textSize="14sp" />
+
                         </RelativeLayout>
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btn_startOrder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/start_order_button"
-                        android:text="@string/or_begin"
-                        android:textColor="#FFFFFF" />
-
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="17dp">
-
-
                     <TextView
-                        android:id="@+id/tv_orderunfinish"
+                        android:id="@+id/tv_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="17dp"
-                        android:text="@string/or_unfinishorder"
+                        android:layout_marginTop="19dp"
+                        android:text="@string/or_account"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp" />
 
 
                     <RelativeLayout
-                        android:id="@+id/ll_more"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true">
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/card_bg">
 
-                        <TextView
-                            android:id="@+id/tv_all_order"
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_moneyName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="16dp"
+                                    android:text="HKD："
+                                    android:textColor="#8D99B2"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_moneyAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="14dp"
+                                    android:layout_toRightOf="@id/tv_moneyName"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp" />
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_moneyEDU"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="8dp"
+                                    android:text="@string/or_edu"
+                                    android:textColor="#8D99B2"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_moneyED"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:layout_toRightOf="@id/tv_moneyEDU"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp" />
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_shouyi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="8dp"
+                                    android:text="@string/or_shouyi"
+                                    android:textColor="#8D99B2"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_shouyiCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:layout_toRightOf="@id/tv_shouyi"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_startOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="40dp"
-                            android:text="@string/or_all"
-                            android:textColor="#4AB2E7"
-                            android:textSize="12sp" />
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/start_order_button"
+                            android:text="@string/or_begin"
+                            android:textColor="#FFFFFF" />
 
 
                     </RelativeLayout>
 
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="17dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_orderunfinish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:text="@string/or_unfinishorder"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/ll_more"
+                            android:layout_width="200dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true">
+
+                            <TextView
+                                android:id="@+id/tv_all_order"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="40dp"
+                                android:text="@string/or_all"
+                                android:textColor="#4AB2E7"
+                                android:textSize="12sp" />
+
+
+                        </RelativeLayout>
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="30dp"
+                            android:src="@mipmap/more_order" />
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="30dp"
-                        android:src="@mipmap/more_order" />
-                </RelativeLayout>
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/card_bg" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/card_bg" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="@string/all_loaded"
+                        android:textColor="#4AB2E7"
+                        android:textSize="@dimen/dp_14" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="@string/all_loaded"
-                    android:textColor="#4AB2E7"
-                    android:textSize="@dimen/dp_14" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
 
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
     </LinearLayout>

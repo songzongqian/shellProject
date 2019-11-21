@@ -50,13 +50,13 @@ public class LetterAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_webletter, null,false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.item_webletter, viewGroup,false);
         return new MyViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        MyViewHolder holder= (MyViewHolder) viewHolder;
+        final MyViewHolder holder= (MyViewHolder) viewHolder;
         LetterBean.ResultDataBean resultDataBean = list.get(position);
         String isRead= resultDataBean.getReadFlag();
         if(isRead.equals("Y")){
@@ -78,6 +78,7 @@ public class LetterAdapter extends RecyclerView.Adapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    holder.llBody.setVisibility(View.VISIBLE);
                     long id = list.get(position).getId();
                     PostFlag(id);
 
@@ -90,7 +91,7 @@ public class LetterAdapter extends RecyclerView.Adapter {
 
     private void PostFlag(long id) {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.PostLetterID, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.PostLetterID, RequestMethod.POST);
         request.addHeader("token", token);
         request.add("msgId", id);
         request.add("token", token);

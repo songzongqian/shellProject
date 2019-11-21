@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,6 +27,9 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.L;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.GetServerBean;
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.NoticeBean;
@@ -134,6 +138,7 @@ public class OrderFragment extends BaseFragment {
     private int AllPager = 0;
     private int CurrentPager = 1;
     private List<OrderListBean.ResultDataBean> firstList = new ArrayList<>();
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_order;
@@ -150,6 +155,21 @@ public class OrderFragment extends BaseFragment {
         tvRight.setVisibility(View.GONE);
         EventBus.getDefault().register(this);
         mTiemTimeCount = new TimeCount(10000, 1000);
+        SmartRefreshLayout order_fragment_refresh = mRootView.findViewById(R.id.order_fragment_refresh);
+        order_fragment_refresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
+                if (isLogin) {
+                    getTopData();
+                    getMiddleData();
+                    getOrderData();
+                    refreshLayout.finishRefresh(2000);
+                }else {
+                    refreshLayout.finishRefresh();
+                }
+            }
+        });
     }
 
     @Override
@@ -189,7 +209,7 @@ public class OrderFragment extends BaseFragment {
     //获取未完成订单
     private void getOrderData() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.GetToDoOrder+CurrentPager, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.GetToDoOrder + CurrentPager, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("token", token);
         request.add("pageNum", page);
@@ -277,7 +297,7 @@ public class OrderFragment extends BaseFragment {
 
 
                         String quota = PreManager.instance().getString("quota");
-                        if (!TextUtils.isEmpty(quota) && !"0".equals(quota)&& !"0.0".equals(quota)) {
+                        if (!TextUtils.isEmpty(quota) && !"0".equals(quota) && !"0.0".equals(quota)) {
                             tvMoneyED.setText(GetTwoLetter.getTwo(quota));
                         } else {
                             tvMoneyED.setText("0");
@@ -285,12 +305,17 @@ public class OrderFragment extends BaseFragment {
 
 
                         String currencyType = PreManager.instance().getString("currencyBlance");
-                        if (!TextUtils.isEmpty(currencyType) && !"0".equals(currencyType)&& !"0.0".equals(currencyType)) {
+                        String currencyType1 = PreManager.instance().getString("currencyType");
+                        if (!TextUtils.isEmpty(currencyType1)){
+                            tvMoneyName.setText(currencyType1+": ");
+                        }else {
+                            tvMoneyName.setText("USD: ");
+                        }
+                        if (!TextUtils.isEmpty(currencyType) && !"0".equals(currencyType) && !"0.0".equals(currencyType)) {
                             tvMoneyAmount.setText(GetTwoLetter.getTwo(currencyType));
                         } else {
                             tvMoneyAmount.setText("0");
                         }
-
 
                     } else {
 

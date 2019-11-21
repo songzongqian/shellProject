@@ -74,7 +74,7 @@
     <string name="tb_tihintsl">請輸入提幣數量</string>
     <string name="tb_kgmoney">曠工費</string>
     <string name="tb_reget">實際到賬</string>
-    <string name="tibi_notice">單筆提幣最少100 USDT，最多100000 USDT</string>
+    <string name="tibi_notice">單筆提幣最少100 USDT，最多10000 USDT</string>
     <string name="tb_btnpost">申請提現</string>
     <string name="cz_saoma">掃描獲取充值地址</string>
     <string name="cz_copyaddress">複製地址</string>
@@ -204,5 +204,10 @@
     <string name="Minutes_ago">分鐘前</string>
     <string name="Hours_before">小時前</string>
     <string name="Days_ago">天前</string>
-
+    <string name="creatTime">訂單時間</string>
+    <string name="dealTime">交易時間</string>
+    <string name="todayEarnings">今日收益</string>
+    <string name="Receive">接收</string>
+    <string name="into">轉入</string>
+    <string name="Ore_pool_income">礦池收益</string>
 </resources>

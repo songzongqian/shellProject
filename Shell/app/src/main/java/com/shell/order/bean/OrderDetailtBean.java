@@ -81,10 +81,19 @@ public class OrderDetailtBean implements Serializable {
         private String awardUsdt;
         private Object awardScore;
         private String status;
-        private Object transTime;
+        private String transTime;
         private Object settlTime;
         private String createTime;
         private int remainingSeconds;
+        private String dealTime;
+
+        public String getDealTime() {
+            return dealTime;
+        }
+
+        public void setDealTime(String dealTime) {
+            this.dealTime = dealTime;
+        }
 
         public int getId() {
             return id;
@@ -222,11 +231,11 @@ public class OrderDetailtBean implements Serializable {
             this.status = status;
         }
 
-        public Object getTransTime() {
+        public String getTransTime() {
             return transTime;
         }
 
-        public void setTransTime(Object transTime) {
+        public void setTransTime(String transTime) {
             this.transTime = transTime;
         }
 

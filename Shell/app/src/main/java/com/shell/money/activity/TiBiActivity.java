@@ -41,6 +41,7 @@ import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.activity.JiaoYiActivity;
 import com.shell.money.Bean.CardBean;
 import com.shell.money.Bean.CardUnderBean;
+import com.shell.money.Bean.LimitBean;
 import com.shell.money.Bean.TiBiBean;
 import com.shell.money.Bean.TiBiResult;
 import com.shell.money.adapter.TiBiAdapter;
@@ -117,6 +118,8 @@ public class TiBiActivity extends BaseActivity {
     private Double finalGet;
     private PopupWindow window;
     private TiBiRecordAdapter underCardAdapter;
+    private int fee = 0;
+    private int minWithdrawAmount = 0;
 
     @Override
     protected void initToolBar() {
@@ -134,7 +137,7 @@ public class TiBiActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        tvTitle.setText(getString(R.string.available));
+        tvTitle.setText(getString(R.string.rmb_tibi));
         tvRightTitle.setVisibility(View.GONE);
 
         etTiBiCount.addTextChangedListener(new TextWatcher() {
@@ -148,7 +151,7 @@ public class TiBiActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(etTiBiCount.getText().toString())) {
                     Double allBi = Double.parseDouble(etTiBiCount.getText().toString());
                     if (allBi < Double.parseDouble(myBalance)) {
-                        finalGet = allBi - 5;
+                        finalGet = allBi - fee;
                         if (finalGet < 0) {
                             tvTwoRight.setText("0" + "USDT");
                         } else {
@@ -188,6 +191,10 @@ public class TiBiActivity extends BaseActivity {
         request.add("status", "");
         request.add("pageNum", page);
         mQueue.add(1, request, responseListener);
+
+
+        request = NoHttp.createJsonObjectRequest(AppUrl.getWalletLimit, RequestMethod.GET);
+        mQueue.add(2, request, responseListener);
     }
 
 
@@ -207,6 +214,8 @@ public class TiBiActivity extends BaseActivity {
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
             LogonFailureUtil.gotoLoginActiviy(TiBiActivity.this, response.get().toString());
+            String s = response.get().toString();
+            System.out.println("------"+s);
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -220,7 +229,16 @@ public class TiBiActivity extends BaseActivity {
                     firstList.addAll(resultData);
                     underCardAdapter.notifyDataSetChanged();
                     break;
-
+                case 2:
+                    LimitBean limitBean = gson.fromJson(response.get().toString(), LimitBean.class);
+                    if ("999999".equals(limitBean.getResultCode())) {
+                        fee = limitBean.getResultData().getFee();
+                        tvOneRight.setText(String.valueOf(fee)+" USDT");
+                        minWithdrawAmount = limitBean.getResultData().getMinWithdrawAmount();
+                        String newString = tvThree.getText().toString().replace("100", String.valueOf(minWithdrawAmount));
+                        tvThree.setText(newString);
+                    }
+                    break;
                 case 3:
                     Log.i("song", "提币结果的返回值" + String.valueOf(response));
                     TiBiResult tiBiResult = gson.fromJson(response.get().toString(), TiBiResult.class);
@@ -319,7 +337,7 @@ public class TiBiActivity extends BaseActivity {
                 //全部提现按钮,把币圈的数值传递过来
                 etTiBiCount.setText(myBalance);
                 Double allBi = Double.parseDouble(myBalance);
-                finalGet = allBi - 5;
+                finalGet = allBi - fee;
                 if (finalGet < 0) {
                     tvTwoRight.setText("0" + "USDT");
                 } else {

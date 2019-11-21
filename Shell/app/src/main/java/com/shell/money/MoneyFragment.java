@@ -91,8 +91,6 @@ public class MoneyFragment extends BaseFragment  {
     ListView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    @BindView(R.id.tv_more)
-    TextView tvMore;
     Unbinder unbinder;
     private String balance;
     //fragment loading只显示一次  没时间了
@@ -208,7 +206,7 @@ public class MoneyFragment extends BaseFragment  {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_qingsuan, R.id.tv_tibi, R.id.btn_chongzhi, R.id.btn_zhiya, R.id.tv_more, R.id.ll_shouyi})
+    @OnClick({R.id.tv_qingsuan, R.id.tv_tibi, R.id.btn_chongzhi, R.id.btn_zhiya, R.id.ll_shouyi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_qingsuan:
@@ -227,8 +225,6 @@ public class MoneyFragment extends BaseFragment  {
             case R.id.btn_zhiya:
                 Intent intent3 = new Intent(getActivity(), ZhiYaActivity.class);
                 startActivity(intent3);
-                break;
-            case R.id.tv_more:
                 break;
             case R.id.ll_shouyi: //我的收益
                 Intent intent4 = new Intent(getActivity(), MyShouYiActivity.class);

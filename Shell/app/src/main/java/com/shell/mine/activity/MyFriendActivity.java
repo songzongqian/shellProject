@@ -171,9 +171,7 @@ public class MyFriendActivity extends BaseActivity {
                         }else{
                             llNoData.setVisibility(View.VISIBLE);
                         }
-
                     }else{
-
                     }
                    // FriendAdapter  friendAdapter=new FriendAdapter();
                     break;

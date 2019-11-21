@@ -53,11 +53,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MineFragment extends BaseFragment {
@@ -122,6 +125,7 @@ public class MineFragment extends BaseFragment {
     private String myEmail;
     //fragment loading只显示一次  没时间了
     private boolean isLoading = true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_mine;
@@ -159,12 +163,12 @@ public class MineFragment extends BaseFragment {
             PackageManager packageManager = getActivity().getPackageManager();
             PackageInfo packInfo = null;
             try {
-                packInfo = packageManager.getPackageInfo(getContext().getPackageName(),0);
+                packInfo = packageManager.getPackageInfo(getContext().getPackageName(), 0);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
             String currentVersion = packInfo.versionName;
-            String finalCurrent="V"+currentVersion;
+            String finalCurrent = "V" + currentVersion;
             tvVersion.setText(finalCurrent);
             Boolean isLogin = PreManager.instance().getBoolean("ISLogin");
             if (isLogin) {
@@ -213,7 +217,7 @@ public class MineFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.iv_head, R.id.iv_ring, R.id.iv_set, R.id.ll_haoyou, R.id.ll_huilv, R.id.ll_denglu, R.id.ll_jiaoyi, R.id.ll_yuyan, R.id.ll_version, R.id.ll_about, R.id.btn_loginOut,R.id.ll_VIP})
+    @OnClick({R.id.iv_head, R.id.iv_ring, R.id.iv_set, R.id.ll_haoyou, R.id.ll_huilv, R.id.ll_denglu, R.id.ll_jiaoyi, R.id.ll_yuyan, R.id.ll_version, R.id.ll_about, R.id.btn_loginOut, R.id.ll_VIP})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_head:
@@ -261,7 +265,14 @@ public class MineFragment extends BaseFragment {
                 //清除token
                 PreManager.instance().putBoolean("ISLogin", false);
                 PreManager.instance().putString("token", "");
-                PreManager.instance().putBoolean(AppUrl.isSetPayPwd,false);
+                PreManager.instance().putBoolean(AppUrl.isSetPayPwd, false);
+                String userId = PreManager.instance().getString("userId");
+                JPushInterface.setAlias(getActivity(), "", new TagAliasCallback() {          //极光推退出
+                    @Override
+                    public void gotResult(int i, String s, Set<String> set) {
+                    }
+                });
+
                 //关闭其他Activity
                 List<Activity> activityList = MyApplication.activityList;
                 for (int i = 0; i < activityList.size(); i++) {
@@ -272,7 +283,7 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.ll_VIP:
                 //会员权益模块
-                Intent intent10=new Intent(getActivity(), JiaDianActivity.class);
+                Intent intent10 = new Intent(getActivity(), JiaDianActivity.class);
                 intent10.putExtra("headUrl", myHewad);
                 intent10.putExtra("nickName", nickName);
                 startActivity(intent10);
@@ -297,7 +308,7 @@ public class MineFragment extends BaseFragment {
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
-            if (isLoading){
+            if (isLoading) {
                 if (myWaitDialog == null) {
                     myWaitDialog = new MyWaitDialog(getActivity());
                     myWaitDialog.show();
@@ -311,7 +322,7 @@ public class MineFragment extends BaseFragment {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
-            LogonFailureUtil.gotoLoginActiviy(getActivity(),response.get().toString());
+            LogonFailureUtil.gotoLoginActiviy(getActivity(), response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -327,7 +338,7 @@ public class MineFragment extends BaseFragment {
                         //获取用户的头像
                         myHewad = myInfoBean.getResultData().getPortrait();
 
-                        RequestOptions options=new RequestOptions();
+                        RequestOptions options = new RequestOptions();
                         options.placeholder(R.mipmap.person); //添加占位图
                         options.error(R.mipmap.person);
 
@@ -360,9 +371,16 @@ public class MineFragment extends BaseFragment {
 
                 case 3:
                     JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
-                    if(jieDianBean.getResultCode().equals("999999")) {
+                    if (jieDianBean.getResultCode().equals("999999")) {
                         JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
-                        tvVip.setText("B lv"+dataBean.getLevel());
+                        if (1<= dataBean.getLevel() && dataBean.getLevel() <= 4){
+                            tvVip.setText("B lv"+dataBean.getLevel());
+                        }else if (11<= dataBean.getLevel() && dataBean.getLevel() <= 15){
+                            tvVip.setText("S lv"+dataBean.getLevel()%10);
+                        }else {
+                            tvVip.setText("lv"+dataBean.getLevel());
+                        }
+
                     }
                     break;
 
@@ -372,12 +390,12 @@ public class MineFragment extends BaseFragment {
 
         @Override
         public void onFailed(int what, Response<JSONObject> response) {
-           // myWaitDialog.cancel();
+            // myWaitDialog.cancel();
         }
 
         @Override
         public void onFinish(int what) {
-           // myWaitDialog.cancel();
+            // myWaitDialog.cancel();
         }
     };
 

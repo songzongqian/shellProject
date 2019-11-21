@@ -112,6 +112,16 @@ public class OrderListBean {
         private int userId;
         private String transTime;
 
+        private int awardScore;
+
+        public int getAwardScore() {
+            return awardScore;
+        }
+
+        public void setAwardScore(int awardScore) {
+            this.awardScore = awardScore;
+        }
+
         public String getAwardUsdt() {
             return awardUsdt;
         }

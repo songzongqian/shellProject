@@ -74,7 +74,7 @@
     <string name="tb_tihintsl">환불수량 입력</string>
     <string name="tb_kgmoney">absent비</string>
     <string name="tb_reget">실제입금금액</string>
-    <string name="tibi_notice">번당 최소 인출 100USDT,최대 인출가능100000 USDTT</string>
+    <string name="tibi_notice">번당 최소 인출 100USDT,최대 인출가능10000 USDTT</string>
     <string name="tb_btnpost">인출 신층</string>
     <string name="cz_saoma">스캔하여 충전주소 획득</string>
     <string name="cz_copyaddress">주소복사</string>
@@ -203,5 +203,10 @@
     <string name="Minutes_ago">분 전</string>
     <string name="Hours_before">시간 전</string>
     <string name="Days_ago">일 전</string>
-
+    <string name="creatTime">주문서 시간</string>
+    <string name="dealTime">거래 시간</string>
+    <string name="todayEarnings">오늘의 이익</string>
+    <string name="Receive">받다</string>
+    <string name="into">전입</string>
+    <string name="Ore_pool_income">광산개발이익</string>
 </resources>

@@ -1,8 +1,12 @@
 package com.shell.utils;
 
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.shell.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -18,8 +22,12 @@ import java.util.Locale;
 public class OrderTimeCount extends CountDownTimer {
 
     private TextView mTextView;
-    public void setWidget(TextView textView) {
+    private TextView btnSendText;
+    private LinearLayout btnSend;
+    public void setWidget(TextView textView, LinearLayout btnSend, TextView btnSendText) {
         this.mTextView = textView;
+        this.btnSendText = btnSendText;
+        this.btnSend = btnSend;
     }
 
     /**
@@ -46,6 +54,13 @@ public class OrderTimeCount extends CountDownTimer {
             mTextView.setText("00:00");
             mTextView.setClickable(true);
             mTextView.setEnabled(true);
+
+            mTextView.setTextColor(Color.BLACK);
+            btnSendText.setTextColor(Color.BLACK);
+
+            btnSend.setClickable(false);
+            btnSend.setEnabled(false);
+            btnSend.setBackgroundResource(R.drawable.button_unfinish_unenable);
         }
     }
     private String hintCodeTime(long time) {

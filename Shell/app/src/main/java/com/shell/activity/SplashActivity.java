@@ -149,17 +149,13 @@ public class SplashActivity extends BaseActivity {
                     String country = outNetIpBean.getResult().getCountry();
                     if (country.contains("中国")) {
                         flag = 1;
-                        Toast.makeText(SplashActivity.this,"中国",Toast.LENGTH_SHORT).show();
                     } else if (country.contains("日本")) {
                         flag = 4;
-                        Toast.makeText(SplashActivity.this,"日本",Toast.LENGTH_SHORT).show();
                     } else if (country.contains("韩国")) {
                         //其他全部为英文
                         flag = 3;
-                        Toast.makeText(SplashActivity.this,"韩国",Toast.LENGTH_SHORT).show();
                     } else {
                         flag = 2;
-                        Toast.makeText(SplashActivity.this,"英文",Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     //其他全部为英文
@@ -176,7 +172,7 @@ public class SplashActivity extends BaseActivity {
                     PreManager.instance().putString("language", "en_US");
                     PreManager.instance().putString("mychoose", "English");
                 } else if (flag == 3) {
-                   // selectLanguage(3);
+                    // selectLanguage(3);
                     // EventBus.getDefault().post(new LanguageEvent("한국어"));
                     PreManager.instance().putString("language", "ko_KR");
                     PreManager.instance().putString("mychoose", "한국어");
@@ -189,6 +185,7 @@ public class SplashActivity extends BaseActivity {
                 MyApplication.initNet();
 
             }
+
             @Override
             public void onFailed(int what, Response<JSONObject> response) {
                 flag = 2;
@@ -207,13 +204,13 @@ public class SplashActivity extends BaseActivity {
 
 
     private void selectLanguage(int select) {
-        if (select != 0){
+        if (select != 0) {
             LocalManageUtil.saveSelectLanguage(this, select);
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-        }else {
+        } else {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

@@ -9,10 +9,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="267dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/card_xxx"
         android:orientation="vertical">
 
@@ -24,24 +24,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
-                android:layout_marginTop="23dp"
-                android:text="订单编号"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="@string/or_orderNumber"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_bianhaoValue"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="23dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
                 android:gravity="end"
                 android:text=""
-                android:textSize="14sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="6dp"
-                android:text="订单类型"
+                android:text="@string/or_ortype"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -63,8 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="6dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="7dp"
-                android:text="订单金额"
+                android:text="@string/or_orjine"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -89,8 +89,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="7dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="11dp"
-                android:text="转出地址"
+                android:text="@string/or_zhuandizhi"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -115,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="11dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="11dp"
-                android:text="本位币种"
+                android:text="@string/the_standard_currency"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -141,8 +141,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="11dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="7dp"
-                android:text="当前汇率"
+                android:text="@string/or_huilv"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -168,8 +168,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="7dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="8dp"
-                android:text="折算金额"
+                android:text="@string/or_zsje"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -194,8 +194,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -210,7 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="12dp"
-                android:text="服务奖励"
+                android:text="@string/or_fwjl"
                 android:textColor="#8D99B2"
                 android:textSize="14sp" />
 
@@ -220,26 +220,95 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
                 android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/creatTime"
+                android:textColor="#8D99B2"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_orderTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/dealTime"
+                android:textColor="#8D99B2"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_jiaoyiTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </RelativeLayout>
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:id="@+id/btn_Send"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/dp_50"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="22dp"
-        android:visibility="invisible"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button_unfinish"
-        android:text="@string/or_out"
-        android:textColor="#FFFFFF"
-        android:textSize="17sp" />
+        android:gravity="center"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/btn_Send_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/or_out"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/btn_Send_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+    </LinearLayout>
+
 
 </LinearLayout>

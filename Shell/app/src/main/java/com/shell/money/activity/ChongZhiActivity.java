@@ -49,7 +49,7 @@ import butterknife.OnClick;
 public class ChongZhiActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
     @BindView(R.id.rl_copy)
-    RelativeLayout rlCopy;
+    TextView rlCopy;
     private Request<JSONObject> request;
     private int page = 1;
     @BindView(R.id.rl_back)

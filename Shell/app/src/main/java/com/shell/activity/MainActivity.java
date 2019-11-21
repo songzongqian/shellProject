@@ -6,20 +6,26 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -47,8 +53,10 @@ import com.shell.home.HomeFragment;
 import com.shell.mine.MineFragment;
 import com.shell.money.MoneyFragment;
 import com.shell.order.OrderFragment;
+import com.shell.updatedemo.update.OnUpdateListener;
+import com.shell.updatedemo.update.UpdateManager;
+import com.shell.updatedemo.utils.AppUtils;
 import com.shell.utils.PreManager;
-import com.vondear.rxtool.RxAppTool;
 import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -67,7 +75,7 @@ import com.zhangke.websocket.response.ErrorResponse;
 import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONObject;
+
 
 import java.io.IOException;
 import java.net.URI;
@@ -81,6 +89,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -89,6 +98,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -103,6 +114,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private WebSocketClient client;
     private PopupWindow window;
 
+    private UpdateManager mUpdateManager;
+
+    private ProgressDialog mProgressDialog;
 
 
   /*  private SocketListener socketListener = new SimpleListener() {
@@ -167,14 +181,23 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     @Override
     protected void initView() {
+        String orderFragment = getIntent().getStringExtra("orderFragment");
         mFragmentmanager = getSupportFragmentManager();
         radioGroup = obtainView(R.id.rg_choose);
         radioGroup.check(R.id.rbtn_kuangchi);
-        repleacFragment(0);
+
         rbtn0 = obtainView(R.id.rbtn_kuangchi);
         rbtn1 = obtainView(R.id.rbtn_getOrder);
         rbtn2 = obtainView(R.id.rbtn_money);
         rbtn3 = obtainView(R.id.rbtn_mine);
+        if (!TextUtils.isEmpty(orderFragment)) {
+            repleacFragment(1);
+            rbtn1.setChecked(true);
+        } else {
+            repleacFragment(0);
+        }
+        initProgressDialog();
+        mUpdateManager = UpdateManager.getInstance();
     }
 
 
@@ -316,7 +339,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             }
 
         }
-
     }
 
     @Override
@@ -332,6 +354,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             }
         } else {
 
+        }
+        String orderFragment = getIntent().getStringExtra("orderFragment");
+        if (!TextUtils.isEmpty(orderFragment)) {
+            repleacFragment(1);
+            rbtn1.setChecked(true);
         }
     }
 
@@ -375,23 +402,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         tvContent.setText(replace);
         final String dataUrl = versionData.getUrl();
         final String replaceUrl = dataUrl.replaceAll(" ", "");
-
-
-/*        layMenu.setOnKeyListener(newOnKeyListener()
-        {
-            publicboolean onKey(View v, intkeyCode, KeyEvent event)
-            {
-                if(event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK)
-                    pw.dismiss();
-
-                returnfalse;
-            }
-        });*/
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downLoadApk(dataUrl.trim(), true);
-                //  downLoadApk(replaceUrl, true);
+                mUpdateManager.clearCacheApkFile();
+                String trim = replaceUrl.trim();
+                mUpdateManager.startToUpdate(trim, mOnUpdateListener);
             }
         });
         backgroundAlpha(0.5f);
@@ -404,16 +420,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         window.setFocusable(false);// 这个很重要
         window.setOutsideTouchable(false);
         window.setBackgroundDrawable(new BitmapDrawable());
-        /*window.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !window.isFocusable()) {
-                    return true;
-                } else {
-                    return true;
-                }
-            }
-        });*/
         window.showAtLocation(LayoutInflater.from(MainActivity.this).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
     }
 
@@ -484,8 +490,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 if (isShow) {
                     psdialog.dismiss();
                 }
-                //安装apk
-                RxAppTool.installApp(MainActivity.this, filePath);
             }
 
             @Override
@@ -496,6 +500,58 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 }
             }
         });
+    }
+
+    private void dismissProgressDialog() {
+        mProgressDialog.setProgress(0);
+        if (mProgressDialog.isShowing())
+            mProgressDialog.dismiss();
+    }
+
+    private OnUpdateListener mOnUpdateListener = new OnUpdateListener() {
+        @Override
+        public void onStartUpdate() {
+            mProgressDialog.show();
+        }
+
+        @Override
+        public void onProgress(int progress) {
+            mProgressDialog.setProgress(progress);
+        }
+
+        @Override
+        public void onApkDownloadFinish(String apkPath) {
+            showToast("newest apk download finish. apkPath: " + apkPath);
+            Log.e("tag", "newest apk download finish. apkPath: " + apkPath);
+            dismissProgressDialog();
+            //所有的更新全部在updateManager中完成，Activity在这里只是做一些界面上的处理
+        }
+
+        @Override
+        public void onUpdateFailed() {
+            showToast("update failed.");
+            dismissProgressDialog();
+        }
+
+        @Override
+        public void onUpdateCanceled() {
+            showToast("update cancled.");
+            dismissProgressDialog();
+        }
+
+        @Override
+        public void onUpdateException() {
+            showToast("update exception.");
+            dismissProgressDialog();
+        }
+    };
+
+    private void initProgressDialog() {
+        mProgressDialog = new ProgressDialog(this, R.style.DialogTheme);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
     }
 
     private void backgroundAlpha(float bgAlpha) {
@@ -547,7 +603,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 public void onError(Exception ex) {
                     if (null != client && !client.isOpen()) {
                         //LogUtils.showLog("socket onStartConnect");
-                       // client.reconnect();
+                        // client.reconnect();
                     }
                     Log.e("onError:", ex.toString());
                 }

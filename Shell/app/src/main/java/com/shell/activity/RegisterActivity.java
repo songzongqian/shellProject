@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.shell.Bean.EmailCodeBean;
 import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.RegisterBean;
@@ -45,7 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RegisterActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
     @BindView(R.id.et_country)
-    EditText etCountry;
+    TextView etCountry;
     @BindView(R.id.ll_country)
     RelativeLayout llCountry;
     @BindView(R.id.rl_country)
@@ -60,7 +61,7 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.tv_rightTitle)
     TextView tvRightTitle;
     @BindView(R.id.profile_image)
-    CircleImageView profileImage;
+    RoundedImageView profileImage;
     @BindView(R.id.et_account)
     EditText etAccount;
     @BindView(R.id.et_code)
@@ -132,7 +133,7 @@ public class RegisterActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.profile_image, R.id.tv_Code, R.id.btn_register, R.id.btn_toLogin, R.id.tv_rightTitle, R.id.rl_country})
+    @OnClick({R.id.profile_image, R.id.tv_Code, R.id.btn_register, R.id.btn_toLogin, R.id.tv_rightTitle, R.id.ll_country})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.profile_image:
@@ -152,7 +153,7 @@ public class RegisterActivity extends BaseActivity {
                 startActivity(intent6);
                 break;
 
-            case R.id.rl_country:
+            case R.id.ll_country:
                 Intent intent1 = new Intent();
                 intent1.setClass(RegisterActivity.this, CountryActivity.class);
                 startActivityForResult(intent1, 12);
@@ -172,7 +173,7 @@ public class RegisterActivity extends BaseActivity {
         request.add("country", country);
         request.add("veriCode", inputCode);
         request.add("password", inputPwd);
-        request.add("inviteCode", "");
+        request.add("inviteCode", friendCode);
         request.add("source", "android");
         request.add("device", deviceId);
         mQueue.add(2, request, responseListener);

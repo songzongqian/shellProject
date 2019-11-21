@@ -18,12 +18,10 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.LetterBean;
 import com.shell.R;
-import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
 import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
-import com.shell.mine.adapter.FriendAdapter;
 import com.shell.mine.adapter.LetterAdapter;
 import com.shell.mine.adapter.MyLetterAdapter;
 import com.shell.utils.PreManager;
@@ -54,7 +52,7 @@ public class WebLetterActivity extends BaseActivity {
     @BindView(R.id.tv_rightTitle)
     TextView tvRightTitle;
     @BindView(R.id.listView)
-    ListView listView;
+    RecyclerView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.ll_noData)
@@ -62,7 +60,7 @@ public class WebLetterActivity extends BaseActivity {
     private int AllPager = 0;
     private int CurrentPager = 1;
     private List<LetterBean.ResultDataBean> firstList = new ArrayList<>();
-    private MyLetterAdapter letterAdapter;
+    private LetterAdapter letterAdapter;
 
     @Override
     protected void initToolBar() {
@@ -219,7 +217,8 @@ public class WebLetterActivity extends BaseActivity {
     }
 
     private void initViews() {
-        letterAdapter = new MyLetterAdapter(WebLetterActivity.this,firstList);
+        letterAdapter = new LetterAdapter(WebLetterActivity.this,firstList);
+        listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(letterAdapter);
     }
 
