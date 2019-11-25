@@ -247,6 +247,14 @@
 
     <string name="Ore_pool_income">矿池收益</string>
 
+    <string name="Credit_score">当前信用分</string>
+
+    <string name="Pledged">当前已质押</string>
+
+    <string name="Remaining_pledged">剩余可质押</string>
+
+    <string name="pledge_number">质押数量</string>
+
     <!--在订单时间下面再加一个交易时间
 繁：交易時間
 英：Deal time

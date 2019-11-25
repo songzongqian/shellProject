@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -14,6 +15,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.shell.R;
 import com.shell.mine.activity.MyFriendActivity;
 import com.shell.mine.activity.MyFriendBean;
+import com.shell.utils.GetTwoLetter;
 
 import org.w3c.dom.Text;
 
@@ -52,9 +54,23 @@ public class FriendAdapter extends RecyclerView.Adapter {
         }
 
         holder.tvEmail.setText(resultDataBean.getEmail());
-        holder.friendCount.setText(resultDataBean.getInvitedCount() + "");
-        holder.tvXinYongCount.setText(resultDataBean.getCreditScore() + "");
-        holder.suanliCount.setText(resultDataBean.getHashRate() + "");
+        holder.friendCount.setText(resultDataBean.getInvitedCount());
+        holder.tvXinYongCount.setText(resultDataBean.getCreditScore());
+        holder.suanliCount.setText(resultDataBean.getHashRate());
+        if ("Y".equals(resultDataBean.getShowLevel())){
+            holder.ll_VIP.setVisibility(View.VISIBLE);
+        }else {
+            holder.ll_VIP.setVisibility(View.INVISIBLE);
+        }
+        if (1<= resultDataBean.getLevel() && resultDataBean.getLevel() <= 4){
+            holder.tv_vip.setText("B lv"+resultDataBean.getLevel());
+        }else if (11<= resultDataBean.getLevel() && resultDataBean.getLevel() <= 15){
+            holder.tv_vip.setText("S lv"+resultDataBean.getLevel()%10);
+        }else {
+            holder.tv_vip.setText("lv"+resultDataBean.getLevel());
+        }
+        holder.tv_zhiya_number.setText(GetTwoLetter.getTwo(resultDataBean.getPledgeAmount()));
+
     }
 
     @Override
@@ -71,6 +87,10 @@ public class FriendAdapter extends RecyclerView.Adapter {
         private final TextView tvXinYongCount;
         private final TextView friendCount;
         private final TextView suanliCount;
+        TextView tv_zhiya_number;
+        RelativeLayout ll_VIP;
+        TextView tv_vip;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +99,10 @@ public class FriendAdapter extends RecyclerView.Adapter {
             tvXinYongCount = itemView.findViewById(R.id.tv_two);
             friendCount = itemView.findViewById(R.id.tv_four);
             suanliCount = itemView.findViewById(R.id.tv_six);
+            tv_zhiya_number = itemView.findViewById(R.id.tv_zhiya_number);
+            ll_VIP = itemView.findViewById(R.id.ll_VIP);
+            tv_vip = itemView.findViewById(R.id.tv_vip);
+
         }
     }
 }

@@ -50,11 +50,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="22dp"
                 android:text="@string/mf_creiscore"
                 android:textColor="#678DA8"
-                android:textSize="14sp" />
+                android:textSize="@dimen/dp_11" />
 
 
             <TextView
@@ -62,12 +62,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="11dp"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginTop="22dp"
                 android:layout_toRightOf="@id/tv_one"
                 android:text="@string/To_pledge"
                 android:textColor="#678DA8"
-                android:textSize="14sp" />
+                android:textSize="@dimen/dp_11" />
 
 
             <TextView
@@ -75,12 +75,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginTop="22dp"
                 android:layout_toRightOf="@id/tv_two"
                 android:text="@string/order"
                 android:textColor="#678DA8"
-                android:textSize="14sp" />
+                android:textSize="@dimen/dp_11" />
 
 
             <TextView
@@ -89,11 +89,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="49dp"
+                android:layout_marginRight="@dimen/dp_20"
                 android:layout_marginTop="22dp"
                 android:text="@string/earnings"
                 android:textColor="#678DA8"
-                android:textSize="14sp" />
+                android:textSize="@dimen/dp_11" />
         </RelativeLayout>
 
 
@@ -110,7 +110,7 @@
     <TextView
         android:id="@+id/tv_OK"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_36"
+        android:layout_height="@dimen/dp_34"
         android:layout_gravity="center_horizontal"
         android:background="@mipmap/bg_qingsuan"
         android:gravity="center"
@@ -120,7 +120,7 @@
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_20"
         android:textColor="#FFFFFF"
-        android:textSize="17sp" />
+        android:textSize="@dimen/dp_14" />
 
 
 </LinearLayout>

@@ -210,4 +210,8 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="Receive">Receive</string>
     <string name="into">into</string>
     <string name="Ore_pool_income">Ore pool income</string>
+    <string name="Credit_score">Credit score</string>
+    <string name="Pledged">Pledged</string>
+    <string name="Remaining_pledged">Remaining pledged</string>
+    <string name="pledge_number">The pledge number</string>
 </resources>

@@ -209,4 +209,9 @@
     <string name="Receive">받다</string>
     <string name="into">전입</string>
     <string name="Ore_pool_income">광산개발이익</string>
+    <string name="Credit_score">당면신용분</string>
+    <string name="Pledged">현재저당잡히기</string>
+    <string name="Remaining_pledged">남은것은저당할수있다</string>
+    <string name="pledge_number">질권 수량</string>
+
 </resources>

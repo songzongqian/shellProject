@@ -59,7 +59,7 @@ import com.shell.activity.MainActivity;
 import com.shell.base.BaseFragment;
 import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
-import com.shell.dialog.MilestoneDialogFragment;
+
 import com.shell.dialog.MyWaitDialog;
 import com.shell.home.Bean.HomeUserBean;
 import com.shell.home.Bean.JiangLiBean;
@@ -159,6 +159,10 @@ public class HomeFragment extends BaseFragment {
     LinearLayout llXinyong;
     @BindView(R.id.tv_suanLi)
     TextView tvSuanLi;
+    @BindView(R.id.path_linear)
+    LinearLayout pathLinrar;
+    @BindView(R.id.path_size)
+    TextView pathSize;
     @BindView(R.id.ll_mysuanli)
     LinearLayout llMysuanli;
     @BindView(R.id.tv_amount)
@@ -443,6 +447,12 @@ public class HomeFragment extends BaseFragment {
                         String miningAward = homeUserBean.getResultData().getMiningAward();
                         tvScore.setText(creditScore + "");
                         tvSuanLi.setText(hashRate + "");
+                        pathSize.setText("+" + homeUserBean.getResultData().getAllHashRate());
+                        if (4 < homeUserBean.getResultData().getLevel()) {
+                            pathLinrar.setVisibility(View.VISIBLE);
+                        } else {
+                            pathLinrar.setVisibility(View.GONE);
+                        }
                         tvAmount.setText(GetTwoLetter.getTwo(miningAward));
                         String profit = homeUserBean.getResultData().getProfit();
                         double quota = homeUserBean.getResultData().getQuota();
@@ -579,7 +589,7 @@ public class HomeFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", bottomList);
                 fragment.setArguments(bundle);*/
-               // fragment.show(getFragmentManager(),"");
+                // fragment.show(getFragmentManager(),"");
                 break;
             case R.id.ll_map:
                 showTopFirstWindow(countryDataList);

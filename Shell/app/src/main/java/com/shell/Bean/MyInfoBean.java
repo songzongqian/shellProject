@@ -49,6 +49,15 @@ public class MyInfoBean {
         private String portrait;
         private String myinviteCode;
         private boolean payPasswordFlag;
+        private String showLevel;
+
+        public String getShowLevel() {
+            return showLevel;
+        }
+
+        public void setShowLevel(String showLevel) {
+            this.showLevel = showLevel;
+        }
 
         public boolean isPayPasswordFlag() {
             return payPasswordFlag;

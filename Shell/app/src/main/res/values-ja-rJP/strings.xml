@@ -210,4 +210,9 @@
     <string name="Receive">受信</string>
     <string name="into">転入</string>
     <string name="Ore_pool_income">鉱池収益</string>
+    <string name="Credit_score">現在の信用分</string>
+    <string name="Pledged">現在の抵当</string>
+    <string name="Remaining_pledged">残存抵当</string>
+    <string name="pledge_number">質量数</string>
+
 </resources>

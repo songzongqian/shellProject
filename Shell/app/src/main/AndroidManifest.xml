@@ -113,7 +113,8 @@
         <activity
             android:name=".money.activity.TiBiActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".money.activity.ZhiYaActivity" />
+        <activity android:name=".money.activity.ZhiYaActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".mine.activity.NickActivity" />
         <activity android:name=".mine.activity.EmailActivity" />
         <activity android:name=".mine.activity.WebLetterActivity" />

@@ -74,6 +74,24 @@ public class HomeUserBean {
         private String createTime;
         private int modifyBy;
         private String modifyTime;
+        private int level;
+        private String allHashRate;
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public String getAllHashRate() {
+            return allHashRate;
+        }
+
+        public void setAllHashRate(String allHashRate) {
+            this.allHashRate = allHashRate;
+        }
 
         public String getProfit() {
             return profit;

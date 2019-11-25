@@ -346,6 +346,11 @@ public class MineFragment extends BaseFragment {
                         Glide.with(getActivity()).load(myHewad).apply(options).into(ivHead);
                         tvNickName.setText(nickName);
                         tvEmail.setText(myEmail);
+                        if ("Y".equals(myInfoBean.getResultData().getShowLevel())){
+                            llVIP.setVisibility(View.VISIBLE);
+                        }else {
+                            llVIP.setVisibility(View.GONE);
+                        }
                     } else {
 
                     }

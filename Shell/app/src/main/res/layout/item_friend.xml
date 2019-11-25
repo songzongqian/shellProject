@@ -9,35 +9,70 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#031D32"
-        >
+        android:layout_height="@dimen/dp_75"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:background="#031D32">
 
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iv_head"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
-            android:layout_centerVertical="true"
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="21dp"
-            android:src="@mipmap/person"
-            app:riv_oval="true"/>
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/person"
+                app:riv_oval="true"/>
+
+            <RelativeLayout
+                android:id="@+id/ll_VIP"
+                android:layout_width="69dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@drawable/bgvip">
+
+
+                <ImageView
+                    android:id="@+id/iv_vip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/bg_vip" />
+
+
+                <TextView
+                    android:id="@+id/tv_vip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:text="Bv1"
+                    android:textColor="#FFFFFF" />
+
+            </RelativeLayout>
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="26dp"
-            android:layout_toRightOf="@id/iv_head"
+            android:gravity="bottom"
+            android:layout_toRightOf="@id/linear"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="che******@qq.com"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp" />
@@ -67,7 +102,28 @@
                     android:textSize="13sp" />
 
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pledge_number"
+                    android:textColor="#8D99B2"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_zhiya_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_3"
+                    android:text=" 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -75,7 +131,8 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
             android:layout_marginLeft="26dp"
             android:layout_alignParentRight="true"
             android:orientation="vertical">
