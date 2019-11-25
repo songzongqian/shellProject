@@ -25,10 +25,9 @@ public class MoneyPageAdapter extends BaseAdapter {
     private static final int TYPE_NOIMG = 1;    //   奇数
 
 
-
     public MoneyPageAdapter(List<CardUnderBean.ResultDataBean> resultList, FragmentActivity activity) {
-        this.context=activity;
-        this.list=resultList;
+        this.context = activity;
+        this.list = resultList;
     }
 
 
@@ -50,9 +49,9 @@ public class MoneyPageAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(position % 2 == 0){
+        if (position % 2 == 0) {
             return TYPE_HASIMAGE;
-        }else{
+        } else {
             return TYPE_NOIMG;
         }
     }
@@ -65,14 +64,14 @@ public class MoneyPageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
-        VideoHolder1 videoHolder1=null;
+        VideoHolder1 videoHolder1 = null;
         int type = getItemViewType(position);
 
-        if(convertView==null){
-            switch (type){
-                case  TYPE_HASIMAGE: //偶数
+        if (convertView == null) {
+            switch (type) {
+                case TYPE_HASIMAGE: //偶数
                     LayoutInflater inflater = LayoutInflater.from(context);
-                    convertView =  inflater.inflate(R.layout.item_card_under, null);
+                    convertView = inflater.inflate(R.layout.item_card_under, null);
                     viewHolder = new ViewHolder(convertView);
                     convertView.setTag(viewHolder);
                     break;
@@ -84,14 +83,14 @@ public class MoneyPageAdapter extends BaseAdapter {
                     convertView.setTag(videoHolder1);
                     break;
             }
-        }else{
-            switch (type){
-                case  TYPE_HASIMAGE:
+        } else {
+            switch (type) {
+                case TYPE_HASIMAGE:
                     viewHolder = (ViewHolder) convertView.getTag();
                     break;
 
                 case TYPE_NOIMG:
-                    videoHolder1= (VideoHolder1) convertView.getTag();
+                    videoHolder1 = (VideoHolder1) convertView.getTag();
                     break;
 
             }
@@ -101,151 +100,251 @@ public class MoneyPageAdapter extends BaseAdapter {
         CardUnderBean.ResultDataBean dataBean = list.get(position);
         String typeCode = dataBean.getBusiCode();
         String status = dataBean.getStatus();
-        switch (type){
+        switch (type) {
             case TYPE_HASIMAGE:
                 //质押
-                if(typeCode.equals("pledge")){
-                    viewHolder.one.setText("-"+dataBean.getOperateAmount()+"");
+                if (typeCode.equals("pledge")) {
+                    viewHolder.one.setText("-" + GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
                     viewHolder.one.setTextColor(Color.parseColor("#F4376D"));
                     viewHolder.two.setText(R.string.or_zhiya);
                     viewHolder.four.setText(dataBean.getCreateTime());
-                    if(status.equals("10")){
-                        viewHolder.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        viewHolder.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        viewHolder.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        viewHolder.three.setText("成功");
-                    }else if(status.equals("40")){
-                        viewHolder.three.setText("失败");
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
                     }
 
                     //充值
-                }else if(typeCode.equals("charge")){
-                    viewHolder.one.setText("+"+dataBean.getOperateAmount()+"");
+                } else if (typeCode.equals("charge")) {
+                    viewHolder.one.setText("+" + GetTwoLetter.getFour(dataBean.getOperateAmount())+ "");
                     viewHolder.two.setText(R.string.rmb_cz);
                     viewHolder.four.setText(dataBean.getCreateTime());
                     viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
-                    if(status.equals("10")){
-                        viewHolder.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        viewHolder.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        viewHolder.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        viewHolder.three.setText("成功");
-                    }else if(status.equals("40")){
-                        viewHolder.three.setText("失败");
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
                     }
 
                     //提币
-                }else if(typeCode.equals("withdraw")){
-                    viewHolder.one.setText("+"+dataBean.getOperateAmount()+"");
+                } else if (typeCode.equals("withdraw")) {
+                    viewHolder.one.setText("-" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
                     viewHolder.two.setText(R.string.rmb_tibi);
                     viewHolder.four.setText(dataBean.getCreateTime());
-                    viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
-                    if(status.equals("10")){
-                        viewHolder.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        viewHolder.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        viewHolder.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        viewHolder.three.setText("成功");
-                    }else if(status.equals("40")){
-                        viewHolder.three.setText("失败");
+                    viewHolder.one.setTextColor(Color.parseColor("#F4376D"));
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
                     }
 
                     //清算
-                }else if(typeCode.equals("settle")){
-                    viewHolder.one.setText("+"+dataBean.getOperateAmount()+"");
+                } else if (typeCode.equals("settle")) {
+                    viewHolder.one.setText("-" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
                     viewHolder.two.setText(R.string.rmb_qingsuan);
                     viewHolder.four.setText(dataBean.getCreateTime());
+                    viewHolder.one.setTextColor(Color.parseColor("#F4376D"));
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
+                    }
+                    //订单
+                } else if (typeCode.equals("order")) {
+                    viewHolder.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    viewHolder.two.setText(R.string.order);
+                    viewHolder.four.setText(dataBean.getCreateTime());
                     viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
-                    if(status.equals("10")){
-                        viewHolder.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        viewHolder.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        viewHolder.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        viewHolder.three.setText("成功");
-                    }else if(status.equals("40")){
-                        viewHolder.three.setText("失败");
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
+                    }
+                } else if (typeCode.equals("reward")) {
+                    viewHolder.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    viewHolder.two.setText(R.string.reward);
+                    viewHolder.four.setText(dataBean.getCreateTime());
+                    viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
+                    }
+                    //矿池
+                }else if (typeCode.equals("minePool")) {
+                    viewHolder.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    viewHolder.two.setText(R.string.index_kc);
+                    viewHolder.four.setText(dataBean.getCreateTime());
+                    viewHolder.one.setTextColor(Color.parseColor("#80C35F"));
+                    if (status.equals("10")) {
+                        viewHolder.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        viewHolder.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        viewHolder.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        viewHolder.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        viewHolder.three.setText(R.string.failure);
                     }
                 }
+
                 break;
             case TYPE_NOIMG:
-                if(typeCode.equals("pledge")){
-                    videoHolder1.one.setText("-"+dataBean.getOperateAmount()+"");
+                if (typeCode.equals("pledge")) {
+                    videoHolder1.one.setText("-" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
                     videoHolder1.one.setTextColor(Color.parseColor("#F4376D"));
                     videoHolder1.two.setText(R.string.or_zhiya);
                     videoHolder1.four.setText(dataBean.getCreateTime());
-                    if(status.equals("10")){
-                        videoHolder1.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        videoHolder1.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        videoHolder1.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        videoHolder1.three.setText("成功");
-                    }else if(status.equals("40")){
-                        videoHolder1.three.setText("失败");
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
                     }
 
                     //充值
-                }else if(typeCode.equals("charge")){
-                    videoHolder1.one.setText("+"+dataBean.getOperateAmount()+"");
-                    videoHolder1.two.setText("充值");
+                } else if (typeCode.equals("charge")) {
+                    videoHolder1.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    videoHolder1.two.setText(R.string.rmb_cz);
                     videoHolder1.four.setText(dataBean.getCreateTime());
                     videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
-                    if(status.equals("10")){
-                        videoHolder1.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        videoHolder1.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        videoHolder1.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        videoHolder1.three.setText("成功");
-                    }else if(status.equals("40")){
-                        videoHolder1.three.setText("失败");
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
                     }
 
                     //提币
-                }else if(typeCode.equals("withdraw")){
-                    videoHolder1.one.setText("+"+dataBean.getOperateAmount()+"");
-                    videoHolder1.two.setText("提币");
+                } else if (typeCode.equals("withdraw")) {
+                    videoHolder1.one.setText("-" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    videoHolder1.two.setText(R.string.rmb_tibi);
                     videoHolder1.four.setText(dataBean.getCreateTime());
-                    videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
-                    if(status.equals("10")){
-                        videoHolder1.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        videoHolder1.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        videoHolder1.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        videoHolder1.three.setText("成功");
-                    }else if(status.equals("40")){
-                        videoHolder1.three.setText("失败");
+                    videoHolder1.one.setTextColor(Color.parseColor("#F4376D"));
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
                     }
 
                     //清算
-                }else if(typeCode.equals("settle")){
-                    videoHolder1.one.setText("+"+dataBean.getOperateAmount()+"");
-                    videoHolder1.two.setText("清算");
+                } else if (typeCode.equals("settle")) {
+                    videoHolder1.one.setText("-" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    videoHolder1.two.setText(R.string.rmb_qingsuan);
+                    videoHolder1.four.setText(dataBean.getCreateTime());
+                    videoHolder1.one.setTextColor(Color.parseColor("#F4376D"));
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
+                    }
+                }else if (typeCode.equals("order")) {
+                    videoHolder1.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    videoHolder1.two.setText(R.string.order);
                     videoHolder1.four.setText(dataBean.getCreateTime());
                     videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
-                    if(status.equals("10")){
-                        videoHolder1.three.setText(R.string.untreated);
-                    }else if(status.equals("20")){
-                        videoHolder1.three.setText("处理中");
-                    }else if(status.equals("21")){
-                        videoHolder1.three.setText("区块确认中");
-                    }else if(status.equals("30")){
-                        videoHolder1.three.setText("成功");
-                    }else if(status.equals("40")){
-                        videoHolder1.three.setText("失败");
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
+                    }
+                } else if (typeCode.equals("reward")) {
+                    videoHolder1.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    videoHolder1.two.setText(R.string.reward);
+                    videoHolder1.four.setText(dataBean.getCreateTime());
+                    videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
+                    }
+                    //矿池
+                }else if (typeCode.equals("minePool")) {
+                    videoHolder1.one.setText("+" +  GetTwoLetter.getFour(dataBean.getOperateAmount()) + "");
+                    videoHolder1.two.setText(R.string.index_kc);
+                    videoHolder1.four.setText(dataBean.getCreateTime());
+                    videoHolder1.one.setTextColor(Color.parseColor("#80C35F"));
+                    if (status.equals("10")) {
+                        videoHolder1.three.setText(R.string.processed);
+                    } else if (status.equals("20")) {
+                        videoHolder1.three.setText(R.string.processing);
+                    } else if (status.equals("21")) {
+                        videoHolder1.three.setText(R.string.block_confirmation);
+                    } else if (status.equals("30")) {
+                        videoHolder1.three.setText(R.string.successful);
+                    } else if (status.equals("40")) {
+                        videoHolder1.three.setText(R.string.failure);
                     }
                 }
                 break;

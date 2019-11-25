@@ -19,9 +19,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.LetterBean;
 import com.shell.R;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
-import com.shell.mine.adapter.FriendAdapter;
 import com.shell.mine.adapter.LetterAdapter;
 import com.shell.mine.adapter.MyLetterAdapter;
 import com.shell.utils.PreManager;
@@ -33,6 +33,9 @@ import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,11 +52,15 @@ public class WebLetterActivity extends BaseActivity {
     @BindView(R.id.tv_rightTitle)
     TextView tvRightTitle;
     @BindView(R.id.listView)
-    ListView listView;
+    RecyclerView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.ll_noData)
     LinearLayout llNoData;
+    private int AllPager = 0;
+    private int CurrentPager = 1;
+    private List<LetterBean.ResultDataBean> firstList = new ArrayList<>();
+    private LetterAdapter letterAdapter;
 
     @Override
     protected void initToolBar() {
@@ -81,7 +88,9 @@ public class WebLetterActivity extends BaseActivity {
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishRefresh();
+                CurrentPager = 1;
+                getLetterData();
+                refreshLayout.finishRefresh(2000);
             }
         });
 
@@ -89,8 +98,13 @@ public class WebLetterActivity extends BaseActivity {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                // refreshMore();
-                smartRefreshLayout.finishLoadMore();
+                if (CurrentPager < AllPager) {
+                    CurrentPager++;
+                    getLetterData();
+                    refreshLayout.finishLoadMore(2000);
+                } else {
+                    refreshLayout.finishLoadMore();
+                }
             }
         });
 
@@ -112,7 +126,7 @@ public class WebLetterActivity extends BaseActivity {
 
     private void getLetterData() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.WebLrtterCount, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.WebLrtterCount+CurrentPager, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("pageNum", page);
         request.add("token", token);
@@ -136,6 +150,7 @@ public class WebLetterActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(WebLetterActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -144,14 +159,15 @@ public class WebLetterActivity extends BaseActivity {
                     if(letterBean.getResultCode().equals("999999")){
                         if(letterBean.getResultData()!=null && letterBean.getResultData().size()>0){
                             llNoData.setVisibility(View.GONE);
-                            smartRefreshLayout.setVisibility(View.VISIBLE);
-                            MyLetterAdapter letterAdapter= new MyLetterAdapter(WebLetterActivity.this,letterBean.getResultData());
-                            listView.setAdapter(letterAdapter);
-
-
+                            List<LetterBean.ResultDataBean> resultData = letterBean.getResultData();
+                            AllPager = letterBean.getPages();
+                            if (1 == CurrentPager) {
+                                firstList.clear();
+                            }
+                            firstList.addAll(resultData);
+                            letterAdapter.notifyDataSetChanged();
                         }else{
                             llNoData.setVisibility(View.VISIBLE);
-                            smartRefreshLayout.setVisibility(View.GONE);
                         }
 
                     }else{
@@ -197,6 +213,13 @@ public class WebLetterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        initViews();
+    }
+
+    private void initViews() {
+        letterAdapter = new LetterAdapter(WebLetterActivity.this,firstList);
+        listView.setLayoutManager(new LinearLayoutManager(this));
+        listView.setAdapter(letterAdapter);
     }
 
     @OnClick({R.id.rl_back, R.id.tv_title})

@@ -1,14 +1,16 @@
 package com.shell.home.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TopStaticBean {
+public class TopStaticBean implements Serializable{
 
     /**
      * resultCode : 999999
      * resultData : {"allMilepost":[{"desc":"Triton Block Chain Laboratory Established","time":"2018-05-28"},{"desc":"Shell, the first laboratory product","time":"2018-10-29"},{"desc":"Signing Technical Cooperation Agreement with Tether","time":"2019-02-15"},{"desc":"Signing a Strategic Cooperation Agreement with McKinsey","time":"2019-05-06"},{"desc":"Shell releases built-in version","time":"2019-08-07"},{"desc":"Shell releases public beta version","time":"2019-09-25"},{"desc":"Shell officially launched, opening up Europe and the United States","time":"2019-09-27"},{"desc":"Shell Opens Korea","time":"2019-10-10"}],"countryData":[{"id":4,"name":"European Union","orderAmount":528303,"orderCount":221200,"superNodeCount":3,"userCount":3865},{"id":5,"name":"U.S.A","orderAmount":121800,"orderCount":251800,"superNodeCount":2,"userCount":2583},{"id":2,"name":"Korea","orderAmount":0,"orderCount":0,"superNodeCount":0,"userCount":0},{"id":3,"name":"Japan","orderAmount":0,"orderCount":0,"superNodeCount":0,"userCount":0},{"id":1,"name":"China","orderAmount":0,"orderCount":0,"superNodeCount":0,"userCount":0}],"creditScoreDesc":"1、抵押数量升级、分配大额订单","hashRateDesc":"算力是由节点的下级节点质押USDT数量以及信用分通过公式计算出来的，算力大小决定挖矿奖励，节点奖励由节点算力与全网算力及信用分以一定比例产出！","networkHashRate":{"createBy":0,"createTime":"2019-10-15 12:55:28","hashRate":0.015,"id":8,"isDeleted":"N","pledgeAmount":2233.0234,"statisticalTime":"2019-10-08 12:55:22","tradingAmount":3303.0032}}
      * resultDesc : 成功！
      */
+
 
     private String resultCode;
     private ResultDataBean resultData;
@@ -38,7 +40,7 @@ public class TopStaticBean {
         this.resultDesc = resultDesc;
     }
 
-    public static class ResultDataBean {
+    public static class ResultDataBean implements Serializable{
         /**
          * allMilepost : [{"desc":"Triton Block Chain Laboratory Established","time":"2018-05-28"},{"desc":"Shell, the first laboratory product","time":"2018-10-29"},{"desc":"Signing Technical Cooperation Agreement with Tether","time":"2019-02-15"},{"desc":"Signing a Strategic Cooperation Agreement with McKinsey","time":"2019-05-06"},{"desc":"Shell releases built-in version","time":"2019-08-07"},{"desc":"Shell releases public beta version","time":"2019-09-25"},{"desc":"Shell officially launched, opening up Europe and the United States","time":"2019-09-27"},{"desc":"Shell Opens Korea","time":"2019-10-10"}]
          * countryData : [{"id":4,"name":"European Union","orderAmount":528303,"orderCount":221200,"superNodeCount":3,"userCount":3865},{"id":5,"name":"U.S.A","orderAmount":121800,"orderCount":251800,"superNodeCount":2,"userCount":2583},{"id":2,"name":"Korea","orderAmount":0,"orderCount":0,"superNodeCount":0,"userCount":0},{"id":3,"name":"Japan","orderAmount":0,"orderCount":0,"superNodeCount":0,"userCount":0},{"id":1,"name":"China","orderAmount":0,"orderCount":0,"superNodeCount":0,"userCount":0}]
@@ -179,7 +181,7 @@ public class TopStaticBean {
             }
         }
 
-        public static class AllMilepostBean {
+        public static class AllMilepostBean implements Serializable {
             /**
              * desc : Triton Block Chain Laboratory Established
              * time : 2018-05-28
@@ -271,4 +273,5 @@ public class TopStaticBean {
             }
         }
     }
+
 }

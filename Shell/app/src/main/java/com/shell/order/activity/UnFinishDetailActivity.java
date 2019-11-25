@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,11 +20,12 @@ import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
 import com.shell.R;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
-import com.shell.order.adapter.OrderListAdapter;
 import com.shell.order.bean.OrderDetailtBean;
-import com.shell.order.bean.OrderListBean;
+import com.shell.utils.GetTwoLetter;
+import com.shell.utils.OrderTimeCount;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -41,6 +43,10 @@ import butterknife.OnClick;
 
 public class UnFinishDetailActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
+    @BindView(R.id.tv_orderTime)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_jiaoyiTime)
+    TextView tvJiaoyiTime;
     private Request<JSONObject> request;
     private int page = 1;
     @BindView(R.id.rl_back)
@@ -66,7 +72,11 @@ public class UnFinishDetailActivity extends BaseActivity {
     @BindView(R.id.tv_fuwujiangli)
     TextView tvFuwujiangli;
     @BindView(R.id.btn_Send)
-    Button btnSend;
+    LinearLayout btnSend;
+    @BindView(R.id.btn_Send_time)
+    TextView btnSendTime;
+    @BindView(R.id.btn_Send_text)
+    TextView btnSendText;
     private PopupWindow pwdWindow;
     private OrderDetailtBean.ResultDataBean resultData;
 
@@ -99,15 +109,17 @@ public class UnFinishDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        long orderId = getIntent().getLongExtra("orderId",0);
+        long orderId = getIntent().getLongExtra("orderId", 0);
         String orderStatue = getIntent().getStringExtra("orderStatue");
 
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.unorderDetail+orderId, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.unorderDetail + orderId, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("orderId", orderId);
         request.add("token", token);
         mQueue.add(1, request, responseListener);
+
+
     }
 
     private MyWaitDialog myWaitDialog;
@@ -125,23 +137,27 @@ public class UnFinishDetailActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            String s1 = response.get().toString();
+            System.out.println("[[[[---" + s1);
+            LogonFailureUtil.gotoLoginActiviy(UnFinishDetailActivity.this, response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
                     Log.i("song", "订单详情的返回值" + String.valueOf(response));
-                    OrderDetailtBean orderDetailtBean= gson.fromJson(response.get().toString(), OrderDetailtBean.class);
+                    OrderDetailtBean orderDetailtBean = gson.fromJson(response.get().toString(), OrderDetailtBean.class);
                     setView(orderDetailtBean);
                     break;
                 case 3:
                     Log.i("song", "订单详情的返回值" + String.valueOf(response));
                     String s = response.get().toString();
+                    System.out.println("=====" + s);
                     try {
                         JSONObject jsonObject = new JSONObject(response.get().toString());
-                        if ("999999".equals(jsonObject.optString("resultCode"))){
-                            Toast.makeText(UnFinishDetailActivity.this,jsonObject.optString("resultDesc"),Toast.LENGTH_SHORT).show();
+                        if ("999999".equals(jsonObject.optString("resultCode"))) {
+                            Toast.makeText(UnFinishDetailActivity.this, jsonObject.optString("resultDesc"), Toast.LENGTH_SHORT).show();
                             finish();
-                        }else {
-                            Toast.makeText(UnFinishDetailActivity.this,jsonObject.optString("resultDesc"),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(UnFinishDetailActivity.this, jsonObject.optString("resultDesc"), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -166,21 +182,37 @@ public class UnFinishDetailActivity extends BaseActivity {
     private void setView(OrderDetailtBean orderDetailtBean) {
         resultData = orderDetailtBean.getResultData();
         tvBianhaoValue.setText(resultData.getCode());
-        if ("in".equals(resultData.getType())){
-            tvOrderType.setText("转入");
-        }else {
-            tvOrderType.setText("转出");
+        if ("in".equals(resultData.getType())) {
+            tvOrderType.setText(R.string.into);
+            btnSendText.setText(R.string.Receive);
+        } else {
+            tvOrderType.setText(R.string.or_out);
+            btnSendText.setText(R.string.or_out);
         }
-        tvOrderPrice.setText(String.valueOf(resultData.getOrderAmount()));
-        //tvOrderAddress.setText(resultData.getUserAddress().toString());
+        tvOrderPrice.setText(GetTwoLetter.getTwo(resultData.getOrderAmount()));
+        tvOrderAddress.setText(resultData.getTargetAddress());
         tvBenweihuobi.setText(resultData.getStandardCurrency());
-        tvHuilv.setText(String.valueOf(resultData.getExchangeRate()));
-        tvJine.setText(String.valueOf(resultData.getStandardAmount()));
-        tvFuwujiangli.setText(String.valueOf(resultData.getAwardUsdt()));
+        tvHuilv.setText(GetTwoLetter.getTwo(resultData.getExchangeRate()));
+        tvJine.setText(GetTwoLetter.getTwo(resultData.getStandardAmount()));
+        tvFuwujiangli.setText(GetTwoLetter.getTwo(resultData.getAwardUsdt()) + " USDT");
 
-        if ("10".equals(resultData.getStatus())){
+
+        //新增订单时间   交易时间
+        tvOrderTime.setText(resultData.getCreateTime());
+        tvJiaoyiTime.setText(resultData.getDealTime());
+
+        //按钮上加一个倒计时
+
+        if (0 == resultData
+                .getRemainingSeconds()) {
+            btnSendTime.setText("00:00");
+        } else {
+            showOrderTimeout(resultData.getRemainingSeconds(), btnSendTime);
+        }
+
+        if ("10".equals(resultData.getStatus())) {
             btnSend.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             btnSend.setVisibility(View.INVISIBLE);
         }
     }
@@ -224,7 +256,7 @@ public class UnFinishDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String inputPwd = editText.getText().toString().trim();
-                if (TextUtils.isEmpty(inputPwd)){
+                if (TextUtils.isEmpty(inputPwd)) {
                     return;
                 }
                 //获取输入的密码
@@ -258,5 +290,18 @@ public class UnFinishDetailActivity extends BaseActivity {
         lp.alpha = bgAlpha;
         getWindow().setAttributes(lp);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
+    /**
+     * 显示超时时间
+     * time_millions 剩余时间
+     *
+     * @param remainingSeconds
+     */
+    private void showOrderTimeout(int remainingSeconds, TextView tvClockTime) {
+        // long time_millions = (orderTime * 1000L + timeOut * 1000L) - System.currentTimeMillis();
+        OrderTimeCount timeCount = new OrderTimeCount(remainingSeconds*1000L, 1000L);
+        timeCount.setWidget(tvClockTime,btnSend,btnSendText);
+        timeCount.start();
     }
 }

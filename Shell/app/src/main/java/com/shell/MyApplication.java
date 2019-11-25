@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 import static com.shell.utils.LocalManageUtil.getSetLanguageLocale;
 
 public class MyApplication extends Application {
@@ -35,7 +38,9 @@ public class MyApplication extends Application {
     public static boolean canShow = true;
     public static Activity topactivity;
     public static List<Activity> activityList = new ArrayList<>();
-
+    protected static Context context;
+    protected static Handler handler;
+    protected static int mainThreadId;
     @Override
     protected void attachBaseContext(Context base) {
         //第一次进入app时保存系统选择语言(为了选择随系统语言时使用，如果不保存，切换语言后就拿不到了）
@@ -54,6 +59,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
+        handler = new Handler();
+        mainThreadId = android.os.Process.myTid();
         app = this;
         initNet();
         //initWebSocket();
@@ -67,6 +75,10 @@ public class MyApplication extends Application {
         });
         MultiLanguage.setApplicationLanguage(this);
         ManageActivity();
+        //初始化极光推
+        //JPush init
+        JPushInterface.setDebugMode(false);//如果时正式版就改成false
+        JPushInterface.init(this);
     }
 
 
@@ -156,39 +168,66 @@ public class MyApplication extends Application {
         WebSocketHandler.registerNetworkChangedReceiver(this);
     }
 
-    private void ManageActivity() {
-        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle bundle) {
-                activityList.add(activity);
-            }
+        private void ManageActivity() {
+            registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+                @Override
+                public void onActivityCreated(Activity activity, Bundle bundle) {
+                    activityList.add(activity);
+                }
 
-            @Override
-            public void onActivityStarted(Activity activity) {
-            }
+                @Override
+                public void onActivityStarted(Activity activity) {
+                }
 
-            @Override
-            public void onActivityResumed(Activity activity) {
-                //处于栈顶的Activity
-                topactivity = activity;
-            }
+                @Override
+                public void onActivityResumed(Activity activity) {
+                    //处于栈顶的Activity
+                    topactivity = activity;
+                }
 
-            @Override
-            public void onActivityPaused(Activity activity) {
-            }
+                @Override
+                public void onActivityPaused(Activity activity) {
+                }
 
-            @Override
-            public void onActivityStopped(Activity activity) {
-            }
+                @Override
+                public void onActivityStopped(Activity activity) {
+                }
 
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-            }
+                @Override
+                public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+                }
 
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                activityList.remove(activity);
-            }
-        });
+                @Override
+                public void onActivityDestroyed(Activity activity) {
+                    activityList.remove(activity);
+                }
+            });
+        }
+
+    /**
+     * 获取上下文对象
+     *
+     * @return context
+     */
+    public static Context getContext() {
+        return context;
+    }
+
+    /**
+     * 获取全局handler
+     *
+     * @return 全局handler
+     */
+    public static Handler getHandler() {
+        return handler;
+    }
+
+    /**
+     * 获取主线程id
+     *
+     * @return 主线程id
+     */
+    public static int getMainThreadId() {
+        return mainThreadId;
     }
 }

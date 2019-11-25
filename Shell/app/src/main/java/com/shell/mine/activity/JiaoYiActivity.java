@@ -17,10 +17,12 @@ import com.google.gson.Gson;
 import com.shell.Bean.EmailCodeBean;
 import com.shell.Bean.RegisterBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.activity.LoginActivity;
 import com.shell.activity.MainActivity;
 import com.shell.activity.RegisterActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.utils.CountDownTimerUtils;
@@ -110,15 +112,16 @@ public class JiaoYiActivity extends BaseActivity {
                     Intent intent = new Intent(JiaoYiActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
-                        request = NoHttp.createJsonObjectRequest(AppUrl.getJiaoYiCode, RequestMethod.POST);
-                        request.addHeader("token", token);
-                        mQueue.add(1, request, responseListener);
-                    }
+                    request = NoHttp.createJsonObjectRequest(AppUrl.getJiaoYiCode, RequestMethod.POST);
+                    request.addHeader("token", token);
+                    mQueue.add(1, request, responseListener);
+                }
 
                 break;
             case R.id.btn_change:
                 inputPwd = editText.getText().toString().trim();
                 if (TextUtils.isEmpty(inputPwd)) {
+                    // Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
 
                 } else {
                     goToChange();
@@ -154,6 +157,7 @@ public class JiaoYiActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(JiaoYiActivity.this, response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -169,8 +173,10 @@ public class JiaoYiActivity extends BaseActivity {
                     Log.i("song", "交易密码修改返回的值" + String.valueOf(response));
                     RegisterBean registerBean = gson.fromJson(response.get().toString(), RegisterBean.class);
                     if (registerBean.getResultCode().equals("999999")) {
+                        PreManager.instance().putBoolean(AppUrl.isSetPayPwd, true);
                         Toast.makeText(JiaoYiActivity.this, registerBean.getResultDesc(), Toast.LENGTH_SHORT).show();
-                    } else{
+                        finish();
+                    } else {
                         Toast.makeText(JiaoYiActivity.this, registerBean.getResultDesc(), Toast.LENGTH_SHORT).show();
                     }
                     break;
@@ -192,8 +198,6 @@ public class JiaoYiActivity extends BaseActivity {
             myWaitDialog.cancel();
         }
     };
-
-
 
 
 }

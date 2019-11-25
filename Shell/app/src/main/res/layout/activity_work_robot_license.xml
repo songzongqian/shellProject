@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#061D34"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".newactivity.ui.WorkRobotLicenseActivity">
+
+    <include layout="@layout/layout_top" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_112"
+        android:scaleType="fitXY"
+        android:src="@mipmap/logo_top"
+        app:riv_corner_radius="@dimen/dp_5" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="Shell Robot"
+        android:textColor="#ffedf1f4"
+        android:textSize="22sp" />
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/input_login"
+        android:hint="License"
+        android:paddingLeft="@dimen/dp_16"
+        android:textColor="#678DA8"
+        android:textColorHint="#678DA8"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/btn_log_in"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@drawable/button"
+        android:text="Log in"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

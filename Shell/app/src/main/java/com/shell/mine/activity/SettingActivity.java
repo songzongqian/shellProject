@@ -27,8 +27,10 @@ import com.shell.Bean.CommonBean;
 import com.shell.Bean.MessageEvent;
 import com.shell.Bean.PostImageBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.activity.LoginActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.utils.FileUtils;
@@ -45,6 +47,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -248,8 +251,11 @@ public class SettingActivity extends BaseActivity {
                 upFileList();
             }
         }else if (requestCode == 10001){
-            String names = data.getStringExtra("name");
-            tvNickName.setText(names);
+            if (null != data){
+                String names = data.getStringExtra("name");
+                tvNickName.setText(names);
+            }
+
         }
 
     }
@@ -295,6 +301,7 @@ public class SettingActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(SettingActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:

@@ -11,6 +11,6 @@
         android:layout_height="40dp"
         android:textColor="#678DA8"
         android:gravity="center"
-        android:background="@drawable/button_zhiyaitem"/>
+        android:background="@drawable/zhiya_item_no_select"/>
 
 </LinearLayout>

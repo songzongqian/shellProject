@@ -3,15 +3,19 @@ package com.shell.mine.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.shell.R;
 import com.shell.mine.activity.MyFriendActivity;
 import com.shell.mine.activity.MyFriendBean;
+import com.shell.utils.GetTwoLetter;
 
 import org.w3c.dom.Text;
 
@@ -25,28 +29,48 @@ public class FriendAdapter extends RecyclerView.Adapter {
     List<MyFriendBean.ResultDataBean> list;
 
     public FriendAdapter(List<MyFriendBean.ResultDataBean> resultData, MyFriendActivity myFriendActivity) {
-        this.context=myFriendActivity;
-        this.list=resultData;
+        this.context = myFriendActivity;
+        this.list = resultData;
     }
 
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_friend, null,false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.item_friend, null, false);
         return new MyViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        MyViewHolder holder= (MyViewHolder) viewHolder;
-       //todo  服务器未返回头像
+        MyViewHolder holder = (MyViewHolder) viewHolder;
+        //todo  服务器未返回头像
         MyFriendBean.ResultDataBean resultDataBean = list.get(position);
-        Glide.with(context).load(R.mipmap.avator).into(holder.ivHead);
+
+        if (!TextUtils.isEmpty(resultDataBean.getPortrait())) {
+            Glide.with(context).load(resultDataBean.getPortrait()).into(holder.ivHead);
+        } else {
+            Glide.with(context).load(R.mipmap.person).into(holder.ivHead);
+        }
+
         holder.tvEmail.setText(resultDataBean.getEmail());
-        holder.friendCount.setText(resultDataBean.getInvitedCount()+"");
-        holder.tvXinYongCount.setText(resultDataBean.getCreditScore()+"");
-        holder.suanliCount.setText(resultDataBean.getHashRate()+"");
+        holder.friendCount.setText(resultDataBean.getInvitedCount());
+        holder.tvXinYongCount.setText(resultDataBean.getCreditScore());
+        holder.suanliCount.setText(resultDataBean.getHashRate());
+        if ("Y".equals(resultDataBean.getShowLevel())){
+            holder.ll_VIP.setVisibility(View.VISIBLE);
+        }else {
+            holder.ll_VIP.setVisibility(View.INVISIBLE);
+        }
+        if (1<= resultDataBean.getLevel() && resultDataBean.getLevel() <= 4){
+            holder.tv_vip.setText("B lv"+resultDataBean.getLevel());
+        }else if (11<= resultDataBean.getLevel() && resultDataBean.getLevel() <= 15){
+            holder.tv_vip.setText("S lv"+resultDataBean.getLevel()%10);
+        }else {
+            holder.tv_vip.setText("lv"+resultDataBean.getLevel());
+        }
+        holder.tv_zhiya_number.setText(GetTwoLetter.getTwo(resultDataBean.getPledgeAmount()));
+
     }
 
     @Override
@@ -55,15 +79,18 @@ public class FriendAdapter extends RecyclerView.Adapter {
     }
 
 
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
 
-
-        private final CircleImageView ivHead;
+        private final RoundedImageView ivHead;
         private final TextView tvEmail;
         private final TextView tvXinYongCount;
         private final TextView friendCount;
         private final TextView suanliCount;
+        TextView tv_zhiya_number;
+        RelativeLayout ll_VIP;
+        TextView tv_vip;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +99,10 @@ public class FriendAdapter extends RecyclerView.Adapter {
             tvXinYongCount = itemView.findViewById(R.id.tv_two);
             friendCount = itemView.findViewById(R.id.tv_four);
             suanliCount = itemView.findViewById(R.id.tv_six);
+            tv_zhiya_number = itemView.findViewById(R.id.tv_zhiya_number);
+            ll_VIP = itemView.findViewById(R.id.ll_VIP);
+            tv_vip = itemView.findViewById(R.id.tv_vip);
+
         }
     }
 }

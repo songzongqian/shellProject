@@ -19,12 +19,15 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.LoginBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.activity.LoginActivity;
 import com.shell.activity.MainActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.adapter.FriendAdapter;
+import com.shell.money.Bean.ChongZhiRecordBean;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -34,6 +37,9 @@ import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +60,10 @@ public class MyFriendActivity extends BaseActivity {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     private LinearLayout llNoData;
-
+    private int AllPager = 0;
+    private int CurrentPager = 1;
+    private List<MyFriendBean.ResultDataBean> firstList = new ArrayList<>();
+    private FriendAdapter friendAdapter;
 
     @Override
     protected void initToolBar() {
@@ -82,7 +91,9 @@ public class MyFriendActivity extends BaseActivity {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishRefresh();
+                CurrentPager = 1;
+                initDatas();
+                refreshLayout.finishRefresh(2000);
             }
         });
 
@@ -90,7 +101,13 @@ public class MyFriendActivity extends BaseActivity {
        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
            @Override
            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-               smartRefreshLayout.finishLoadMore();
+               if (CurrentPager < AllPager) {
+                   CurrentPager++;
+                   initDatas();
+                   refreshLayout.finishLoadMore(2000);
+               } else {
+                   refreshLayout.finishLoadMore();
+               }
            }
         });
 
@@ -104,16 +121,19 @@ public class MyFriendActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        initDatas();
+    }
+
+    private void initDatas() {
         Log.i("song", "进入我的好友");
         String token = PreManager.instance().getString("token");
         Log.i("song", "进入我的好友token"+token);
-        request = NoHttp.createJsonObjectRequest(AppUrl.MyFriendUrl, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.MyFriendUrl+CurrentPager, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("pageNum", page);
         request.add("token", token);
         mQueue.add(1, request, responseListener);
     }
-
 
 
     private MyWaitDialog myWaitDialog;
@@ -131,6 +151,8 @@ public class MyFriendActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(MyFriendActivity.this,response.get().toString());
+
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -139,16 +161,17 @@ public class MyFriendActivity extends BaseActivity {
                     if(loginBean.getResultCode().equals("999999")){
                         if(loginBean.getResultData()!=null && loginBean.getResultData().size()>0){
                             llNoData.setVisibility(View.GONE);
-                            smartRefreshLayout.setVisibility(View.VISIBLE);
-                            FriendAdapter friendAdapter=new FriendAdapter(loginBean.getResultData(),MyFriendActivity.this);
-                            recyclerView.setAdapter(friendAdapter);
+                            List<MyFriendBean.ResultDataBean> resultData = loginBean.getResultData();
+                            AllPager = loginBean.getPages();
+                            if (1 == CurrentPager) {
+                                firstList.clear();
+                            }
+                            firstList.addAll(resultData);
+                            friendAdapter.notifyDataSetChanged();
                         }else{
                             llNoData.setVisibility(View.VISIBLE);
-                            smartRefreshLayout.setVisibility(View.GONE);
                         }
-
                     }else{
-
                     }
                    // FriendAdapter  friendAdapter=new FriendAdapter();
                     break;
@@ -167,20 +190,17 @@ public class MyFriendActivity extends BaseActivity {
         }
     };
 
-
-
-
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        initViews();
+    }
+
+    private void initViews() {
+        friendAdapter = new FriendAdapter(firstList,MyFriendActivity.this);
+        recyclerView.setAdapter(friendAdapter);
     }
 
     @OnClick({R.id.rl_back, R.id.tv_title})

@@ -17,6 +17,7 @@ import com.shell.Bean.EmailCodeBean;
 import com.shell.Bean.RegisterBean;
 import com.shell.R;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -54,7 +55,6 @@ public class ForgetActivity extends BaseActivity {
     @BindView(R.id.btn_change)
     Button btnChange;
     private TimeCount mTiemTimeCount;
-    private String emailCode;
     private String inputEmail;
     private String firstPwd;
 
@@ -108,7 +108,7 @@ public class ForgetActivity extends BaseActivity {
             case R.id.tv_Code:
                 inputEmail = etAccount.getText().toString().trim();
                 if(TextUtils.isEmpty(inputEmail)) {
-                    Toast.makeText(this,"请输入邮箱",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this,"请输入邮箱",Toast.LENGTH_SHORT).show();
                 }else{
                     mTiemTimeCount.start();
                     request = NoHttp.createJsonObjectRequest(AppUrl.ForgetCode, RequestMethod.POST);
@@ -119,11 +119,11 @@ public class ForgetActivity extends BaseActivity {
             case R.id.btn_change:
                 firstPwd = etPwd.getText().toString().trim();
                 String agianPwd=etAgianpwd.getText().toString().trim();
-                if(TextUtils.isEmpty(firstPwd) || TextUtils.isEmpty(agianPwd)){
-                    Toast.makeText(this,"密码不能为空",Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(firstPwd) || TextUtils.isEmpty(agianPwd)|| TextUtils.isEmpty(etCode.getText().toString())){
+                   // Toast.makeText(this,"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
                     if(!firstPwd.equals(agianPwd)){
-                        Toast.makeText(this,"两次密码输入不一致",Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(this,"两次密码输入不一致",Toast.LENGTH_SHORT).show();
                     }else{
                         goToChange();
                     }
@@ -136,7 +136,7 @@ public class ForgetActivity extends BaseActivity {
     private void goToChange() {
         request = NoHttp.createJsonObjectRequest(AppUrl.ResetCode, RequestMethod.POST);
         request.add("email", inputEmail);
-        request.add("veriCode", emailCode);
+        request.add("veriCode", etCode.getText().toString());
         request.add("newPassword", firstPwd);
         mQueue.add(2, request, responseListener);
     }
@@ -157,13 +157,14 @@ public class ForgetActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(ForgetActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
                     Log.i("song", "忘记密码短信验证码" + String.valueOf(response));
                     EmailCodeBean emailCodeBean = gson.fromJson(response.get().toString(), EmailCodeBean.class);
                     if(emailCodeBean.getResultCode().equals("999999")){
-                        emailCode = emailCodeBean.getResultData();
+
                     }
 
                     break;

@@ -25,7 +25,9 @@ import com.google.gson.Gson;
 import com.google.zxing.client.android.utils.ZXingUtils;
 import com.shell.Bean.HelpBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.utils.ImageToGallery;
@@ -128,6 +130,7 @@ public class NewHelpFriendActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(NewHelpFriendActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:

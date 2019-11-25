@@ -57,6 +57,7 @@ public class HomeUserBean {
          * modifyTime : 2019-10-21 09:32:50
          */
 
+        private String profit;
         private int id;
         private int userId;
         private Object address;
@@ -73,6 +74,32 @@ public class HomeUserBean {
         private String createTime;
         private int modifyBy;
         private String modifyTime;
+        private int level;
+        private String allHashRate;
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public String getAllHashRate() {
+            return allHashRate;
+        }
+
+        public void setAllHashRate(String allHashRate) {
+            this.allHashRate = allHashRate;
+        }
+
+        public String getProfit() {
+            return profit;
+        }
+
+        public void setProfit(String profit) {
+            this.profit = profit;
+        }
 
         public int getId() {
             return id;

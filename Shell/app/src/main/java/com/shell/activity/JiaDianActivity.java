@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shell.Bean.JieDianBean;
 import com.shell.R;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.money.Bean.CardBean;
@@ -147,6 +148,7 @@ public class JiaDianActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(JiaDianActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -154,7 +156,13 @@ public class JiaDianActivity extends BaseActivity {
                   JieDianBean jieDianBean = gson.fromJson(response.get().toString(), JieDianBean.class);
                     if(jieDianBean.getResultCode().equals("999999")) {
                          JieDianBean.ResultDataBean dataBean = jieDianBean.getResultData();
-                         tvVip.setText("Blv"+dataBean.getLevel());
+                         if (1<= dataBean.getLevel() && dataBean.getLevel() <= 4){
+                             tvVip.setText("B lv"+dataBean.getLevel());
+                         }else if (11<= dataBean.getLevel() && dataBean.getLevel() <= 15){
+                             tvVip.setText("S lv"+dataBean.getLevel()%10);
+                         }else {
+                             tvVip.setText("lv"+dataBean.getLevel());
+                         }
                          tvProgress.setText(dataBean.getBrokerComplete()+"/"+dataBean.getBrokerNeed());
                          tvSuanliValue.setText(GetTwoLetter.getTwo(dataBean.getHashRate()));
                          tvSuanli2Value.setText(GetTwoLetter.getTwo(dataBean.getAllHashRate()));

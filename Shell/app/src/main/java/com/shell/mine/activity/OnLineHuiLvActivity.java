@@ -19,8 +19,10 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.OnLineBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
 import com.shell.base.HeNanAdapter;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.adapter.FriendAdapter;
@@ -107,6 +109,7 @@ public class OnLineHuiLvActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(OnLineHuiLvActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:

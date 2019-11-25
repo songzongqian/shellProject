@@ -8,8 +8,20 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 131
-        versionName "1.3.1"
+        versionName "1.4.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86_64','x86'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "f6e53d0b993048c996588c6d", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -17,7 +29,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 
     lintOptions {
         disable 'GoogleAppIndexingWarning'
@@ -81,6 +92,8 @@ android {
         implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
         //头像控件
         implementation 'com.makeramen:roundedimageview:2.2.1'
+        compile 'cn.jiguang.sdk:jpush:3.4.0'  // 此处以JPush 3.4.0 版本为例。
+        compile 'cn.jiguang.sdk:jcore:2.1.6'  // 此处以JCore 2.1.6 版本为例。
     }
 }
 

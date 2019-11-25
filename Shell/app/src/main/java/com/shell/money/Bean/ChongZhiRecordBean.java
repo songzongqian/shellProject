@@ -102,24 +102,24 @@ public class ChongZhiRecordBean {
          */
 
         private String address;
-        private int afterBalance;
-        private int afterFreeze;
-        private int afterUseable;
-        private int beforeBalance;
-        private int beforeFreeze;
-        private int beforeUseable;
+        private String afterBalance;
+        private String afterFreeze;
+        private String afterUseable;
+        private String beforeBalance;
+        private String beforeFreeze;
+        private String beforeUseable;
         private String busiCode;
         private String coinCode;
         private String coinName;
-        private int createBy;
+        private String createBy;
         private String createTime;
-        private int id;
+        private String id;
         private String isDeleted;
-        private int operateAmount;
+        private String operateAmount;
         private String status;
-        private int userId;
-        private int version;
-        private int walletId;
+        private String userId;
+        private String version;
+        private String walletId;
 
         public String getAddress() {
             return address;
@@ -129,51 +129,51 @@ public class ChongZhiRecordBean {
             this.address = address;
         }
 
-        public int getAfterBalance() {
+        public String getAfterBalance() {
             return afterBalance;
         }
 
-        public void setAfterBalance(int afterBalance) {
+        public void setAfterBalance(String afterBalance) {
             this.afterBalance = afterBalance;
         }
 
-        public int getAfterFreeze() {
+        public String getAfterFreeze() {
             return afterFreeze;
         }
 
-        public void setAfterFreeze(int afterFreeze) {
+        public void setAfterFreeze(String afterFreeze) {
             this.afterFreeze = afterFreeze;
         }
 
-        public int getAfterUseable() {
+        public String getAfterUseable() {
             return afterUseable;
         }
 
-        public void setAfterUseable(int afterUseable) {
+        public void setAfterUseable(String afterUseable) {
             this.afterUseable = afterUseable;
         }
 
-        public int getBeforeBalance() {
+        public String getBeforeBalance() {
             return beforeBalance;
         }
 
-        public void setBeforeBalance(int beforeBalance) {
+        public void setBeforeBalance(String beforeBalance) {
             this.beforeBalance = beforeBalance;
         }
 
-        public int getBeforeFreeze() {
+        public String getBeforeFreeze() {
             return beforeFreeze;
         }
 
-        public void setBeforeFreeze(int beforeFreeze) {
+        public void setBeforeFreeze(String beforeFreeze) {
             this.beforeFreeze = beforeFreeze;
         }
 
-        public int getBeforeUseable() {
+        public String getBeforeUseable() {
             return beforeUseable;
         }
 
-        public void setBeforeUseable(int beforeUseable) {
+        public void setBeforeUseable(String beforeUseable) {
             this.beforeUseable = beforeUseable;
         }
 
@@ -201,11 +201,11 @@ public class ChongZhiRecordBean {
             this.coinName = coinName;
         }
 
-        public int getCreateBy() {
+        public String getCreateBy() {
             return createBy;
         }
 
-        public void setCreateBy(int createBy) {
+        public void setCreateBy(String createBy) {
             this.createBy = createBy;
         }
 
@@ -217,11 +217,11 @@ public class ChongZhiRecordBean {
             this.createTime = createTime;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -233,11 +233,11 @@ public class ChongZhiRecordBean {
             this.isDeleted = isDeleted;
         }
 
-        public int getOperateAmount() {
+        public String getOperateAmount() {
             return operateAmount;
         }
 
-        public void setOperateAmount(int operateAmount) {
+        public void setOperateAmount(String operateAmount) {
             this.operateAmount = operateAmount;
         }
 
@@ -249,27 +249,27 @@ public class ChongZhiRecordBean {
             this.status = status;
         }
 
-        public int getUserId() {
+        public String getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(String userId) {
             this.userId = userId;
         }
 
-        public int getVersion() {
+        public String getVersion() {
             return version;
         }
 
-        public void setVersion(int version) {
+        public void setVersion(String version) {
             this.version = version;
         }
 
-        public int getWalletId() {
+        public String getWalletId() {
             return walletId;
         }
 
-        public void setWalletId(int walletId) {
+        public void setWalletId(String walletId) {
             this.walletId = walletId;
         }
     }

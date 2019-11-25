@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -19,16 +20,16 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
-import com.shell.Bean.HistoryShouYiBean;
+
 import com.shell.R;
-import com.shell.activity.HistoryAdapter;
-import com.shell.activity.MyShouYiActivity;
+
 import com.shell.base.BaseActivity;
-import com.shell.base.TodayShouBean;
+
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.home.Bean.SuanAllBean;
-import com.shell.utils.GetTwoLetter;
+
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -46,15 +47,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import lecho.lib.hellocharts.gesture.ZoomType;
-import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.view.LineChartView;
+
 
 public class SuanChartActivity extends BaseActivity {
 
@@ -118,13 +111,13 @@ public class SuanChartActivity extends BaseActivity {
         chart.setDrawGridBackground(false);
         chart.setMaxHighlightDistance(300);
         // create marker to display box when values are selected
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view,dataText,data);
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view, dataText, data);
 
         // Set the marker to the chart
         mv.setChartView(chart);
         chart.setMarker(mv);
 
-        ValueFormatter xAxisFormatter = new DayAxisValueFormatter(chart,data);
+        ValueFormatter xAxisFormatter = new DayAxisValueFormatter(chart, data);
 
         XAxis x = chart.getXAxis();
         x.setTextColor(Color.rgb(36, 72, 110));
@@ -141,7 +134,7 @@ public class SuanChartActivity extends BaseActivity {
 
         YAxis y = chart.getAxisLeft();
         y.setTextSize(12f);
-        y.setLabelCount(6, false);
+      //  y.setLabelCount(6, false);
         y.setTextColor(Color.rgb(36, 72, 110));
         y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);//YAxis.YAxisLabelPosition.INSIDE_CHART
         y.setZeroLineColor(Color.rgb(36, 72, 110));
@@ -150,19 +143,20 @@ public class SuanChartActivity extends BaseActivity {
         y.setDrawAxisLine(false);//坐标轴的线是否绘制
         y.setDrawGridLines(true);//是否绘制中间的提示线
         y.enableGridDashedLine(10f, 10f, 0f);//虚线
-        y.setLabelCount(11);
-
+        y.setLabelCount(9,true);
+        y.setAxisMinimum(0f); // start at zero
+        y.setAxisMaximum(2f); // the axis maximum is 100
 
         chart.getAxisRight().setEnabled(false);
 
 
         chart.getLegend().setEnabled(false);
 
-        chart.animateXY(2000, 2000);
+        //chart.animateXY(2000, 2000);
 
-
-        setData(dataText.size(),dataText.size());
-
+        chart.animateX(400, Easing.EaseInOutCirc);
+      //  chart.setViewPortOffsets(0, top, right, bottom)
+        setData(dataText.size(), dataText.size());
 
         List<ILineDataSet> sets = chart.getData().getDataSets();
 
@@ -183,6 +177,8 @@ public class SuanChartActivity extends BaseActivity {
             set.setCircleRadius(4f);//点外圈的半径
             set.setCircleHoleRadius(2.5f);//点里面的半径
             set.setHighLightColor(Color.TRANSPARENT);
+            set.setDrawFilled(true);
+            set.setFillDrawable(getResources().getDrawable(R.drawable.line_gradient_bg_shape));
             //  set.setHighlightEnabled(false);
 //            set.setFillAlpha(100);//覆盖物透明度
         }
@@ -190,6 +186,7 @@ public class SuanChartActivity extends BaseActivity {
         // don't forget to refresh the drawing
         chart.invalidate();
     }
+
     private void setData(int count, float range) {
 
         ArrayList<Entry> values = new ArrayList<>();
@@ -222,6 +219,10 @@ public class SuanChartActivity extends BaseActivity {
             set1.setFillColor(Color.WHITE);
             set1.setFillAlpha(100);
             set1.setDrawHorizontalHighlightIndicator(false);
+            set1.setDrawFilled(true);
+            set1.setFillDrawable(getResources().getDrawable(R.drawable.line_gradient_bg_shape));
+
+
             set1.setFillFormatter(new IFillFormatter() {
                 @Override
                 public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
@@ -238,6 +239,7 @@ public class SuanChartActivity extends BaseActivity {
             chart.setData(data);
         }
     }
+
     @Override
     protected void setListener() {
 
@@ -269,6 +271,7 @@ public class SuanChartActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(SuanChartActivity.this, response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:

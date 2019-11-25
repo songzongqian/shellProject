@@ -1,7 +1,10 @@
 package com.shell.money.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,11 +21,18 @@ import android.widget.Toast;
 
 import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
+import com.laojiang.imagepickers.ImagePicker;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.shell.Bean.QingSuanDescBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
+import com.shell.mine.activity.JiaoYiActivity;
+import com.shell.money.Bean.ZhiYaBean;
+import com.shell.utils.FileUtils;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -32,6 +42,8 @@ import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,8 +63,9 @@ public class QingSuanActivity extends BaseActivity {
     @BindView(R.id.btn_qingsuan)
     Button btnQingsuan;
     @BindView(R.id.checkBox)
-    CheckBox checkBox;
+    ImageView checkBox;
     private PopupWindow pwdWindow;
+    private boolean isChecked;
 
     @Override
     protected void initToolBar() {
@@ -110,6 +123,7 @@ public class QingSuanActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(QingSuanActivity.this, response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -124,7 +138,12 @@ public class QingSuanActivity extends BaseActivity {
                     break;
                 case 2:
                     Log.i("song", "开始清算的返回值" + String.valueOf(response));
-                    // ZhiYaBean zhiYaBean = gson.fromJson(response.get().toString(), ZhiYaBean.class);
+                    ZhiYaBean zhiYaBean = gson.fromJson(response.get().toString(), ZhiYaBean.class);
+                    if ("999999".equals(zhiYaBean.getResultCode())) {
+                        showSuccess();
+                    } else {
+                        showToast(zhiYaBean.getResultDesc());
+                    }
                     break;
             }
         }
@@ -148,17 +167,32 @@ public class QingSuanActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.rl_back, R.id.btn_qingsuan})
+    @OnClick({R.id.rl_back, R.id.checkBox, R.id.btn_qingsuan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
                 finish();
                 break;
-            case R.id.btn_qingsuan:
-                if (checkBox.isChecked()) {
-                    showPopuwindow();
+            case R.id.checkBox:
+                if (isChecked) {
+                    checkBox.setImageResource(R.mipmap.checkbox_false);
+                    isChecked = false;
                 } else {
-                    Toast.makeText(QingSuanActivity.this, "请勾选我已知晓选项", Toast.LENGTH_SHORT).show();
+                    checkBox.setImageResource(R.mipmap.checkbox_true);
+                    isChecked = true;
+                }
+                break;
+            case R.id.btn_qingsuan:
+                if (isChecked) {
+                    Boolean aBoolean = PreManager.instance().getBoolean(AppUrl.isSetPayPwd);
+                    if (aBoolean) {
+                        showPopuwindow();
+                    } else {
+                        gotosetPayPwd();
+                    }
+
+                } else {
+                    Toast.makeText(QingSuanActivity.this, getString(R.string.please_check_option), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -225,13 +259,24 @@ public class QingSuanActivity extends BaseActivity {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String token = PreManager.instance().getString("token");
-                String inputPwd = editText.getText().toString().trim();
-                request = NoHttp.createJsonObjectRequest(AppUrl.QingSuanURL, RequestMethod.POST);
-                request.addHeader("token", token);
-                request.add("token", token);
-                request.add("payPassword", inputPwd);
-                mQueue.add(2, request, responseListener);
+                Boolean aBoolean = PreManager.instance().getBoolean(AppUrl.isSetPayPwd);
+                if (aBoolean) {
+                    String token = PreManager.instance().getString("token");
+                    String inputPwd = editText.getText().toString().trim();
+                    if (TextUtils.isEmpty(inputPwd)) {
+                        return;
+                    }
+                    request = NoHttp.createJsonObjectRequest(AppUrl.QingSuanURL, RequestMethod.POST);
+                    request.addHeader("token", token);
+                    request.add("token", token);
+                    request.add("payPassword", inputPwd);
+                    mQueue.add(2, request, responseListener);
+                    pwdWindow.dismiss();
+                } else {
+                    Intent intent = new Intent(QingSuanActivity.this, JiaoYiActivity.class);
+                    startActivityForResult(intent, 10001);
+                }
+
             }
         });
 
@@ -255,5 +300,48 @@ public class QingSuanActivity extends BaseActivity {
         lp.alpha = bgAlpha;
         this.getWindow().setAttributes(lp);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
+    private void gotosetPayPwd() {
+        View inflate = LayoutInflater.from(QingSuanActivity.this).inflate(R.layout.popuwindow_set_pay_pwd, null, false);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView tvTitle = inflate.findViewById(R.id.tv_title);
+        TextView tvContent = inflate.findViewById(R.id.tv_content);
+        TextView tvOk = inflate.findViewById(R.id.tv_OK);
+
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QingSuanActivity.this, JiaoYiActivity.class);
+                startActivity(intent);
+                window.dismiss();
+            }
+        });
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(QingSuanActivity.this).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10001) {
+            if (null != data) {
+
+                // String result = data.getStringExtra("result");
+                // if ("OK")
+            }
+
+        }
+
     }
 }

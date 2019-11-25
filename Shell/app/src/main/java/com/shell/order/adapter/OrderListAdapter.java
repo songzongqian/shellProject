@@ -2,6 +2,8 @@ package com.shell.order.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SyncAdapterType;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,17 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.shell.R;
 import com.shell.mine.activity.MyFriendActivity;
 import com.shell.mine.activity.MyFriendBean;
 import com.shell.order.activity.OrderListActivity;
 import com.shell.order.activity.UnFinishDetailActivity;
 import com.shell.order.bean.OrderListBean;
-import com.shell.utils.GetWillTime;
+import com.shell.utils.GetTwoLetter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,61 +32,73 @@ public class OrderListAdapter extends RecyclerView.Adapter {
     List<OrderListBean.ResultDataBean> list;
 
     public OrderListAdapter(List<OrderListBean.ResultDataBean> resultData, OrderListActivity orderListActivity) {
-       this.context=orderListActivity;
-       this.list=resultData;
+        this.context = orderListActivity;
+        this.list = resultData;
     }
 
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_order_list, null,false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.item_order_list, null, false);
         return new MyViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        MyViewHolder holder= (MyViewHolder) viewHolder;
-        OrderListBean.ResultDataBean dataBean = list.get(position);
-        holder.tvOrderName.setText(dataBean.getOrderCurrency()+":"+dataBean.getOrderAmount());
-        holder.tvOrderAddress.setText(dataBean.getTargetAddress());
+        MyViewHolder holder = (MyViewHolder) viewHolder;
+        final OrderListBean.ResultDataBean dataBean = list.get(position);
+        holder.tvOrderName.setText(dataBean.getOrderCurrency() + ":" + dataBean.getOrderAmount());
+        holder.tvOrderAddress.setText(context.getString(R.string.address) + dataBean.getTargetAddress());
         String status = dataBean.getStatus();
-        if(status.equals("10")){
+        if (status.equals("10")) {
             holder.orderStatue.setText(context.getString(R.string.untreated));
-        }else if(status.equals("20")){
+            holder.orderStatue.setTextColor(Color.parseColor("#F4376D"));
+            holder.orderStatue.setBackgroundResource(R.drawable.red_bg_line);
+        } else if (status.equals("20")) {
             holder.orderStatue.setText(context.getString(R.string.Have_to_dealwith));
-        }
-        String createTime = dataBean.getCreateTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date strtodate = formatter.parse(createTime);
-            String timeFormatText = GetWillTime.getTimeFormatText(strtodate);
-            String substring = timeFormatText.substring(0, timeFormatText.length() - 1);
-            if(timeFormatText.contains("d")){
-                holder.tvClockTime.setText(substring+context.getString(R.string.df)); 
-
-            }else if(timeFormatText.contains("h")){
-                holder.tvClockTime.setText(substring+context.getString(R.string.hf));
-
-            }else if(timeFormatText.contains("m")){
-                holder.tvClockTime.setText(substring+context.getString(R.string.mf));
-
-            }else if(timeFormatText.contains("g")){
-                holder.tvClockTime.setText(R.string.gg);
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
+            holder.orderStatue.setTextColor(Color.parseColor("#65DFFE"));
+            holder.orderStatue.setBackgroundResource(R.drawable.bule_bg_line);
+        } else if ("30".equals(status)) {
+            holder.orderStatue.setText(context.getString(R.string.has_been_settled));
+            holder.orderStatue.setTextColor(Color.parseColor("#64E3AE"));
+            holder.orderStatue.setBackgroundResource(R.drawable.green_bg_line);
+        } else if ("40".equals(status)) {
+            holder.orderStatue.setText(context.getString(R.string.has_been_cancelled));
+            holder.orderStatue.setTextColor(Color.parseColor("#8D99B2"));
+            holder.orderStatue.setBackgroundResource(R.drawable.gray_bg_line);
         }
 
 
+        //信用等级
 
+        if (0 == dataBean.getAwardScore()){
+            holder.xinyongGradle.setImageResource(R.mipmap.xinyong_zero);
+        }else  if (1 == dataBean.getAwardScore()){
+            holder.xinyongGradle.setImageResource(R.mipmap.xinyong_one);
+        }else  if (2 == dataBean.getAwardScore()){
+            holder.xinyongGradle.setImageResource(R.mipmap.xinyong_second);
+        }else  if (3 == dataBean.getAwardScore()){
+            holder.xinyongGradle.setImageResource(R.mipmap.xinyong_three);
+        }else {
+            holder.xinyongGradle.setImageResource(R.mipmap.xinyong_zero);
+        }
+
+
+        if ("out".equals(dataBean.getType())) {
+            holder.ivPic.setImageResource(R.mipmap.money_name_red);
+        } else {
+            holder.ivPic.setImageResource(R.mipmap.money_name);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, UnFinishDetailActivity.class);
-                intent.putExtra("orderId",list.get(position).getId());
-                intent.putExtra("orderStatue",list.get(position).getStatus());
+                if("40".equals(dataBean.getStatus())){
+                    return;
+                }
+                Intent intent = new Intent(context, UnFinishDetailActivity.class);
+                intent.putExtra("orderId", list.get(position).getId());
+                intent.putExtra("orderStatue", list.get(position).getStatus());
                 context.startActivity(intent);
             }
         });
@@ -98,15 +110,15 @@ public class OrderListAdapter extends RecyclerView.Adapter {
     }
 
 
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
 
-
-        private final ImageView ivPic;
+        private final RoundedImageView ivPic;
         private final TextView tvOrderName;
         private final TextView tvOrderAddress;
+
+        private ImageView xinyongGradle;
         private final TextView orderStatue;
-        private final TextView tvClockTime;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,7 +126,7 @@ public class OrderListAdapter extends RecyclerView.Adapter {
             tvOrderName = itemView.findViewById(R.id.tv_orderCount);
             tvOrderAddress = itemView.findViewById(R.id.orderAddress);
             orderStatue = itemView.findViewById(R.id.tv_orderStatue);
-            tvClockTime = itemView.findViewById(R.id.tv_clockTime);
+            xinyongGradle = itemView.findViewById(R.id.xinyong_gradle);
         }
     }
 }

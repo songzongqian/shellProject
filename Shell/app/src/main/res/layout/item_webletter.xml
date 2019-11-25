@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_15"
+    android:paddingRight="@dimen/dp_15"
     android:orientation="vertical"
     android:background="#061D34"
     android:id="@+id/rootView">
@@ -14,7 +16,6 @@
         android:layout_height="wrap_content"
         android:text="这里是站内信标题"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
         android:textColor="#FFFFFF"
         android:textSize="14sp"/>
 
@@ -25,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="2019-7-31 9:28:59"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="@dimen/dp_15"
         android:textColor="#8D99B2"
         android:textSize="14sp"/>
 
@@ -38,9 +39,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="14dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/line_ju" />
 
         <TextView
@@ -50,17 +49,11 @@
             android:text="2019-点击标题展开的这就是内容点击标题展开的这就是内容点击标题
 展开的这就是内容点击标题展开的这就是内容......-31 9:28:59"
             android:layout_marginTop="12dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginBottom="22dp"
             android:textColor="#8D99B2"
             android:textSize="12sp"/>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-       android:background="#04172A"/>
 
 
 </LinearLayout>

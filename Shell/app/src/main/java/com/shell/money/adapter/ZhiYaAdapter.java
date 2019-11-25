@@ -65,10 +65,10 @@ public class ZhiYaAdapter extends BaseAdapter {
         viewHolder.tvName.setText(zhiYaItemBean.getTvContent()+"USDT");
 
         if (selectedId  == position) {
-           viewHolder.tvName.setBackgroundColor(Color.parseColor("#4AB2E7"));
+           viewHolder.tvName.setBackgroundResource(R.drawable.zhiya_item_select);
             viewHolder.tvName.setTextColor(Color.parseColor("#FFFFFF"));
         } else {
-            viewHolder.tvName.setBackgroundColor(Color.parseColor("#0D3354"));
+            viewHolder.tvName.setBackgroundResource(R.drawable.zhiya_item_no_select);
             viewHolder.tvName.setTextColor(Color.parseColor("#678DA8"));
         }
         return convertView;

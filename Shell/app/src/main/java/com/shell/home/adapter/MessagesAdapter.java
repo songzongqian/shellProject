@@ -1,22 +1,19 @@
 package com.shell.home.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-import com.laojiang.imagepickers.utils.DateUtil;
 import com.shell.R;
 import com.shell.home.Bean.JiangLiBean;
+import com.shell.utils.GetTwoLetter;
+import com.shell.utils.StringUtils;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +25,7 @@ import butterknife.ButterKnife;
  * E-Mail:811832241@qq.com
  */
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
+
 
     private Activity activity;
     private List<JiangLiBean.ResultDataBean> data;
@@ -47,7 +45,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if (null != data) {
-          //  viewHolder.one2.setText(data.get(i));
+            String amount = data.get(i).getAmount();
+            viewHolder.tvNum.setText("+"+GetTwoLetter.getFour(amount)+" USDT");
+            String createTime = data.get(i).getCreateTime();
+            String time = StringUtils.getTime(activity,new Date(Long.parseLong(StringUtils.date2TimeStamp(createTime) + "000")));
+            viewHolder.tvTime.setText(time);
         }
     }
 
@@ -57,9 +59,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.one2)
-        TextView one2;
+        @BindView(R.id.tv_num)
+        TextView tvNum;
+        @BindView(R.id.tv_time)
+        TextView tvTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

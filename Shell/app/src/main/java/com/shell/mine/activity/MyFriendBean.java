@@ -88,18 +88,54 @@ public class MyFriendBean {
          * userId : 9
          */
 
-        private int creditScore;
+        private String creditScore;
         private String email;
-        private int hashRate;
-        private int invitedCount;
+        private String hashRate;
+        private String invitedCount;
         private String name;
         private int userId;
+        private String portrait;
+        private String pledgeAmount;
+        private String showLevel;
+        private int level;
 
-        public int getCreditScore() {
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public String getShowLevel() {
+            return showLevel;
+        }
+
+        public void setShowLevel(String showLevel) {
+            this.showLevel = showLevel;
+        }
+
+        public String getPledgeAmount() {
+            return pledgeAmount;
+        }
+
+        public void setPledgeAmount(String pledgeAmount) {
+            this.pledgeAmount = pledgeAmount;
+        }
+
+        public String getPortrait() {
+            return portrait;
+        }
+
+        public void setPortrait(String portrait) {
+            this.portrait = portrait;
+        }
+
+        public String getCreditScore() {
             return creditScore;
         }
 
-        public void setCreditScore(int creditScore) {
+        public void setCreditScore(String creditScore) {
             this.creditScore = creditScore;
         }
 
@@ -111,19 +147,19 @@ public class MyFriendBean {
             this.email = email;
         }
 
-        public int getHashRate() {
+        public String getHashRate() {
             return hashRate;
         }
 
-        public void setHashRate(int hashRate) {
+        public void setHashRate(String hashRate) {
             this.hashRate = hashRate;
         }
 
-        public int getInvitedCount() {
+        public String getInvitedCount() {
             return invitedCount;
         }
 
-        public void setInvitedCount(int invitedCount) {
+        public void setInvitedCount(String invitedCount) {
             this.invitedCount = invitedCount;
         }
 

@@ -1,6 +1,7 @@
 package com.shell.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -9,10 +10,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.HistoryShouYiBean;
+import com.shell.Bean.LetterBean;
 import com.shell.R;
 import com.shell.base.BaseActivity;
 import com.shell.base.TodayShouBean;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.money.Bean.CardBean;
@@ -29,6 +35,7 @@ import com.yanzhenjie.nohttp.rest.Response;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,6 +78,10 @@ public class MyShouYiActivity extends BaseActivity {
     ListView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    private int AllPager = 0;
+    private int CurrentPager = 1;
+    private List<HistoryShouYiBean.ResultDataBean> firstList = new ArrayList<>();
+    private HistoryAdapter historyAdapter;
 
     @Override
     protected void initToolBar() {
@@ -103,8 +114,6 @@ public class MyShouYiActivity extends BaseActivity {
     protected void initData() {
         getUnderList();
         getTop();
-
-
     }
 
 
@@ -119,7 +128,7 @@ public class MyShouYiActivity extends BaseActivity {
 
     private void getUnderList() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.getHistoryShouYi, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.getHistoryShouYi+CurrentPager, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("token", token);
         mQueue.add(2, request, responseListener);
@@ -142,6 +151,7 @@ public class MyShouYiActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(MyShouYiActivity.this,response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -163,8 +173,13 @@ public class MyShouYiActivity extends BaseActivity {
                     String code = historyShouYiBean.getResultCode();
                     if(code.equals("999999")){
                         List<HistoryShouYiBean.ResultDataBean> historyList = historyShouYiBean.getResultData();
-                        HistoryAdapter historyAdapter=new HistoryAdapter(historyList,MyShouYiActivity.this);
-                        listView.setAdapter(historyAdapter);
+
+                        AllPager = historyShouYiBean.getPages();
+                        if (1 == CurrentPager) {
+                            firstList.clear();
+                        }
+                        firstList.addAll(historyList);
+                        historyAdapter.notifyDataSetChanged();
                     }
 
                     break;
@@ -187,28 +202,40 @@ public class MyShouYiActivity extends BaseActivity {
         }
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        initViews();
+    }
+
+    private void initViews() {
+
+        historyAdapter = new HistoryAdapter(firstList,MyShouYiActivity.this);
+        listView.setAdapter(historyAdapter);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                CurrentPager = 1;
+                getUnderList();
+                refreshLayout.finishRefresh(2000);
+            }
+        });
+
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (CurrentPager < AllPager) {
+                    CurrentPager++;
+                    getUnderList();
+                    refreshLayout.finishLoadMore(2000);
+                } else {
+                    refreshLayout.finishLoadMore();
+                }
+            }
+        });
     }
 
     @OnClick({R.id.rl_back, R.id.tv_title})

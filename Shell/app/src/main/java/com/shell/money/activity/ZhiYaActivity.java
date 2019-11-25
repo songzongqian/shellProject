@@ -1,8 +1,10 @@
 package com.shell.money.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,14 +29,19 @@ import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
 import com.shell.Bean.ZhiYaItemBean;
 import com.shell.R;
+import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
+import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
+import com.shell.dialog.MilestoneDialogFragment;
 import com.shell.dialog.MyWaitDialog;
+import com.shell.mine.activity.JiaoYiActivity;
 import com.shell.money.Bean.ZhiYaBean;
 import com.shell.money.Bean.ZhiYaResultBean;
 import com.shell.money.Bean.ZhiYaScoreBean;
 import com.shell.money.adapter.ZhiYaAdapter;
 import com.shell.money.adapter.ZhiYaScoreAdapter;
+import com.shell.utils.GetTwoLetter;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -73,15 +81,22 @@ public class ZhiYaActivity extends BaseActivity {
     EditText etAmount;
     @BindView(R.id.btn_zhiya)
     Button btnZhiya;
+    @BindView(R.id.text_one)
+    TextView textOne;
+    @BindView(R.id.text_twe)
+    TextView textTwe;
+    @BindView(R.id.text_three)
+    TextView textThree;
+    @BindView(R.id.zhiya_parent_linnear)
+    LinearLayout zhiya_parent_linnear;
     List<ZhiYaItemBean> titleList = new ArrayList<>();
     private ZhiYaAdapter zhiYaAdapter;
     private List<ZhiYaScoreBean.ResultDataBean> zhiyaScoreFirst;
-    private String inputPwd;
-    private String tvAmount;
-    private float inputCount;
     private PopupWindow pwdWindow;
     int flag = 0;
-
+    private String clicktvContent;
+    private ZhiYaBean zhiYaBean;
+    String reuqestNumber = "";
 
     @Override
     protected void initToolBar() {
@@ -102,8 +117,17 @@ public class ZhiYaActivity extends BaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.or_zhiya));
-        tvRightTitle.setText(getString(R.string.The_pledge_rights));
+        tvRightTitle.setText(getString(R.string.Benefits_that));
         tvRightTitle.setVisibility(View.VISIBLE);
+        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    flag=2;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -124,13 +148,13 @@ public class ZhiYaActivity extends BaseActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                flag = 0;
-                btnOther.setBackgroundColor(Color.parseColor("#0D3354"));
+                flag = 1;
+                btnOther.setBackgroundResource(R.drawable.zhiya_item_no_select);
                 zhiYaAdapter.setSelectedId(position);
                 zhiYaAdapter.notifyDataSetInvalidated();
                 ZhiYaItemBean zhiYaItemBean = titleList.get(position);
-                tvAmount = zhiYaItemBean.getTvContent();
-                Log.i("song", "用户点击的条目的数据" + tvAmount);
+                clicktvContent = zhiYaItemBean.getTvContent();
+
             }
         });
     }
@@ -169,13 +193,18 @@ public class ZhiYaActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
+            LogonFailureUtil.gotoLoginActiviy(ZhiYaActivity.this, response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
                     Log.i("song", "质押信息的页面返回值" + String.valueOf(response));
-                    ZhiYaBean zhiYaBean = gson.fromJson(response.get().toString(), ZhiYaBean.class);
+                    zhiYaBean = gson.fromJson(response.get().toString(), ZhiYaBean.class);
                     String resultCode = zhiYaBean.getResultCode();
                     if (resultCode.equals("999999")) {
+                        int floor = (int) Math.floor(zhiYaBean.getResultData().getCreditScore());
+                        textOne.setText(String.valueOf(floor));
+                        textTwe.setText(GetTwoLetter.getTwo(zhiYaBean.getResultData().getPledged()) + " USDT");
+                        textThree.setText(GetTwoLetter.getTwo(zhiYaBean.getResultData().getMaxAllowed()) + " USDT");
                         if (titleList != null) {
                             titleList.clear();
                         }
@@ -203,7 +232,6 @@ public class ZhiYaActivity extends BaseActivity {
                     ZhiYaScoreBean zhiYaScoreBean = gson.fromJson(response.get().toString(), ZhiYaScoreBean.class);
                     if (zhiYaScoreBean.getResultCode().equalsIgnoreCase("999999")) {
                         zhiyaScoreFirst = zhiYaScoreBean.getResultData();
-
                     }
                     break;
 
@@ -218,7 +246,7 @@ public class ZhiYaActivity extends BaseActivity {
                         etAmount.requestFocus();
                         etAmount.setFocusable(true);
                         etAmount.setFocusableInTouchMode(true);
-
+                        finish();
                     } else {
                         pwdWindow.dismiss();
                         Toast.makeText(ZhiYaActivity.this, resultDesc, Toast.LENGTH_SHORT).show();
@@ -258,15 +286,23 @@ public class ZhiYaActivity extends BaseActivity {
                 break;
             case R.id.btn_other:
                 //点击其他
-                flag = 1;
-                tvAmount = "";
+                flag = 2;
                 zhiYaAdapter.setSelectedId(-1);
                 zhiYaAdapter.notifyDataSetInvalidated();
-                btnOther.setBackgroundColor(Color.parseColor("#4AB2E7"));
+                btnOther.setBackgroundResource(R.drawable.zhiya_item_select);
+                etAmount.setText(GetTwoLetter.getTwo(String.valueOf(zhiYaBean.getResultData().getAllowed())));
                 break;
             case R.id.btn_zhiya:
-                etAmount.setFocusable(false);
-                showPopuwindow();
+                Boolean aBoolean = PreManager.instance().getBoolean(AppUrl.isSetPayPwd);
+                if (aBoolean) {
+                    etAmount.setFocusable(false);
+                    showPopuwindow();
+                /*   MilestoneDialogFragment fragment = new MilestoneDialogFragment();
+                    fragment.show(getSupportFragmentManager(),"");*/
+                } else {
+                    gotosetPayPwd();
+                }
+
                 break;
             case R.id.tv_rightTitle:
                 showPopuScore();
@@ -274,6 +310,33 @@ public class ZhiYaActivity extends BaseActivity {
         }
     }
 
+    private void gotosetPayPwd() {
+        View inflate = LayoutInflater.from(ZhiYaActivity.this).inflate(R.layout.popuwindow_set_pay_pwd, null, false);
+        final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView tvTitle = inflate.findViewById(R.id.tv_title);
+        TextView tvContent = inflate.findViewById(R.id.tv_content);
+        TextView tvOk = inflate.findViewById(R.id.tv_OK);
+
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ZhiYaActivity.this, JiaoYiActivity.class);
+                startActivity(intent);
+                window.dismiss();
+            }
+        });
+        backgroundAlpha(0.5f);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setOutsideTouchable(true);
+        window.setTouchable(true);
+        window.showAtLocation(LayoutInflater.from(ZhiYaActivity.this).inflate(R.layout.fragment_home, null), Gravity.CENTER, 0, 0);
+    }
 
     //显示质押权益列表
     private void showPopuScore() {
@@ -322,6 +385,7 @@ public class ZhiYaActivity extends BaseActivity {
 
 
     private void showPopuwindow() {
+
         View inflate = LayoutInflater.from(this).inflate(R.layout.popu_input, null, false);
         pwdWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
@@ -331,14 +395,12 @@ public class ZhiYaActivity extends BaseActivity {
 
         final CodeInputView editText = inflate.findViewById(R.id.editText);
 
-
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pwdWindow.dismiss();
             }
         });
-
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -346,20 +408,22 @@ public class ZhiYaActivity extends BaseActivity {
                 String inputPwd = editText.getText().toString().trim();
                 //获取输入的密码
                 String token = PreManager.instance().getString("token");
-                if (flag == 0) {
-
-                } else if (flag == 1) {
-                    tvAmount = etAmount.getText().toString().trim();
+                if (0 == flag) {
+                    return;
                 }
+                if (flag == 1) {
+                    reuqestNumber = clicktvContent;
+                } else if (flag == 2) {
+                    reuqestNumber = etAmount.getText().toString().trim();
 
-                if (TextUtils.isEmpty(tvAmount)) {
-
-                } else {
-                    inputCount = Float.parseFloat(tvAmount);
                 }
+                if (TextUtils.isEmpty(reuqestNumber)) {
+                    return;
+                }
+                //  Toast.makeText(ZhiYaActivity.this,reuqestNumber,Toast.LENGTH_SHORT).show();
                 request = NoHttp.createJsonObjectRequest(AppUrl.ZhiYaDataLv, RequestMethod.POST);
                 request.addHeader("token", token);
-                request.add("amount", inputCount);
+                request.add("amount", reuqestNumber);
                 request.add("payPassword", inputPwd);
                 mQueue.add(3, request, responseListener);
             }
@@ -372,12 +436,15 @@ public class ZhiYaActivity extends BaseActivity {
             @Override
             public void onDismiss() {
                 backgroundAlpha(1.0f);
+                etAmount.requestFocus();
+                etAmount.setFocusable(true);
+                etAmount.setFocusableInTouchMode(true);
             }
         });
-        pwdWindow.setBackgroundDrawable(new BitmapDrawable());
         pwdWindow.setOutsideTouchable(true);
-        pwdWindow.setTouchable(true);
-        pwdWindow.setFocusable(true);
+       /* pwdWindow.setTouchable(true);
+        pwdWindow.setFocusable(true);*/
+        pwdWindow.setBackgroundDrawable(new BitmapDrawable());
         pwdWindow.showAtLocation(LayoutInflater.from(this).inflate(R.layout.activity_zhiya, null), Gravity.CENTER, 0, 0);
     }
 

@@ -44,24 +44,42 @@ public class ZhiYaBean {
          * pledgeAmount : 100,1000,3000,5000,10000,30000
          */
 
-        private int allowed;
-        private int creditScore;
+        private double allowed;
+        private double creditScore;
         private String descText;
         private String pledgeAmount;
+        private String maxAllowed;
+        private String pledged;
 
-        public int getAllowed() {
+        public String getMaxAllowed() {
+            return maxAllowed;
+        }
+
+        public void setMaxAllowed(String maxAllowed) {
+            this.maxAllowed = maxAllowed;
+        }
+
+        public String getPledged() {
+            return pledged;
+        }
+
+        public void setPledged(String pledged) {
+            this.pledged = pledged;
+        }
+
+        public double getAllowed() {
             return allowed;
         }
 
-        public void setAllowed(int allowed) {
+        public void setAllowed(double allowed) {
             this.allowed = allowed;
         }
 
-        public int getCreditScore() {
+        public double getCreditScore() {
             return creditScore;
         }
 
-        public void setCreditScore(int creditScore) {
+        public void setCreditScore(double creditScore) {
             this.creditScore = creditScore;
         }
 

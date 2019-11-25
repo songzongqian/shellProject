@@ -56,7 +56,7 @@
             app:ciItemWidth="40dp"
             app:ciTextSize="20sp"
             app:ciTextColor="#FFFFFF"
-            app:ciInputType="number"
+            app:ciInputType="numberPassword"
             app:ciGapWidth="20dp"
             app:ciItemCount="6"
             app:ciItemBackground="@drawable/border"/>
