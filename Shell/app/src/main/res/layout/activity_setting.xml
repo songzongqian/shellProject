@@ -92,7 +92,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_senven"
             android:text="@string/my_email"
             android:textColor="#FFFFFF"
             android:textSize="13sp" />

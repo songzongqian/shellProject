@@ -214,11 +214,11 @@
     <string name="you_have_new_order">您有新的订单</string>
 
     <string name="the_standard_currency">本位币种</string>
-    
+
     <string name="all_loaded">已经全部加载完毕</string>
     <string name="available">可用 </string>
     <string name="please_check_option">请勾选我已知晓选项</string>
-    
+
     <string name="processed">待处理</string>
     <string name="processing">处理中</string>
     <string name="successful">成功</string>

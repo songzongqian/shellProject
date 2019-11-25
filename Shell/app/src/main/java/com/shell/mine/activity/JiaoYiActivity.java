@@ -122,6 +122,7 @@ public class JiaoYiActivity extends BaseActivity {
                 inputPwd = editText.getText().toString().trim();
                 if (TextUtils.isEmpty(inputPwd)) {
                     // Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+
                 } else {
                     goToChange();
                 }

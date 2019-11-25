@@ -180,6 +180,7 @@ public class TiBiActivity extends BaseActivity {
         myBalance = getIntent().getStringExtra("myBalance");
         tvTiBiCount.setText(getString(R.string.available) + myBalance);
         getTiBiData();
+        tvTiBiCount.setText(myBalance);
     }
 
     private void getTiBiData() {

@@ -63,7 +63,7 @@ public class OrderPartAdapter extends RecyclerView.Adapter {
             holder.orderStatue.setTextColor(Color.parseColor("#8D99B2"));
             holder.orderStatue.setBackgroundResource(R.drawable.gray_bg_line);
         }
-       //信用等级
+        //信用等级
 
 
         if (0 == dataBean.getAwardScore()){
