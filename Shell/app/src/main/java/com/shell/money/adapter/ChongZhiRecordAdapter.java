@@ -1,5 +1,6 @@
 package com.shell.money.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,6 @@ import android.widget.TextView;
 
 import com.shell.R;
 import com.shell.money.Bean.ChongZhiRecordBean;
-import com.shell.money.Bean.TiBiBean;
-import com.shell.money.activity.ChongZhiActivity;
-import com.shell.money.activity.TiBiActivity;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
     private static final int TYPE_NOIMG = 1;    //   奇数
 
 
-    public ChongZhiRecordAdapter(ChongZhiActivity chongZhiActivity, List<ChongZhiRecordBean.ResultDataBean> chongZhiList) {
+    public ChongZhiRecordAdapter(Activity chongZhiActivity, List<ChongZhiRecordBean.ResultDataBean> chongZhiList) {
         this.context=chongZhiActivity;
         this.list=chongZhiList;
     }

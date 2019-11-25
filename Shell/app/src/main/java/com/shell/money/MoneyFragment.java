@@ -13,17 +13,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.shell.Bean.JieDianBean;
 import com.shell.Bean.MyInfoBean;
 import com.shell.R;
-import com.shell.activity.ForgetActivity;
 import com.shell.activity.LoginActivity;
 import com.shell.activity.MyShouYiActivity;
 import com.shell.base.BaseFragment;

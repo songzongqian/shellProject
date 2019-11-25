@@ -1,5 +1,6 @@
 package com.shell.money.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
@@ -25,7 +26,7 @@ public class TiBiRecordAdapter extends BaseAdapter {
     private static final int TYPE_NOIMG = 1;    //   奇数
 
 
-    public TiBiRecordAdapter(List<TiBiBean.ResultDataBean> firstList, TiBiActivity activity) {
+    public TiBiRecordAdapter(List<TiBiBean.ResultDataBean> firstList, Activity activity) {
         this.context=activity;
         this.list=firstList;
     }

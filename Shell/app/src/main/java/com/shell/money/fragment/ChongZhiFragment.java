@@ -1,12 +1,16 @@
-package com.shell.money.activity;
+package com.shell.money.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.ClipboardManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -15,17 +19,18 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.zxing.client.android.utils.ZXingUtils;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.ChongZhiTopBean;
 import com.shell.R;
-import com.shell.base.BaseActivity;
 import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.money.Bean.ChongZhiRecordBean;
+import com.shell.money.activity.ChongZhiActivity;
 import com.shell.money.adapter.ChongZhiRecordAdapter;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -42,22 +47,22 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.Unbinder;
 
-public class ChongZhiActivity extends BaseActivity {
+/**
+ * Created by wangjungang on 25/11/2019.
+ * E-Mail:811832241@qq.com
+ */
+public class ChongZhiFragment extends Fragment {
+
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
     @BindView(R.id.rl_copy)
     TextView rlCopy;
+    Unbinder unbinder;
     private Request<JSONObject> request;
     private int page = 1;
-    @BindView(R.id.rl_back)
-    RelativeLayout rlBack;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tv_rightTitle)
-    TextView tvRightTitle;
     @BindView(R.id.iv_qrCode)
-    ImageView ivQrCode;
+    RoundedImageView ivQrCode;
     @BindView(R.id.tv_qrContent)
     TextView tvQrContent;
     @BindView(R.id.tv_one)
@@ -75,35 +80,57 @@ public class ChongZhiActivity extends BaseActivity {
     private int CurrentPager = 1;
     private ChongZhiRecordAdapter chongZhiRecordAdapter;
     private List<ChongZhiRecordBean.ResultDataBean> firstList = new ArrayList<>();
-    @Override
-    protected void initToolBar() {
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_chongzhi_fragment, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
-    protected void initStatusBar() {
-
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+        initData();
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_chongzhi;
+    private void initView() {
+        chongZhiRecordAdapter = new ChongZhiRecordAdapter(getActivity(),firstList);
+        listView.setAdapter(chongZhiRecordAdapter);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                CurrentPager = 1;
+                getChongZhiData();
+                refreshLayout.finishRefresh(2000);
+            }
+        });
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (CurrentPager < AllPager) {
+                    CurrentPager++;
+                    getChongZhiData() ;
+                    refreshLayout.finishLoadMore(2000);
+                } else {
+                    refreshLayout.finishLoadMore();
+                }
+            }
+        });
+        rlCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager cmb1 = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                cmb1.setText(chongZhiUrl);
+                Toast.makeText(getContext(), getString(R.string.tv_hascopy), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    @Override
-    protected void initView() {
-        ButterKnife.bind(this);
-        tvTitle.setText(getString(R.string.usdtchar));
-        tvRightTitle.setVisibility(View.GONE);
-    }
 
-    @Override
-    protected void setListener() {
-
-    }
-
-    @Override
-    protected void initData() {
+    private void initData() {
         String token = PreManager.instance().getString("token");
         request = NoHttp.createJsonObjectRequest(AppUrl.GiveMoneyUrl, RequestMethod.GET);
         request.addHeader("token", token);
@@ -111,8 +138,6 @@ public class ChongZhiActivity extends BaseActivity {
         mQueue.add(1, request, responseListener);
         getChongZhiData();
     }
-
-
     //获取充值记录
     private void getChongZhiData() {
         String token = PreManager.instance().getString("token");
@@ -124,14 +149,12 @@ public class ChongZhiActivity extends BaseActivity {
         request.add("pageNum", page);
         mQueue.add(2, request, responseListener);
     }
-
-
     private MyWaitDialog myWaitDialog;
     OnResponseListener<JSONObject> responseListener = new OnResponseListener<JSONObject>() {
         @Override
         public void onStart(int what) {
             if (myWaitDialog == null) {
-                myWaitDialog = new MyWaitDialog(ChongZhiActivity.this);
+                myWaitDialog = new MyWaitDialog(getActivity());
                 myWaitDialog.show();
             } else {
                 myWaitDialog.show();
@@ -140,7 +163,7 @@ public class ChongZhiActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
-            LogonFailureUtil.gotoLoginActiviy(ChongZhiActivity.this,response.get().toString());
+            LogonFailureUtil.gotoLoginActiviy(getActivity(),response.get().toString());
             Gson gson = new Gson();
             switch (what) {
                 case 1:
@@ -184,55 +207,9 @@ public class ChongZhiActivity extends BaseActivity {
         }
     };
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-        initViews();
-    }
-
-    private void initViews() {
-        chongZhiRecordAdapter = new ChongZhiRecordAdapter(ChongZhiActivity.this,firstList);
-        listView.setAdapter(chongZhiRecordAdapter);
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                CurrentPager = 1;
-                getChongZhiData();
-                refreshLayout.finishRefresh(2000);
-            }
-        });
-        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (CurrentPager < AllPager) {
-                    CurrentPager++;
-                    getChongZhiData() ;
-                    refreshLayout.finishLoadMore(2000);
-                } else {
-                    refreshLayout.finishLoadMore();
-                }
-            }
-        });
-    }
-    @OnClick({R.id.rl_back, R.id.tv_title,R.id.rl_copy})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.rl_back:
-                finish();
-                break;
-            case R.id.tv_title:
-                break;
-
-            case R.id.rl_copy:
-                ClipboardManager cmb1 = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                cmb1.setText(chongZhiUrl);
-                Toast.makeText(ChongZhiActivity.this, getString(R.string.tv_hascopy), Toast.LENGTH_SHORT).show();
-
-
-                break;
-        }
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
