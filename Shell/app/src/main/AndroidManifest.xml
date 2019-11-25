@@ -3,21 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shell">
 
-    <uses-sdk tools:overrideLibrary="io.crossbar.autobahn" />
-    <!-- 联网权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 获取机型信息权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-
-    <!--安装APK-->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -28,93 +13,49 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <activity android:name=".money.activity.TopupWithdrawalActivity"></activity>
         <!-- Required since 3.0.7 -->
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
         <!-- 3.3.0开始所有事件将通过该类回调 -->
         <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
-        <receiver
-            android:name=".receivers.CustomerJpushReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.shell" />
-            </intent-filter>
-        </receiver>
-        <!-- Since JCore2.0.0 Required SDK核心功能-->
+        <activity android:name=".newactivity.ui.WorkRobotWorkbenchActivity" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
         <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
         <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
-        <service
-            android:name=".receivers.CustomerJCoerReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jiguang.user.service.action" />
-            </intent-filter>
-        </service>
-
-        <!-- 极光推送 -->
+        <activity android:name=".newactivity.ui.WorkRobotAddAccountActivity" /> <!-- 极光推送 -->
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
-
-        <!-- 极光推送正式版APPKEY -->
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="f6e53d0b993048c996588c6d" />
-        <provider
-            android:name=".utils.SumeFileProvider"
-            android:authorities="${applicationId}.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
-
-        <activity android:name=".newactivity.ui.WorkRobotWorkbenchActivity"></activity>
-        <activity android:name=".newactivity.ui.WorkRobotAddAccountActivity" />
-        <!-- <activity android:name=".newactivity.WorkRobotLicenseActivity"></activity> -->
-        <!-- <activity android:name=".home.activity.Main2Activity"></activity> -->
-
-        <meta-data
-            android:name="design_width_in_dp"
-            android:value="375" />
-        <meta-data
-            android:name="design_height_in_dp"
-            android:value="812" />
-
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- 极光推送正式版APPKEY -->
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleInstance" />
+
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="locale|layoutDirection|keyboard"
             android:hardwareAccelerated="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".mine.activity.SettingActivity" />
+        <activity android:name=".mine.activity.SettingActivity" /> <!-- <activity android:name=".newactivity.WorkRobotLicenseActivity"></activity> -->
+        <!-- <activity android:name=".home.activity.Main2Activity"></activity> -->
         <activity android:name=".home.activity.SuanChartActivity" />
         <activity android:name=".money.activity.ChongZhiActivity" />
+
         <activity android:name=".money.activity.QingSuanActivity" />
         <activity
             android:name=".money.activity.TiBiActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".money.activity.ZhiYaActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".money.activity.ZhiYaActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".mine.activity.NickActivity" />
         <activity android:name=".mine.activity.EmailActivity" />
         <activity android:name=".mine.activity.WebLetterActivity" />
@@ -132,6 +73,60 @@
         <activity android:name=".activity.MyShouYiActivity" />
         <activity android:name=".order.activity.UnFinishDetailActivity" />
         <activity android:name=".activity.CountryActivity" />
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="f6e53d0b993048c996588c6d" />
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="812" />
+        <provider
+            android:name=".utils.SumeFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <receiver
+            android:name=".receivers.CustomerJpushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+
+                <category android:name="com.shell" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".receivers.CustomerJCoerReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
     </application>
+    <!-- 联网权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 获取机型信息权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" /> <!-- 安装APK -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <uses-sdk tools:overrideLibrary="io.crossbar.autobahn" />
 
 </manifest>
