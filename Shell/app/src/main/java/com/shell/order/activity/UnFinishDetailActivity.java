@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.galenleo.widgets.CodeInputView;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.shell.R;
 import com.shell.base.BaseActivity;
 import com.shell.commom.LogonFailureUtil;
@@ -25,6 +26,7 @@ import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.order.bean.OrderDetailtBean;
 import com.shell.utils.GetTwoLetter;
+import com.shell.utils.NullStringEmptyTypeAdapterFactory;
 import com.shell.utils.OrderTimeCount;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -140,12 +142,16 @@ public class UnFinishDetailActivity extends BaseActivity {
             String s1 = response.get().toString();
             System.out.println("[[[[---" + s1);
             LogonFailureUtil.gotoLoginActiviy(UnFinishDetailActivity.this, response.get().toString());
-            Gson gson = new Gson();
+            Gson gson  = new GsonBuilder().registerTypeAdapterFactory(new NullStringEmptyTypeAdapterFactory()).create();
             switch (what) {
                 case 1:
                     Log.i("song", "订单详情的返回值" + String.valueOf(response));
                     OrderDetailtBean orderDetailtBean = gson.fromJson(response.get().toString(), OrderDetailtBean.class);
-                    setView(orderDetailtBean);
+                    if("999999".equals(orderDetailtBean.getResultCode())){
+                        setView(orderDetailtBean);
+                    }else {
+                        Toast.makeText(UnFinishDetailActivity.this,orderDetailtBean.getResultDesc(),Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case 3:
                     Log.i("song", "订单详情的返回值" + String.valueOf(response));

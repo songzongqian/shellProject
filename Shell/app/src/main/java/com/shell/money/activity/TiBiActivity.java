@@ -1,11 +1,9 @@
 package com.shell.money.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -33,20 +31,15 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.R;
-import com.shell.activity.ForgetActivity;
 import com.shell.base.BaseActivity;
 import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
 import com.shell.mine.activity.JiaoYiActivity;
-import com.shell.money.Bean.CardBean;
-import com.shell.money.Bean.CardUnderBean;
 import com.shell.money.Bean.LimitBean;
 import com.shell.money.Bean.TiBiBean;
 import com.shell.money.Bean.TiBiResult;
-import com.shell.money.adapter.TiBiAdapter;
 import com.shell.money.adapter.TiBiRecordAdapter;
-import com.shell.money.adapter.UnderCardAdapter;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -63,7 +56,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.leefeng.viewlibrary.PEditTextView;
 
 public class TiBiActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
@@ -321,6 +313,7 @@ public class TiBiActivity extends BaseActivity {
                         switch (resultCode) {
                             case MNScanManager.RESULT_SUCCESS:
                                 String resultSuccess = data.getStringExtra(MNScanManager.INTENT_KEY_RESULT_SUCCESS);
+                                etAccount.setText(resultSuccess);
                                 //扫码成功
                                 break;
                             case MNScanManager.RESULT_FAIL:
@@ -328,7 +321,7 @@ public class TiBiActivity extends BaseActivity {
                                 String resultError = data.getStringExtra(MNScanManager.INTENT_KEY_RESULT_ERROR);
                                 break;
                             case MNScanManager.RESULT_CANCLE:
-                                showToast("取消扫码");
+                              //  showToast("取消扫码");
                                 break;
                         }
                     }

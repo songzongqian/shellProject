@@ -1,1 +1,1 @@
-include ':app', ':imagepickers', ':websocketlib'
+include ':app', ':imagepickers', ':websocketlib', ':libraryzxing'

@@ -74,7 +74,6 @@ android {
         implementation 'pub.devrel:easypermissions:2.0.0'
         implementation 'org.greenrobot:eventbus:3.1.1'
         implementation 'com.github.limxing:PEditTextView:1.0'
-        implementation 'com.github.maning0303:MNZXingCode:V2.1.2'
         implementation 'com.rabtman.wsmanager:wsmanager:1.0.2'
         implementation 'com.hedgehog.ratingbar:app:1.1.2'
         implementation 'com.veken:chart_view:1.0.2'
@@ -99,5 +98,6 @@ android {
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
+    implementation project(path: ':libraryzxing')
 
 }
