@@ -70,11 +70,18 @@ public class ChongZhiActivity extends BaseActivity {
     ListView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    private String chongZhiUrl;
+    @BindView(R.id.tv_viewPager_one)
+    TextView tvViewPagerOne;
+    @BindView(R.id.tv_viewPager_twe)
+    TextView tvViewPagerTwe;
+    private String chongZhiUrl,ETHchongZhiUrl;
     private int AllPager = 0;
     private int CurrentPager = 1;
     private ChongZhiRecordAdapter chongZhiRecordAdapter;
     private List<ChongZhiRecordBean.ResultDataBean> firstList = new ArrayList<>();
+    private Bitmap etHqrImage;
+    private Bitmap qrImage;
+
     @Override
     protected void initToolBar() {
 
@@ -105,9 +112,18 @@ public class ChongZhiActivity extends BaseActivity {
     @Override
     protected void initData() {
         String token = PreManager.instance().getString("token");
+
         request = NoHttp.createJsonObjectRequest(AppUrl.GiveMoneyUrl, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("token", token);
+        request.add("coinCode", "USDT");
+        mQueue.add(0, request, responseListener);
+
+
+        request = NoHttp.createJsonObjectRequest(AppUrl.GiveMoneyUrl, RequestMethod.GET);
+        request.addHeader("token", token);
+        request.add("token", token);
+        request.add("coinCode", "ETH_USDT");
         mQueue.add(1, request, responseListener);
         getChongZhiData();
     }
@@ -116,7 +132,7 @@ public class ChongZhiActivity extends BaseActivity {
     //获取充值记录
     private void getChongZhiData() {
         String token = PreManager.instance().getString("token");
-        request = NoHttp.createJsonObjectRequest(AppUrl.CardUnderUrl+ CurrentPager, RequestMethod.GET);
+        request = NoHttp.createJsonObjectRequest(AppUrl.CardUnderUrl + CurrentPager, RequestMethod.GET);
         request.addHeader("token", token);
         request.add("token", token);
         request.add("busiCode", "charge");
@@ -140,25 +156,31 @@ public class ChongZhiActivity extends BaseActivity {
 
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
-            LogonFailureUtil.gotoLoginActiviy(ChongZhiActivity.this,response.get().toString());
+            LogonFailureUtil.gotoLoginActiviy(ChongZhiActivity.this, response.get().toString());
             Gson gson = new Gson();
             switch (what) {
-                case 1:
-                    Log.i("song", "钱包充值页面上方的参数" + String.valueOf(response));
+                case 0:
                     ChongZhiTopBean chongZhiTopBean = gson.fromJson(response.get().toString(), ChongZhiTopBean.class);
                     if (chongZhiTopBean.getResultCode().equals("999999")) {
                         chongZhiUrl = chongZhiTopBean.getResultData();
-                        Bitmap qrImage = ZXingUtils.createQRImage(chongZhiUrl);
-                        ivQrCode.setImageBitmap(qrImage);
-                        tvQrContent.setText(chongZhiUrl);
+                        qrImage = ZXingUtils.createQRImage(chongZhiUrl);
+                    }
+                    break;
+                case 1:
+                    ChongZhiTopBean chongZhiTopBean2 = gson.fromJson(response.get().toString(), ChongZhiTopBean.class);
+                    if (chongZhiTopBean2.getResultCode().equals("999999")) {
+                        ETHchongZhiUrl = chongZhiTopBean2.getResultData();
+                        etHqrImage = ZXingUtils.createQRImage(ETHchongZhiUrl);
+                        ivQrCode.setImageBitmap(etHqrImage);
+                        tvQrContent.setText(ETHchongZhiUrl);
                     }
                     break;
                 case 2:
                     Log.i("song", "用户充值记录返回的值" + String.valueOf(response));
                     ChongZhiRecordBean chongZhiRecordBean = gson.fromJson(response.get().toString(), ChongZhiRecordBean.class);
-                    if(chongZhiRecordBean.getResultCode().equals("999999")){
+                    if (chongZhiRecordBean.getResultCode().equals("999999")) {
                         List<ChongZhiRecordBean.ResultDataBean> chongZhiList = chongZhiRecordBean.getResultData();
-                        if(chongZhiList!=null && chongZhiList.size()>0){
+                        if (chongZhiList != null && chongZhiList.size() > 0) {
                             AllPager = chongZhiRecordBean.getPages();
                             if (1 == CurrentPager) {
                                 firstList.clear();
@@ -194,7 +216,7 @@ public class ChongZhiActivity extends BaseActivity {
     }
 
     private void initViews() {
-        chongZhiRecordAdapter = new ChongZhiRecordAdapter(ChongZhiActivity.this,firstList);
+        chongZhiRecordAdapter = new ChongZhiRecordAdapter(ChongZhiActivity.this, firstList);
         listView.setAdapter(chongZhiRecordAdapter);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -209,7 +231,7 @@ public class ChongZhiActivity extends BaseActivity {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (CurrentPager < AllPager) {
                     CurrentPager++;
-                    getChongZhiData() ;
+                    getChongZhiData();
                     refreshLayout.finishLoadMore(2000);
                 } else {
                     refreshLayout.finishLoadMore();
@@ -217,7 +239,8 @@ public class ChongZhiActivity extends BaseActivity {
             }
         });
     }
-    @OnClick({R.id.rl_back, R.id.tv_title,R.id.rl_copy})
+
+    @OnClick({R.id.rl_back, R.id.tv_title, R.id.rl_copy, R.id.tv_viewPager_one, R.id.tv_viewPager_twe})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -231,8 +254,26 @@ public class ChongZhiActivity extends BaseActivity {
                 cmb1.setText(chongZhiUrl);
                 Toast.makeText(ChongZhiActivity.this, getString(R.string.tv_hascopy), Toast.LENGTH_SHORT).show();
 
-
                 break;
+            case R.id.tv_viewPager_one:
+                changTitleViewP(0);
+                break;
+            case R.id.tv_viewPager_twe:
+                changTitleViewP(1);
+                break;
+        }
+    }
+    private void changTitleViewP(int size) {
+        if (0 == size) {
+            ivQrCode.setImageBitmap(etHqrImage);
+            tvQrContent.setText(ETHchongZhiUrl);
+            tvViewPagerOne.setBackgroundResource(R.drawable.card_home_country);
+            tvViewPagerTwe.setBackgroundResource(R.drawable.omni_283040_bg);
+        } else {
+            ivQrCode.setImageBitmap(qrImage);
+            tvQrContent.setText(chongZhiUrl);
+            tvViewPagerOne.setBackgroundResource(R.drawable.omni_283040_bg);
+            tvViewPagerTwe.setBackgroundResource(R.drawable.card_home_country);
         }
     }
 }

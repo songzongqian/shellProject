@@ -99,6 +99,10 @@ public class TiBiActivity extends BaseActivity {
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.tv_more)
     TextView tvMore;
+    @BindView(R.id.tv_viewPager_one)
+    TextView tvViewPagerOne;
+    @BindView(R.id.tv_viewPager_twe)
+    TextView tvViewPagerTwe;
     private int AllPager = 0;
     private int CurrentPager = 1;
     private List<TiBiBean.ResultDataBean> firstList = new ArrayList<>();
@@ -112,6 +116,7 @@ public class TiBiActivity extends BaseActivity {
     private TiBiRecordAdapter underCardAdapter;
     private int fee = 0;
     private int minWithdrawAmount = 0;
+    private String coinCode = "ETH_USDT";
 
     @Override
     protected void initToolBar() {
@@ -296,7 +301,7 @@ public class TiBiActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.rl_back, R.id.et_account, R.id.iv_sao, R.id.tv_all, R.id.btn_TiXian})
+    @OnClick({R.id.rl_back, R.id.et_account, R.id.iv_sao, R.id.tv_all, R.id.btn_TiXian, R.id.tv_viewPager_one, R.id.tv_viewPager_twe})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -355,9 +360,26 @@ public class TiBiActivity extends BaseActivity {
                     }
                 }
                 break;
+            case R.id.tv_viewPager_one:
+                changTitleViewP(0);
+                break;
+            case R.id.tv_viewPager_twe:
+                changTitleViewP(1);
+                break;
         }
     }
 
+    private void changTitleViewP(int size) {
+        if (0 == size) {
+            coinCode = "ETH_USDT";
+            tvViewPagerOne.setBackgroundResource(R.drawable.card_home_country);
+            tvViewPagerTwe.setBackgroundResource(R.drawable.omni_283040_bg);
+        } else {
+            coinCode = "USDT";
+            tvViewPagerOne.setBackgroundResource(R.drawable.omni_283040_bg);
+            tvViewPagerTwe.setBackgroundResource(R.drawable.card_home_country);
+        }
+    }
     private void gotosetPayPwd() {
         View inflate = LayoutInflater.from(TiBiActivity.this).inflate(R.layout.popuwindow_set_pay_pwd, null, false);
         final PopupWindow window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -419,6 +441,7 @@ public class TiBiActivity extends BaseActivity {
                 request.add("address", tiBiAddress);
                 request.add("amount", userInput);
                 request.add("payPassword", inputPwd);
+                request.add("coinCode", coinCode);
                 mQueue.add(3, request, responseListener);
             }
         });

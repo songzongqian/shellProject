@@ -62,6 +62,15 @@ public class CardBean {
         private String useable;
         private int userId;
         private int version;
+        private String ethAddress;
+
+        public String getEthAddress() {
+            return ethAddress;
+        }
+
+        public void setEthAddress(String ethAddress) {
+            this.ethAddress = ethAddress;
+        }
 
         public String getBalance() {
             return balance;
