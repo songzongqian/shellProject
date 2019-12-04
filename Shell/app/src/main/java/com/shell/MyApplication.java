@@ -2,6 +2,7 @@ package com.shell;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
 import static com.shell.utils.LocalManageUtil.getSetLanguageLocale;
@@ -79,6 +81,15 @@ public class MyApplication extends Application {
         //JPush init
         JPushInterface.setDebugMode(false);//如果时正式版就改成false
         JPushInterface.init(this);
+
+        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(getApplicationContext());
+        builder.statusBarDrawable = R.mipmap.ic_launcher;
+        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL
+                | Notification.FLAG_SHOW_LIGHTS;  //设置为自动消失和呼吸灯闪烁
+        builder.notificationDefaults = R.raw.tts
+                | Notification.DEFAULT_VIBRATE
+                | Notification.DEFAULT_LIGHTS;  // 设置为铃声、震动、呼吸灯闪烁都要
+        JPushInterface.setPushNotificationBuilder(1, builder);
     }
 
 

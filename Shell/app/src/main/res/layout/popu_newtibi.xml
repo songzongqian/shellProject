@@ -48,7 +48,6 @@
         android:layout_centerInParent="true"
         app:ciItemBackground="@drawable/border"/>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -60,8 +59,9 @@
             android:id="@+id/btn_canle"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="#8D99B2"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_other"
+            android:background="@drawable/cancle_background"
             android:layout_marginLeft="44dp"
             android:text="@string/tb_cancle"/>
 
@@ -69,15 +69,14 @@
             android:id="@+id/btn_ok"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="#fff"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_other"
+            android:background="@mipmap/sure_background"
             android:layout_marginRight="44dp"
             android:layout_marginLeft="7dp"
             android:text="@string/tb_ok"/>
 
     </LinearLayout>
-
-
 
 
 

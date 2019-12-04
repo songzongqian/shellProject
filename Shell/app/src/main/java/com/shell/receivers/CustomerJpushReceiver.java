@@ -5,18 +5,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.bumptech.glide.RequestManager;
-import com.google.gson.Gson;
-import com.shell.MyApplication;
 import com.shell.R;
 import com.shell.activity.MainActivity;
-
-import java.util.HashMap;
 
 import cn.jpush.android.api.CmdMessage;
 import cn.jpush.android.api.CustomMessage;
@@ -38,7 +31,7 @@ public class CustomerJpushReceiver extends JPushMessageReceiver {
     @Override
     public void onMessage(Context context, CustomMessage customMessage) {
         Log.e(TAG, "[onMessage] " + customMessage);
-        processCustomMessage(context, customMessage);
+
     }
 
     @Override
@@ -50,7 +43,7 @@ public class CustomerJpushReceiver extends JPushMessageReceiver {
         String content = message.notificationContent;
         String ss = message.notificationTitle;
         Intent in = new Intent(context, MainActivity.class);
-        in.putExtra("orderFragment","orderFragment");
+        in.putExtra("orderFragment", "orderFragment");
         in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         context.startActivity(in);
     }
@@ -79,12 +72,13 @@ public class CustomerJpushReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageArrived(final Context context, NotificationMessage message) {
         Log.e(TAG, "[onNotifyMessageArrived] " + message);
-//JPushInterface.ACTION_MESSAGE_RECEIVED:收到了自定义消息 Push
+        //JPushInterface.ACTION_MESSAGE_RECEIVED:收到了自定义消息 Push
         //收到了通知 Push。如果通知的内容为空，则在通知栏上不会展示通知。
         //add db
         String title = message.notificationTitle;
         String content = message.notificationContent;
-        processCustomMessage(context);
+        //  processCustomMessage(context);
+        //SoundHelper.get().palyOrder();
     }
 
     @Override
@@ -128,22 +122,13 @@ public class CustomerJpushReceiver extends JPushMessageReceiver {
         super.onMobileNumberOperatorResult(context, jPushMessage);
     }
 
-    //send msg to MainActivity
-    private void processCustomMessage(final Context context, CustomMessage customMessage) {
-        Log.e(TAG, "[onConnected] " + customMessage);
-        String type = customMessage.contentType;
-        String msg_type = customMessage.message;
-        final String msg = customMessage.extra;
-
-
-    }
 
 
     private void processCustomMessage(Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context);
         // notification.setAutoCancel(true).setContentText("自定义推送声音").setContentTitle("极光测试").setSmallIcon(R.mipmap.ic_launcher);
-        notification.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aps_sound));
+        notification.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.tts));
 /*        if (!TextUtils.isEmpty(extras)) {
             try {
                 JSONObject extraJson = new JSONObject(extras);

@@ -371,10 +371,12 @@ public class TiBiActivity extends BaseActivity {
 
     private void changTitleViewP(int size) {
         if (0 == size) {
+            etAccount.setText("");
             coinCode = "ETH_USDT";
             tvViewPagerOne.setBackgroundResource(R.drawable.card_home_country);
             tvViewPagerTwe.setBackgroundResource(R.drawable.omni_283040_bg);
         } else {
+            etAccount.setText("");
             coinCode = "USDT";
             tvViewPagerOne.setBackgroundResource(R.drawable.omni_283040_bg);
             tvViewPagerTwe.setBackgroundResource(R.drawable.card_home_country);

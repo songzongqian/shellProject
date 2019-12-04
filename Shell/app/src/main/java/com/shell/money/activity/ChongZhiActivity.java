@@ -251,7 +251,7 @@ public class ChongZhiActivity extends BaseActivity {
 
             case R.id.rl_copy:
                 ClipboardManager cmb1 = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                cmb1.setText(chongZhiUrl);
+                cmb1.setText(tvQrContent.getText().toString());
                 Toast.makeText(ChongZhiActivity.this, getString(R.string.tv_hascopy), Toast.LENGTH_SHORT).show();
 
                 break;

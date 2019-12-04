@@ -11,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.shell.Bean.LetterBean;
 import com.shell.R;
 import com.shell.constant.AppUrl;
-import com.shell.mine.activity.MyFriendActivity;
-import com.shell.mine.activity.MyFriendBean;
 import com.shell.mine.activity.WebLetterActivity;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -29,8 +26,6 @@ import com.yanzhenjie.nohttp.rest.Response;
 import org.json.JSONObject;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class LetterAdapter extends RecyclerView.Adapter {
@@ -70,7 +65,9 @@ public class LetterAdapter extends RecyclerView.Adapter {
             holder.rootView.setBackgroundColor(Color.parseColor("#061D34"));
             holder.tvTitle.setText(resultDataBean.getTitle());
             holder.tvTime.setText(resultDataBean.getCreateTime());
-            holder.tvContent.setText(resultDataBean.getContent());
+            String trim = resultDataBean.getContent().replace("\\r\\n","\n");
+            System.out.println("------"+trim);
+            holder.tvContent.setText(trim);
             holder.llBody.setVisibility(View.GONE);
 
 
