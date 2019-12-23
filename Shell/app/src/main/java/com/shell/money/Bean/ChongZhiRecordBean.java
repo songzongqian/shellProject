@@ -120,6 +120,15 @@ public class ChongZhiRecordBean {
         private String userId;
         private String version;
         private String walletId;
+        private String link;
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
 
         public String getAddress() {
             return address;

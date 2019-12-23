@@ -95,9 +95,9 @@
     <string name="my_about">TRITON LAB</string>
     <string name="my_logout">ログアウト</string>
     <string name="my_myfriend">私の親友</string>
-    <string name="mf_first">越境支払新モード</string>
+    <string name="mf_first">グローバル取引ブロック決済システム グローバルブローカーの募集</string>
     <string name="mf_second">形式様々、楽にお金を儲ける</string>
-    <string name="mf_third">取引金、マイニングプール収益、ノード奨励</string>
+    <string name="mf_third">伝統を覆し、簡単にお金を稼ぐ</string>
     <string name="mf_fourth">shell、楽に取引金を儲ける</string>
     <string name="mf_five">登録時に招待コード入力ください：</string>
     <string name="mf_six">長押しQRコード識別：</string>
@@ -214,5 +214,5 @@
     <string name="Pledged">現在の抵当</string>
     <string name="Remaining_pledged">残存抵当</string>
     <string name="pledge_number">質量数</string>
-
+    <string name="details">详细</string>
 </resources>

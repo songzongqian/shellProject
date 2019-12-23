@@ -95,9 +95,9 @@
     <string name="my_about">TRITON LAB</string>
     <string name="my_logout">나가기</string>
     <string name="my_myfriend">나의친구</string>
-    <string name="mf_first">신 경외지불방식</string>
+    <string name="mf_first">글로벌 거래 차단 시스템 글로벌 중개인 모집</string>
     <string name="mf_second">다양한 께임으로 쉽게 돈벌다</string>
-    <string name="mf_third">거래수수료 폴수익 시점장례</string>
+    <string name="mf_third">전통을 파괴하고 쉽게 돈을 버십시오</string>
     <string name="mf_fourth">Shell,쉽게 거래수수료를 벌다.</string>
     <string name="mf_five">등록시 요청코드 입력：</string>
     <string name="mf_six">길게눌러 Qrcode스캔：</string>
@@ -213,5 +213,5 @@
     <string name="Pledged">현재저당잡히기</string>
     <string name="Remaining_pledged">남은것은저당할수있다</string>
     <string name="pledge_number">질권 수량</string>
-
+    <string name="details">자세 한 정보</string>
 </resources>

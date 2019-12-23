@@ -2,19 +2,17 @@ package com.shell.money.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shell.R;
-import com.shell.money.Bean.CardUnderBean;
 import com.shell.money.Bean.TiBiBean;
-import com.shell.money.activity.TiBiActivity;
 
 import java.util.List;
 
@@ -98,7 +96,7 @@ public class TiBiRecordAdapter extends BaseAdapter {
         }
 
 
-        TiBiBean.ResultDataBean dataBean = list.get(position);
+        final TiBiBean.ResultDataBean dataBean = list.get(position);
         String status = dataBean.getStatus();
 
         switch (type){
@@ -116,7 +114,19 @@ public class TiBiRecordAdapter extends BaseAdapter {
                 }else if(status.equals("40")){
                     viewHolder.three.setText("失败");
                 }
-
+                if (!TextUtils.isEmpty(dataBean.getLink())) {
+                    viewHolder.fiver.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.fiver.setVisibility(View.INVISIBLE);
+                }
+                viewHolder.fiver.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(dataBean.getLink());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
             case TYPE_NOIMG:
                 videoHolder1.one.setText(dataBean.getOperateAmount()+"");
@@ -132,6 +142,19 @@ public class TiBiRecordAdapter extends BaseAdapter {
                 }else if(status.equals("40")){
                     videoHolder1.three.setText("失败");
                 }
+                if (!TextUtils.isEmpty(dataBean.getLink())) {
+                    videoHolder1.fiver.setVisibility(View.VISIBLE);
+                } else {
+                    videoHolder1.fiver.setVisibility(View.INVISIBLE);
+                }
+                videoHolder1.fiver.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(dataBean.getLink());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
         }
         return convertView;
@@ -142,14 +165,14 @@ public class TiBiRecordAdapter extends BaseAdapter {
         private final TextView one;
         private final TextView three;
         private final TextView four;
-
+        private final TextView fiver;
 
         ViewHolder(View view) {
             this.view = view;
             one = (TextView) view.findViewById(R.id.tv_one);
             three = (TextView) view.findViewById(R.id.tv_three);
             four = (TextView) view.findViewById(R.id.tv_four);
-
+            fiver = (TextView) view.findViewById(R.id.tv_fiver);
         }
     }
 
@@ -159,13 +182,14 @@ public class TiBiRecordAdapter extends BaseAdapter {
         private final TextView one;
         private final TextView three;
         private final TextView four;
-
+        private final TextView fiver;
 
         VideoHolder1(View view) {
             this.view = view;
             one = (TextView) view.findViewById(R.id.tv_one);
             three = (TextView) view.findViewById(R.id.tv_three);
             four = (TextView) view.findViewById(R.id.tv_four);
+            fiver = (TextView) view.findViewById(R.id.tv_fiver);
         }
     }
 }

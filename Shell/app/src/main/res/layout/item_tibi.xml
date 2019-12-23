@@ -6,17 +6,18 @@
     android:background="#08233F"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/tv_one"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="22dp"
+            android:gravity="center"
             android:text="+ 0"
             android:textColor="#FFFFFF"
             android:textSize="13sp" />
@@ -24,11 +25,10 @@
 
         <TextView
             android:id="@+id/tv_three"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="117dp"
-            android:layout_marginTop="22dp"
+            android:gravity="center"
             android:text="已完成"
             android:textColor="#FFFFFF"
             android:textSize="13sp" />
@@ -36,16 +36,23 @@
 
         <TextView
             android:id="@+id/tv_four"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="22dp"
-            android:layout_marginRight="18dp"
+            android:gravity="center"
             android:text="0"
             android:textColor="#678DA8"
             android:textSize="14sp" />
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_fiver"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="查看"
+            android:textColor="#156097"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -1,11 +1,13 @@
 package com.shell.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -37,7 +39,6 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginActivity extends BaseActivity {
     public RequestQueue mQueue = NoHttp.newRequestQueue(1);
@@ -87,6 +88,29 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText(R.string.log_login);
         EventBus.getDefault().register(this);
+        etAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showKeyboard(true);
+                }
+            }
+        });
+    }
+
+    protected void showKeyboard(boolean isShow) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (isShow) {
+            if (getCurrentFocus() == null) {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            } else {
+                imm.showSoftInput(getCurrentFocus(), 0);
+            }
+        } else {
+            if (getCurrentFocus() != null) {
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
     }
 
     @Override
@@ -97,9 +121,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initData() {
         String mychoose = PreManager.instance().getString("mychoose");
-        if(!TextUtils.isEmpty(mychoose) && mychoose!=null){
+        if (!TextUtils.isEmpty(mychoose) && mychoose != null) {
             tvRightTitle.setText(mychoose);
-        }else{
+        } else {
 
         }
     }

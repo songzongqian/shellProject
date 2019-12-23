@@ -21,6 +21,7 @@ public class NetworkChangedReceiver extends BroadcastReceiver {
     private static final String TAG = "WSNetworkReceiver";
 
     public NetworkChangedReceiver() {
+
     }
 
     @Override

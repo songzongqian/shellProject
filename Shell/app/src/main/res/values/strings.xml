@@ -113,9 +113,9 @@
     <string name="my_about">TRITON LAB</string>
     <string name="my_logout">退出</string>
     <string name="my_myfriend">我的好友</string>
-    <string name="mf_first">跨境支付新模式</string>
+    <string name="mf_first">全球贸易区块清算系统招募全球经纪人</string>
     <string name="mf_second">玩法多样 轻松赚钱</string>
-    <string name="mf_third">交易佣金 矿池收益 节点奖励</string>
+    <string name="mf_third">颠覆传统 轻松赚钱</string>
     <string name="mf_fourth">Shell,轻松赚取交易佣金</string>
     <string name="mf_five">注册时请填写邀请码：</string>
     <string name="mf_six">长按识别二维码：</string>
@@ -254,6 +254,8 @@
     <string name="Remaining_pledged">剩余可质押</string>
 
     <string name="pledge_number">质押数量</string>
+
+    <string name="details">详情</string>
 
     <!--在订单时间下面再加一个交易时间
 繁：交易時間

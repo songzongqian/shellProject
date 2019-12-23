@@ -22,8 +22,8 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
 
 
     public ChongZhiRecordAdapter(Activity chongZhiActivity, List<ChongZhiRecordBean.ResultDataBean> chongZhiList) {
-        this.context=chongZhiActivity;
-        this.list=chongZhiList;
+        this.context = chongZhiActivity;
+        this.list = chongZhiList;
     }
 
 
@@ -45,9 +45,9 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(position % 2 == 0){
+        if (position % 2 == 0) {
             return TYPE_HASIMAGE;
-        }else{
+        } else {
             return TYPE_NOIMG;
         }
     }
@@ -60,14 +60,14 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
-        VideoHolder1 videoHolder1=null;
+        VideoHolder1 videoHolder1 = null;
         int type = getItemViewType(position);
 
-        if(convertView==null){
-            switch (type){
-                case  TYPE_HASIMAGE: //偶数
+        if (convertView == null) {
+            switch (type) {
+                case TYPE_HASIMAGE: //偶数
                     LayoutInflater inflater = LayoutInflater.from(context);
-                    convertView =  inflater.inflate(R.layout.item_tibi, null);
+                    convertView = inflater.inflate(R.layout.item_tibi, null);
                     viewHolder = new ViewHolder(convertView);
                     convertView.setTag(viewHolder);
                     break;
@@ -79,52 +79,53 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
                     convertView.setTag(videoHolder1);
                     break;
             }
-        }else{
-            switch (type){
-                case  TYPE_HASIMAGE:
+        } else {
+            switch (type) {
+                case TYPE_HASIMAGE:
                     viewHolder = (ViewHolder) convertView.getTag();
                     break;
 
                 case TYPE_NOIMG:
-                    videoHolder1= (VideoHolder1) convertView.getTag();
+                    videoHolder1 = (VideoHolder1) convertView.getTag();
                     break;
 
             }
         }
 
 
-        ChongZhiRecordBean.ResultDataBean dataBean = list.get(position);
+        final ChongZhiRecordBean.ResultDataBean dataBean = list.get(position);
         String status = dataBean.getStatus();
 
-        switch (type){
+        switch (type) {
             case TYPE_HASIMAGE:
-                viewHolder.one.setText(dataBean.getOperateAmount()+"");
+                viewHolder.one.setText(dataBean.getOperateAmount() + "");
                 viewHolder.four.setText(dataBean.getCreateTime());
-                if(status.equals("10")){
+                viewHolder.fiver.setVisibility(View.GONE);
+                if (status.equals("10")) {
                     viewHolder.three.setText("待处理");
-                }else if(status.equals("20")){
+                } else if (status.equals("20")) {
                     viewHolder.three.setText("处理中");
-                }else if(status.equals("21")){
+                } else if (status.equals("21")) {
                     viewHolder.three.setText("区块确认中");
-                }else if(status.equals("30")){
+                } else if (status.equals("30")) {
                     viewHolder.three.setText("成功");
-                }else if(status.equals("40")){
+                } else if (status.equals("40")) {
                     viewHolder.three.setText("失败");
                 }
-
                 break;
             case TYPE_NOIMG:
-                videoHolder1.one.setText(dataBean.getOperateAmount()+"");
+                videoHolder1.one.setText(dataBean.getOperateAmount() + "");
                 videoHolder1.four.setText(dataBean.getCreateTime());
-                if(status.equals("10")){
+                videoHolder1.fiver.setVisibility(View.GONE);
+                if (status.equals("10")) {
                     videoHolder1.three.setText("待处理");
-                }else if(status.equals("20")){
+                } else if (status.equals("20")) {
                     videoHolder1.three.setText("处理中");
-                }else if(status.equals("21")){
+                } else if (status.equals("21")) {
                     videoHolder1.three.setText("区块确认中");
-                }else if(status.equals("30")){
+                } else if (status.equals("30")) {
                     videoHolder1.three.setText("成功");
-                }else if(status.equals("40")){
+                } else if (status.equals("40")) {
                     videoHolder1.three.setText("失败");
                 }
                 break;
@@ -137,6 +138,7 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
         private final TextView one;
         private final TextView three;
         private final TextView four;
+        private final TextView fiver;
 
 
         ViewHolder(View view) {
@@ -144,6 +146,7 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
             one = (TextView) view.findViewById(R.id.tv_one);
             three = (TextView) view.findViewById(R.id.tv_three);
             four = (TextView) view.findViewById(R.id.tv_four);
+            fiver = (TextView) view.findViewById(R.id.tv_fiver);
 
         }
     }
@@ -154,13 +157,14 @@ public class ChongZhiRecordAdapter extends BaseAdapter {
         private final TextView one;
         private final TextView three;
         private final TextView four;
-
+        private final TextView fiver;
 
         VideoHolder1(View view) {
             this.view = view;
             one = (TextView) view.findViewById(R.id.tv_one);
             three = (TextView) view.findViewById(R.id.tv_three);
             four = (TextView) view.findViewById(R.id.tv_four);
+            fiver = (TextView) view.findViewById(R.id.tv_fiver);
         }
     }
 }

@@ -106,9 +106,9 @@ public class TiBiBean implements Serializable {
          * modifyTime : null
          */
 
-        private int id;
-        private int userId;
-        private int walletId;
+        private long id;
+        private long userId;
+        private String walletId;
         private String busiCode;
         private String coinCode;
         private String coinName;
@@ -116,8 +116,8 @@ public class TiBiBean implements Serializable {
         private String operateAmount;
         private double beforeBalance;
         private double afterBalance;
-        private int beforeFreeze;
-        private int afterFreeze;
+        private String beforeFreeze;
+        private String afterFreeze;
         private double beforeUseable;
         private double afterUseable;
         private String status;
@@ -128,28 +128,37 @@ public class TiBiBean implements Serializable {
         private String createTime;
         private Object modifyBy;
         private Object modifyTime;
+        private String link;
 
-        public int getId() {
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
             this.id = id;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 
-        public int getWalletId() {
+        public String getWalletId() {
             return walletId;
         }
 
-        public void setWalletId(int walletId) {
+        public void setWalletId(String walletId) {
             this.walletId = walletId;
         }
 
@@ -209,19 +218,19 @@ public class TiBiBean implements Serializable {
             this.afterBalance = afterBalance;
         }
 
-        public int getBeforeFreeze() {
+        public String getBeforeFreeze() {
             return beforeFreeze;
         }
 
-        public void setBeforeFreeze(int beforeFreeze) {
+        public void setBeforeFreeze(String beforeFreeze) {
             this.beforeFreeze = beforeFreeze;
         }
 
-        public int getAfterFreeze() {
+        public String getAfterFreeze() {
             return afterFreeze;
         }
 
-        public void setAfterFreeze(int afterFreeze) {
+        public void setAfterFreeze(String afterFreeze) {
             this.afterFreeze = afterFreeze;
         }
 

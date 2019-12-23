@@ -4,9 +4,15 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.shell.R;
 import com.shell.activity.MainActivity;
@@ -27,6 +33,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class CustomerJpushReceiver extends JPushMessageReceiver {
 
     private static final String TAG = "PushMessageReceiver";
+    private SoundPool soundPool;
 
     @Override
     public void onMessage(Context context, CustomMessage customMessage) {
@@ -69,6 +76,7 @@ public class CustomerJpushReceiver extends JPushMessageReceiver {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onNotifyMessageArrived(final Context context, NotificationMessage message) {
         Log.e(TAG, "[onNotifyMessageArrived] " + message);
@@ -79,6 +87,30 @@ public class CustomerJpushReceiver extends JPushMessageReceiver {
         String content = message.notificationContent;
         //  processCustomMessage(context);
         //SoundHelper.get().palyOrder();
+        SoundPool.Builder builder = new SoundPool.Builder();
+        builder.setMaxStreams(1);
+        AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
+        attrBuilder.setLegacyStreamType(AudioManager.STREAM_ALARM);
+        builder.setAudioAttributes(attrBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SoundPool.Builder spb = new SoundPool.Builder();
+            spb.setMaxStreams(10);
+            // spb.setAudioAttributes(null); // 转换音频格式
+            // 创建SoundPool对象
+            soundPool = spb.build();
+
+        } else {
+            soundPool = new SoundPool(2, AudioManager.STREAM_SYSTEM, 5);
+        }
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                if (status == 0) {
+                    soundPool.play(sampleId, 0.99f, 0.99f, 0, 0, 1);
+                }
+            }
+        });
+        soundPool.load(context, R.raw.tts, 0);
     }
 
     @Override

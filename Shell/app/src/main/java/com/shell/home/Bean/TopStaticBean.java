@@ -217,18 +217,18 @@ public class TopStaticBean implements Serializable{
              * userCount : 3865
              */
 
-            private int id;
+            private String id;
             private String name;
-            private int orderAmount;
-            private int orderCount;
-            private int superNodeCount;
+            private String orderAmount;
+            private String orderCount;
+            private String superNodeCount;
             private int userCount;
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
@@ -240,27 +240,27 @@ public class TopStaticBean implements Serializable{
                 this.name = name;
             }
 
-            public int getOrderAmount() {
+            public String getOrderAmount() {
                 return orderAmount;
             }
 
-            public void setOrderAmount(int orderAmount) {
+            public void setOrderAmount(String orderAmount) {
                 this.orderAmount = orderAmount;
             }
 
-            public int getOrderCount() {
+            public String getOrderCount() {
                 return orderCount;
             }
 
-            public void setOrderCount(int orderCount) {
+            public void setOrderCount(String orderCount) {
                 this.orderCount = orderCount;
             }
 
-            public int getSuperNodeCount() {
+            public String getSuperNodeCount() {
                 return superNodeCount;
             }
 
-            public void setSuperNodeCount(int superNodeCount) {
+            public void setSuperNodeCount(String superNodeCount) {
                 this.superNodeCount = superNodeCount;
             }
 

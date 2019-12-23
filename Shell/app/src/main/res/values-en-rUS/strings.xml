@@ -95,9 +95,9 @@
     <string name="my_about">TRITON LAB</string>
     <string name="my_logout">Quit</string>
     <string name="my_myfriend">My friends</string>
-    <string name="mf_first">New Model of Cross-border payment</string>
+    <string name="mf_first">Global trade block clearing system Recruiting Global Brokers</string>
     <string name="mf_second">A variety of ways to make money easily</string>
-    <string name="mf_third">Transaction commission mining pool income node reward</string>
+    <string name="mf_third">Subvert the tradition and make money easily</string>
     <string name="mf_fourth">Shell, easily earn transaction commission</string>
     <string name="mf_five">Please fill in the invitation code when registering：</string>
     <string name="mf_six">Long press to identify QR code：</string>
@@ -214,4 +214,5 @@ After you stop working, be sure to click stop receiving orders. Unprocessed orde
     <string name="Pledged">Pledged</string>
     <string name="Remaining_pledged">Remaining pledged</string>
     <string name="pledge_number">The pledge number</string>
+    <string name="details">details</string>
 </resources>

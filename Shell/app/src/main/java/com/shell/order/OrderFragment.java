@@ -1,7 +1,6 @@
 package com.shell.order;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -18,35 +17,25 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.L;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shell.Bean.GetServerBean;
-import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.NoticeBean;
 import com.shell.Bean.OrderEvent;
 import com.shell.R;
-import com.shell.activity.ForgetActivity;
-import com.shell.activity.LoginActivity;
 import com.shell.base.BaseFragment;
 import com.shell.commom.LogonFailureUtil;
 import com.shell.constant.AppUrl;
 import com.shell.dialog.MyWaitDialog;
-import com.shell.mine.activity.MyFriendActivity;
-import com.shell.mine.activity.MyFriendBean;
-import com.shell.mine.adapter.FriendAdapter;
-import com.shell.money.activity.QingSuanActivity;
 import com.shell.order.activity.OrderListActivity;
-import com.shell.order.adapter.OrderListAdapter;
 import com.shell.order.adapter.OrderPartAdapter;
 import com.shell.order.bean.AllNetTopBean;
 import com.shell.order.bean.CurrentOrderStatue;
@@ -62,7 +51,6 @@ import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
-import com.zhangke.websocket.WebSocketHandler;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -484,7 +472,7 @@ public class OrderFragment extends BaseFragment {
         tvSecond = inflate.findViewById(R.id.tv_daojishi);
 
 
-        tvJinE.setText(currentOrderStatue.getData().getOrderAmount() + "");
+        tvJinE.setText(currentOrderStatue.getData().getOrderAmount());
         tvOrderType.setText(currentOrderStatue.getData().getType());
         tvMoneyType.setText(currentOrderStatue.getData().getStandardCurrency());
         tvServer.setText(currentOrderStatue.getData().getAwardUsdt() + "");

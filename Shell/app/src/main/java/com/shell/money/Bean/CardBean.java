@@ -54,7 +54,7 @@ public class CardBean {
         private String balance;
         private String coinCode;
         private String coinName;
-        private int createBy;
+        private String createBy;
         private String createTime;
         private String freeze;
         private int id;
@@ -96,11 +96,11 @@ public class CardBean {
             this.coinName = coinName;
         }
 
-        public int getCreateBy() {
+        public String getCreateBy() {
             return createBy;
         }
 
-        public void setCreateBy(int createBy) {
+        public void setCreateBy(String createBy) {
             this.createBy = createBy;
         }
 

@@ -43,6 +43,7 @@ public class MyApplication extends Application {
     protected static Context context;
     protected static Handler handler;
     protected static int mainThreadId;
+
     @Override
     protected void attachBaseContext(Context base) {
         //第一次进入app时保存系统选择语言(为了选择随系统语言时使用，如果不保存，切换语言后就拿不到了）
@@ -82,23 +83,20 @@ public class MyApplication extends Application {
         JPushInterface.setDebugMode(false);//如果时正式版就改成false
         JPushInterface.init(this);
 
-        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(getApplicationContext());
-        builder.statusBarDrawable = R.mipmap.ic_launcher;
-        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL
-                | Notification.FLAG_SHOW_LIGHTS;  //设置为自动消失和呼吸灯闪烁
-        builder.notificationDefaults = R.raw.tts
-                | Notification.DEFAULT_VIBRATE
-                | Notification.DEFAULT_LIGHTS;  // 设置为铃声、震动、呼吸灯闪烁都要
+        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(this);
+        builder.statusBarDrawable =  R.mipmap.chargebg;
+        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL//
+                | Notification.FLAG_SHOW_LIGHTS; // 设置为自动消失和呼吸灯闪烁
+        builder.notificationDefaults = //
+//				Notification.DEFAULT_SOUND | // 设置为铃声
+                Notification.DEFAULT_VIBRATE | // 设置为、震动
+                        Notification.DEFAULT_LIGHTS; // 设置为呼吸灯闪烁
         JPushInterface.setPushNotificationBuilder(1, builder);
     }
-
-
 
     public static Application getAppInstance() {
         return app;
     }
-
-
 
 
     public static void setApplicationLanguage(Context context) {
@@ -116,7 +114,6 @@ public class MyApplication extends Application {
         }
         resources.updateConfiguration(config, dm);
     }
-
 
 
     public static void initNet() {
@@ -138,7 +135,7 @@ public class MyApplication extends Application {
                 // 配置网络层，URLConnectionNetworkExecutor，如果想用OkHttp：OkHttpNetworkExecutor。
                 .networkExecutor(new OkHttpNetworkExecutor())
                 // 全局通用Header，add是添加，多次调用add不会覆盖上次add。
-                .addHeader("lang",language)
+                .addHeader("lang", language)
                 .retry(3) // 全局重试次数，配置后每个请求失败都会重试x次。
                 .build();
         NoHttp.initialize(nohttpConfig);
@@ -148,15 +145,15 @@ public class MyApplication extends Application {
     }
 
 
-    private void initWebSocket(){
+    private void initWebSocket() {
         WebSocketSetting setting = new WebSocketSetting();
         //连接地址，必填，例如 wss://echo.websocket.org
         String token = PreManager.instance().getString("token");
         setting.setConnectUrl("wss://echo.websocket.org");//必填
-       // setting.setConnectUrl("wss://api.tritonlab.net/webSocket/61286e6eb1834f2f903ee2670f398650");//必填
-        setting.setConnectUrl("wss://api.tritonlab.net/webSocket"+token);//必填
-       // setting.setConnectUrl("wss://api.tritonlab.net/webSocket/61286e6eb1834f2f903ee2670f398650");//必填
-       // setting.setConnectUrl("ws://121.40.165.18:8800");//必填
+        // setting.setConnectUrl("wss://api.tritonlab.net/webSocket/61286e6eb1834f2f903ee2670f398650");//必填
+        setting.setConnectUrl("wss://api.tritonlab.net/webSocket" + token);//必填
+        // setting.setConnectUrl("wss://api.tritonlab.net/webSocket/61286e6eb1834f2f903ee2670f398650");//必填
+        // setting.setConnectUrl("ws://121.40.165.18:8800");//必填
         //设置连接超时时间
         setting.setConnectTimeout(15 * 1000);
 
@@ -179,41 +176,41 @@ public class MyApplication extends Application {
         WebSocketHandler.registerNetworkChangedReceiver(this);
     }
 
-        private void ManageActivity() {
-            registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-                @Override
-                public void onActivityCreated(Activity activity, Bundle bundle) {
-                    activityList.add(activity);
-                }
+    private void ManageActivity() {
+        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle bundle) {
+                activityList.add(activity);
+            }
 
-                @Override
-                public void onActivityStarted(Activity activity) {
-                }
+            @Override
+            public void onActivityStarted(Activity activity) {
+            }
 
-                @Override
-                public void onActivityResumed(Activity activity) {
-                    //处于栈顶的Activity
-                    topactivity = activity;
-                }
+            @Override
+            public void onActivityResumed(Activity activity) {
+                //处于栈顶的Activity
+                topactivity = activity;
+            }
 
-                @Override
-                public void onActivityPaused(Activity activity) {
-                }
+            @Override
+            public void onActivityPaused(Activity activity) {
+            }
 
-                @Override
-                public void onActivityStopped(Activity activity) {
-                }
+            @Override
+            public void onActivityStopped(Activity activity) {
+            }
 
-                @Override
-                public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-                }
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+            }
 
-                @Override
-                public void onActivityDestroyed(Activity activity) {
-                    activityList.remove(activity);
-                }
-            });
-        }
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                activityList.remove(activity);
+            }
+        });
+    }
 
     /**
      * 获取上下文对象

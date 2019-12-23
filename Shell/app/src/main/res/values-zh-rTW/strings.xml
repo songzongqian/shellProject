@@ -95,9 +95,9 @@
     <string name="my_about">TRITON LAB</string>
     <string name="my_logout">退出</string>
     <string name="my_myfriend">我的好友</string>
-    <string name="mf_first">跨境支付新模式</string>
+    <string name="mf_first">全球貿易區塊清算系統招募全球經紀人</string>
     <string name="mf_second">玩法多樣 輕鬆賺錢</string>
-    <string name="mf_third">交易傭金 礦池收益 節點獎勵</string>
+    <string name="mf_third">顛覆傳統 輕鬆賺錢</string>
     <string name="mf_fourth">Shell，輕鬆賺取交易傭金</string>
     <string name="mf_five">註冊時請填寫邀請碼：</string>
     <string name="mf_six">長按識別二維碼：</string>
@@ -214,4 +214,5 @@
     <string name="Pledged">當前已質押</string>
     <string name="Remaining_pledged">剩餘可質押</string>
     <string name="pledge_number">質押數量</string>
+    <string name="details">詳情</string>
 </resources>

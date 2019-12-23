@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".money.activity.TopupWithdrawalActivity"/>
+        <activity android:name=".money.activity.TopupWithdrawalActivity" />
         <!-- Required since 3.0.7 -->
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
         <!-- 3.3.0开始所有事件将通过该类回调 -->
@@ -32,7 +32,8 @@
         </activity> <!-- 极光推送正式版APPKEY -->
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
             android:name=".activity.MainActivity"
@@ -73,6 +74,7 @@
         <activity android:name=".activity.MyShouYiActivity" />
         <activity android:name=".order.activity.UnFinishDetailActivity" />
         <activity android:name=".activity.CountryActivity" />
+
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
@@ -85,6 +87,7 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="812" />
+
         <provider
             android:name=".utils.SumeFileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -94,6 +97,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <receiver
             android:name=".receivers.CustomerJpushReceiver"
             android:enabled="true"
