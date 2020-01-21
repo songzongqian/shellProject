@@ -233,7 +233,7 @@ public class TiBiActivity extends BaseActivity {
                         fee = limitBean.getResultData().getFee();
                         tvOneRight.setText(String.valueOf(fee)+" USDT");
                         minWithdrawAmount = limitBean.getResultData().getMinWithdrawAmount();
-                        String newString = tvThree.getText().toString().replace("100", String.valueOf(minWithdrawAmount));
+                        String newString = tvThree.getText().toString().replaceFirst("100", String.valueOf(minWithdrawAmount));
                         tvThree.setText(newString);
                     }
                     break;
