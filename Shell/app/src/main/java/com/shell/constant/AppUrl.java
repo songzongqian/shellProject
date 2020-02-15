@@ -1,13 +1,11 @@
 package com.shell.constant;
 
-import com.shell.Bean.OutNetIpBean;
-
 public class AppUrl {
 
     public static final String CACAHE_DIRNAME = "/webcache";
 
-    public static final String BASE_URL = "https://api.tritonlab.net";//正式环境
-    // public static final String BASE_URL = "https://t.tritonlab.net";//测试环境
+   // public static final String BASE_URL = "https://api.tritonlab.net";//正式环境
+    public static final String BASE_URL = "http://ttt.tritonlab.net";//测试环境
 
 
     public static final String WebSocket = "wss://api.tritonlab.net/webSocket/";//正式环境

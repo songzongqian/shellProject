@@ -1,31 +1,20 @@
 package com.shell.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,8 +29,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.shell.Bean.LanguageEvent;
 import com.shell.Bean.OrderEvent;
 import com.shell.Bean.OrePoolRewardBean;
 import com.shell.Bean.VersionBean;
@@ -55,7 +42,6 @@ import com.shell.money.MoneyFragment;
 import com.shell.order.OrderFragment;
 import com.shell.updatedemo.update.OnUpdateListener;
 import com.shell.updatedemo.update.UpdateManager;
-import com.shell.updatedemo.utils.AppUtils;
 import com.shell.utils.PreManager;
 import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -63,24 +49,14 @@ import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.download.DownloadListener;
 import com.yanzhenjie.nohttp.download.DownloadQueue;
 import com.yanzhenjie.nohttp.download.DownloadRequest;
-import com.yanzhenjie.nohttp.rest.OnResponseListener;
-import com.yanzhenjie.nohttp.rest.Request;
-import com.yanzhenjie.nohttp.rest.RequestQueue;
-import com.yanzhenjie.nohttp.rest.Response;
-import com.zhangke.websocket.SimpleListener;
-import com.zhangke.websocket.SocketListener;
-import com.zhangke.websocket.WebSocketHandler;
-import com.zhangke.websocket.response.ErrorResponse;
 
 import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -89,7 +65,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -98,8 +73,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -204,6 +177,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     /**
      * 切换Fragment
      */
+
     public void repleacFragment(int index) {
         Log.i("main_加载位置", index + "");
         Fragment tabFragment = getTabFragment(index);

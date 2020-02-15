@@ -49,6 +49,8 @@
         <!-- <activity android:name=".home.activity.Main2Activity"></activity> -->
         <activity android:name=".home.activity.SuanChartActivity" />
         <activity android:name=".money.activity.ChongZhiActivity" />
+        <activity android:name=".money.activity.ChongZhiETHActivity" />
+        <activity android:name=".money.activity.ShanDuiActivity"/>
 
         <activity android:name=".money.activity.QingSuanActivity" />
         <activity
